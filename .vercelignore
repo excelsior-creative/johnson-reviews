@@ -1,0 +1,4 @@
+reference/
+.git/
+*.md
+apps/app/.env.local
