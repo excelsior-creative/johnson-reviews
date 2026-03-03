@@ -66,7 +66,12 @@ export default buildConfig({
   }),
   plugins: [
     vercelBlobStorage({
-      enabled: true,
+      // Only enable when token is in the expected vercel_blob_rw_ format
+      // JWT tokens (eyJ...) are a newer format but may be incompatible with this adapter version
+      enabled: !!(
+        process.env.BLOB_READ_WRITE_TOKEN &&
+        process.env.BLOB_READ_WRITE_TOKEN.startsWith("vercel_blob_rw_")
+      ),
       collections: {
         media: true,
       },
