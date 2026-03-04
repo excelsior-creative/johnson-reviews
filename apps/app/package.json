@@ -17,7 +17,8 @@
     "seed": "cross-env PAYLOAD_SEED=true next dev",
     "reset:password": "tsx ./scripts/reset-password.ts",
     "migrate:wp": "tsx scripts/migrate-wp.ts",
-    "migrate:galleries": "tsx scripts/migrate-galleries.ts"
+    "migrate:galleries": "tsx scripts/migrate-galleries.ts",
+    "remigrate:content": "tsx scripts/remigrate-content.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",

@@ -4,6 +4,7 @@ import config from "@/payload.config";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { LexicalContent } from "@/components/LexicalContent";
 import Image from "next/image";
 import { Media, Post } from "@/payload-types";
 
@@ -81,12 +82,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           )}
 
           {/* Post content */}
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="text-muted-foreground italic">
-              {/* Rich text renderer placeholder — Lexical content renders here */}
-              Content renders via Lexical rich text component.
-            </p>
-          </div>
+          <LexicalContent content={post.content} />
 
           {/* Photo Gallery */}
           {galleryImages.length > 0 && (
