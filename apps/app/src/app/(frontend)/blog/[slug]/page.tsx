@@ -3,6 +3,7 @@ import { getPayload } from "payload";
 import config from "@/payload.config";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/Container";
+import { PhotoGallery } from "@/components/PhotoGallery";
 import Image from "next/image";
 import { Media, Post } from "@/payload-types";
 
@@ -21,6 +22,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           equals: slug,
         },
       },
+      depth: 2, // populate gallery images
     });
     post = posts[0] as Post;
   } catch (error) {
@@ -31,19 +33,41 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     notFound();
   }
 
-  const featuredImage = post.featuredImage as Media;
+  const featuredImage = post.featuredImage as Media | undefined;
+
+  // Build gallery images array from the gallery field
+  const galleryImages =
+    post.gallery
+      ?.map((item) => {
+        const img = typeof item.image === "object" ? (item.image as Media) : undefined;
+        if (!img?.url) return null;
+        return {
+          url: img.url,
+          alt: img.alt || post.title,
+          caption: item.caption ?? undefined,
+          width: img.width ?? undefined,
+          height: img.height ?? undefined,
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
   return (
     <article className="py-20">
       <Container>
-        <div className="max-w-3xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <header className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              {post.title}
+            </h1>
             {post.excerpt && (
-              <p className="text-xl text-muted-foreground">{post.excerpt}</p>
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                {post.excerpt}
+              </p>
             )}
-          </div>
+          </header>
 
+          {/* Featured image */}
           {featuredImage?.url && (
             <div className="relative aspect-video mb-12 rounded-2xl overflow-hidden shadow-xl">
               <Image
@@ -51,19 +75,28 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 alt={featuredImage.alt || post.title}
                 fill
                 className="object-cover"
+                priority
               />
             </div>
           )}
 
+          {/* Post content */}
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            {/* Rich text rendering would go here. For now, we'll just show a placeholder 
-                as we need a proper Lexical renderer for Payload 3.0. 
-                In a real app, you'd use @payloadcms/richtext-lexical/client */}
-            <p>Content would be rendered here using a Lexical rich text component.</p>
+            <p className="text-muted-foreground italic">
+              {/* Rich text renderer placeholder — Lexical content renders here */}
+              Content renders via Lexical rich text component.
+            </p>
           </div>
+
+          {/* Photo Gallery */}
+          {galleryImages.length > 0 && (
+            <PhotoGallery
+              images={galleryImages as { url: string; alt?: string; caption?: string }[]}
+              title="Photo Gallery"
+            />
+          )}
         </div>
       </Container>
     </article>
   );
 }
-

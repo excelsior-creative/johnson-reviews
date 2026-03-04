@@ -184,6 +184,19 @@ export interface Post {
    * Optional infographic image for this post
    */
   infographic?: (number | null) | Media;
+  /**
+   * Additional photos for this post — displayed as a scrollable gallery with lightbox.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        /**
+         * Optional caption shown in the lightbox
+         */
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   author: number | User;
   categories?: (number | Category)[] | null;
   tags?: (number | Tag)[] | null;
@@ -414,6 +427,13 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   featuredImage?: T;
   infographic?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
   author?: T;
   categories?: T;
   tags?: T;

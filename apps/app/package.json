@@ -15,7 +15,9 @@
     "db:push": "payload migrate:fresh --force-accept-warning",
     "type-check": "tsc --noEmit",
     "seed": "cross-env PAYLOAD_SEED=true next dev",
-    "reset:password": "tsx ./scripts/reset-password.ts"
+    "reset:password": "tsx ./scripts/reset-password.ts",
+    "migrate:wp": "tsx scripts/migrate-wp.ts",
+    "migrate:galleries": "tsx scripts/migrate-galleries.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",

@@ -107,6 +107,30 @@ export const Posts: CollectionConfig = {
       },
     },
     {
+      name: 'gallery',
+      type: 'array',
+      label: 'Photo Gallery',
+      admin: {
+        description: 'Additional photos for this post — displayed as a scrollable gallery with lightbox.',
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'caption',
+          type: 'text',
+          admin: {
+            description: 'Optional caption shown in the lightbox',
+          },
+        },
+      ],
+    },
+    {
       name: 'author',
       type: 'relationship',
       relationTo: 'users',
