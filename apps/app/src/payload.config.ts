@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { searchPlugin } from "@payloadcms/plugin-search";
 import { sentryPlugin } from "@payloadcms/plugin-sentry";
 import { seoPlugin } from "@payloadcms/plugin-seo";
@@ -11,10 +12,13 @@ import { fileURLToPath } from "url";
 
 import { Categories } from "@/collections/Categories";
 import { Media } from "@/collections/Media";
+import { Pages } from "@/collections/Pages";
 import { Posts } from "@/collections/Posts";
 import { Tags } from "@/collections/Tags";
 import { Users } from "@/collections/Users";
 import { ContentGenerationSettings } from "@/globals/ContentGenerationSettings";
+import { Footer } from "@/globals/Footer";
+import { Header } from "@/globals/Header";
 import { SiteSettings } from "@/globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
@@ -39,9 +43,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      breakpoints: [
+        { label: 'Mobile', name: 'mobile', width: 375, height: 667 },
+        { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
-  collections: [Users, Posts, Media, Categories, Tags],
-  globals: [SiteSettings, ContentGenerationSettings],
+  collections: [Users, Posts, Pages, Media, Categories, Tags],
+  globals: [SiteSettings, ContentGenerationSettings, Header, Footer],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {
@@ -105,6 +116,14 @@ export default buildConfig({
           ? `${doc.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || "Your Site"}`
           : process.env.NEXT_PUBLIC_SITE_NAME || "Your Site",
       generateDescription: ({ doc }: any) => doc?.excerpt || "",
+    }),
+    redirectsPlugin({
+      collections: ['posts', 'pages'],
+      overrides: {
+        access: {
+          read: () => true,
+        },
+      },
     }),
   ],
 });

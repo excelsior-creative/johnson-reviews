@@ -6,6 +6,10 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', '_status', 'publishedDate'],
+    livePreview: {
+      url: ({ data }: { data: any }) =>
+        `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/blog/${data.slug}/preview`,
+    },
   },
   versions: {
     drafts: {
