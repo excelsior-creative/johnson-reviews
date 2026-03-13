@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 
 import { Categories } from "@/collections/Categories";
 import { Media } from "@/collections/Media";
+import { Pages } from "@/collections/Pages";
 import { Posts } from "@/collections/Posts";
 import { Tags } from "@/collections/Tags";
 import { Users } from "@/collections/Users";
@@ -47,7 +48,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Posts, Media, Categories, Tags],
+  collections: [Users, Posts, Pages, Media, Categories, Tags],
   globals: [SiteSettings, ContentGenerationSettings],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET ?? "",
