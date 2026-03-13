@@ -17,6 +17,8 @@ import { Posts } from "@/collections/Posts";
 import { Tags } from "@/collections/Tags";
 import { Users } from "@/collections/Users";
 import { ContentGenerationSettings } from "@/globals/ContentGenerationSettings";
+import { Footer } from "@/globals/Footer";
+import { Header } from "@/globals/Header";
 import { SiteSettings } from "@/globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
@@ -50,7 +52,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Posts, Pages, Media, Categories, Tags],
-  globals: [SiteSettings, ContentGenerationSettings],
+  globals: [SiteSettings, ContentGenerationSettings, Header, Footer],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET ?? "",
   typescript: {
