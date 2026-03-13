@@ -35,6 +35,9 @@ importers:
       '@payloadcms/next':
         specifier: ^3.77.0
         version: 3.77.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.8.3)
+      '@payloadcms/plugin-redirects':
+        specifier: ^3.79.0
+        version: 3.79.0(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))
       '@payloadcms/plugin-search':
         specifier: ^3.77.0
         version: 3.77.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.8.3)
@@ -1858,6 +1861,11 @@ packages:
       react: ^19.0.1 || ^19.1.2 || ^19.2.1
       react-dom: ^19.0.1 || ^19.1.2 || ^19.2.1
 
+  '@payloadcms/plugin-redirects@3.79.0':
+    resolution: {integrity: sha512-rVupcrjhmKGpy8fa5ps19RqqEDIg1rETlZhXgc0RULGMc35I7jZ+u2y1qg6TeZdg/4jgZ2apqYTkUkxd+b6HZA==}
+    peerDependencies:
+      payload: 3.79.0
+
   '@payloadcms/plugin-search@3.77.0':
     resolution: {integrity: sha512-g0iu3b+jLz93fi2YVSy5RJ9LtMYealVg+Ngp4Myupl1GLOH18FRh0zpCTdfetN3//lnuskpSIxxBQWS1lFaQiQ==}
     peerDependencies:
@@ -1898,6 +1906,9 @@ packages:
 
   '@payloadcms/translations@3.77.0':
     resolution: {integrity: sha512-vDlliIsB7JJqBKuL/YKnzSPfrgfkROudVohJQcP5wBCJBIAtcPqBAKmGlGf4nfUwexN7brixmg2uV2L1B0DKrQ==}
+
+  '@payloadcms/translations@3.79.0':
+    resolution: {integrity: sha512-xDJ5tjTDQIYebZ3HKZikktsBiWAqk80sN0EY50L990oWtW3hSVj6ervE39wlbK9prNuOiIhSS8NGV4nVYDxspg==}
 
   '@payloadcms/ui@3.77.0':
     resolution: {integrity: sha512-CCgsehZEyLgS9Njb1NT78ERIW2lC0VEtITaFIa7MBtzGBQ0Uzmk0T7ycE8qbdqz280gNJsPTIocQ9rc237Yy1w==}
@@ -8093,6 +8104,11 @@ snapshots:
       - supports-color
       - typescript
 
+  '@payloadcms/plugin-redirects@3.79.0(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))':
+    dependencies:
+      '@payloadcms/translations': 3.79.0
+      payload: 3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6)
+
   '@payloadcms/plugin-search@3.77.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.8.3)':
     dependencies:
       '@payloadcms/next': 3.77.0(@types/react@19.2.7)(graphql@16.12.0)(monaco-editor@0.55.1)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.57.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.77.4))(payload@3.77.0(bufferutil@4.1.0)(graphql@16.12.0)(typescript@5.8.3)(utf-8-validate@6.0.6))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.8.3)
@@ -8198,6 +8214,10 @@ snapshots:
       - typescript
 
   '@payloadcms/translations@3.77.0':
+    dependencies:
+      date-fns: 4.1.0
+
+  '@payloadcms/translations@3.79.0':
     dependencies:
       date-fns: 4.1.0
 

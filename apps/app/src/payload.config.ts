@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { searchPlugin } from "@payloadcms/plugin-search";
 import { sentryPlugin } from "@payloadcms/plugin-sentry";
 import { seoPlugin } from "@payloadcms/plugin-seo";
@@ -113,6 +114,14 @@ export default buildConfig({
           ? `${doc.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || "Your Site"}`
           : process.env.NEXT_PUBLIC_SITE_NAME || "Your Site",
       generateDescription: ({ doc }: any) => doc?.excerpt || "",
+    }),
+    redirectsPlugin({
+      collections: ['posts', 'pages'],
+      overrides: {
+        access: {
+          read: () => true,
+        },
+      },
     }),
   ],
 });
