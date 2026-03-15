@@ -32,25 +32,43 @@ export const CategoryGrid = () => {
           key={cat.name}
           href={cat.href}
           className="relative group overflow-hidden"
-          style={{ minHeight: "240px" }}
+          style={{ minHeight: "260px" }}
         >
           {/* Background image */}
           <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-108"
             style={{ backgroundImage: `url(${cat.image})` }}
           />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/60 group-hover:bg-black/70 transition-colors" />
-          {/* Border overlay */}
-          <div className="absolute inset-0 border border-white/20" />
+          {/* Warm overlay — taupe/blush tint */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              background: "linear-gradient(180deg, rgba(108,104,100,0.35) 0%, rgba(53,47,44,0.72) 100%)",
+            }}
+          />
+          {/* Teal hover overlay */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-25 transition-opacity duration-500"
+            style={{ backgroundColor: "#52A3A9" }}
+          />
+          {/* Border */}
+          <div className="absolute inset-0 border border-white/15" />
+
           {/* Label */}
-          <div className="absolute inset-0 flex items-center justify-center p-8">
+          <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
+            {/* Decorative top line */}
+            <div
+              className="w-6 h-px bg-[#D5C17A] mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
             <span
-              className="text-white text-xl font-bold text-center leading-tight"
-              style={{ fontFamily: '"Jost", sans-serif', fontWeight: 700 }}
+              className="text-white text-base text-center leading-tight tracking-[0.18em] uppercase"
+              style={{ fontFamily: '"Lato", system-ui, sans-serif', fontWeight: 300, fontSize: "13px" }}
             >
               {cat.name}
             </span>
+            <div
+              className="w-6 h-px bg-[#D5C17A] mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
           </div>
         </Link>
       ))}

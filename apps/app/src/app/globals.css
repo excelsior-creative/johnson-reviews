@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@700&family=Unna:ital,wght@0,400;0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-lato);
   --font-mono: var(--font-geist-mono);
-  --font-oswald: "Oswald", sans-serif;
-  --font-jost: "Jost", sans-serif;
-  --font-dancing: "Dancing Script", cursive;
-  --font-unna: "Unna", serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-lato: "Lato", system-ui, sans-serif;
 
+  /* ─── Option A: The Luxury Traveler ─── */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
 
@@ -37,10 +36,16 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
 
-  --color-brand: #DB7D2D;
-  --color-brand-light: #E8943A;
-  --color-brand-dark: #C4691E;
-  --color-brand-foreground: #ffffff;
+  /* Brand palette — Option A: Luxury Traveler */
+  --color-brand: #CFD6D9;          /* silver-blue */
+  --color-brand-blush: #F4DDCD;    /* blush peach */
+  --color-brand-gold: #D5C17A;     /* muted gold */
+  --color-brand-teal: #52A3A9;     /* dusty teal */
+  --color-brand-taupe: #6C6864;    /* charcoal taupe */
+
+  /* Accent = dusty teal (CTAs, links, hover states) */
+  --color-accent-primary: #52A3A9;
+  --color-accent-warm: #D5C17A;    /* gold for dates, badges */
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -49,50 +54,59 @@
 
 @layer base {
   :root {
-    /* Dark theme by default - matches Johnson Reviews */
-    --background: 220 7% 11%;     /* #191A1B */
-    --foreground: 0 0% 100%;
-    --card: 220 7% 13%;
-    --card-foreground: 0 0% 100%;
-    --popover: 220 7% 13%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 220 7% 11%;
-    --secondary: 220 7% 11%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 220 6% 20%;
-    --muted-foreground: 215 5% 65%;
-    --accent: 26 72% 52%;         /* #DB7D2D orange */
+    /* Luxury Traveler — warm ivory/cream light theme */
+    --background: 36 25% 97%;        /* #F9F7F4 warm white */
+    --foreground: 25 8% 20%;         /* #352F2C near-black */
+    --card: 0 0% 100%;
+    --card-foreground: 25 8% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 8% 20%;
+    --primary: 25 8% 20%;            /* near-black */
+    --primary-foreground: 36 25% 97%;
+    --secondary: 196 11% 83%;        /* silver-blue #CFD6D9 */
+    --secondary-foreground: 25 8% 20%;
+    --muted: 30 15% 92%;             /* warm light grey */
+    --muted-foreground: 25 6% 50%;
+    --accent: 185 35% 49%;           /* dusty teal #52A3A9 */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 6% 22%;
-    --input: 220 6% 22%;
-    --ring: 26 72% 52%;
-    --radius: 0.25rem;
+    --border: 196 11% 87%;
+    --input: 196 11% 87%;
+    --ring: 185 35% 49%;
+    --radius: 0.125rem;
   }
 }
 
 @layer utilities {
+  .font-cormorant {
+    font-family: "Cormorant Garamond", Georgia, serif;
+  }
+
+  .font-lato {
+    font-family: "Lato", system-ui, sans-serif;
+  }
+
+  /* Luxury editorial decorative rule */
+  .luxury-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+  .luxury-divider::before,
+  .luxury-divider::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #D5C17A;
+  }
+
+  /* Subtle dot texture */
   .bg-dot-pattern {
-    background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+    background-image: radial-gradient(circle, #CFD6D9 1px, transparent 1px);
     background-size: 20px 20px;
-  }
-
-  .font-oswald {
-    font-family: "Oswald", sans-serif;
-  }
-
-  .font-jost {
-    font-family: "Jost", sans-serif;
-  }
-
-  .font-dancing {
-    font-family: "Dancing Script", cursive;
-  }
-
-  .font-unna {
-    font-family: "Unna", serif;
   }
 }
 
@@ -104,22 +118,23 @@
     @apply bg-background text-foreground antialiased;
   }
   body {
-    font-family: "Jost", sans-serif;
-    background-color: #191A1B;
-    color: #ffffff;
+    font-family: "Lato", system-ui, sans-serif;
+    background-color: #F9F7F4;
+    color: #352F2C;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — refined */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/20 rounded-full;
+  background: #CFD6D9;
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/30;
+  background: #52A3A9;
 }
