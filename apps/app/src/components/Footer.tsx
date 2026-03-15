@@ -15,30 +15,44 @@ export const Footer = async () => {
   }
 
   return (
-    <footer className="bg-[#191A1B]">
-      {/* Main footer with logo, social, subscribe */}
-      <div className="border-t border-white/10 py-12 px-4">
-        <div className="max-w-xl mx-auto text-center">
-          {/* Logo */}
-          <div className="mb-6">
+    <footer className="bg-[#352F2C]">
+      {/* Main footer */}
+      <div className="border-t border-white/10 py-14 px-4">
+        <div className="max-w-lg mx-auto text-center">
+          {/* Wordmark */}
+          <div className="mb-4">
             <span
-              className="text-white text-2xl font-bold tracking-wide"
-              style={{ fontFamily: '"Oswald", sans-serif' }}
+              className="text-[#F9F7F4] text-xl tracking-[0.14em] uppercase"
+              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif', fontWeight: 600 }}
             >
-              JOHNSON REVIEWS
+              {siteTitle}
             </span>
           </div>
 
-          {/* Divider */}
-          <div className="w-16 h-px bg-white/30 mx-auto mb-6" />
+          {/* Tagline */}
+          <p
+            className="text-[#CFD6D9]/60 text-[10px] uppercase tracking-[0.28em] mb-6"
+            style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
+          >
+            Every Day a New Destination
+          </p>
+
+          {/* Gold divider */}
+          <div className="flex items-center justify-center gap-3 mb-7">
+            <div style={{ width: 32, height: 1, background: "#D5C17A", opacity: 0.6 }} />
+            <svg width="5" height="5" viewBox="0 0 5 5" fill="none">
+              <rect x="2.5" y="0" width="3.54" height="3.54" fill="#D5C17A" opacity="0.6" transform="rotate(45 2.5 0)" />
+            </svg>
+            <div style={{ width: 32, height: 1, background: "#D5C17A", opacity: 0.6 }} />
+          </div>
 
           {/* Social Icons */}
-          <div className="flex justify-center gap-4 mb-6">
+          <div className="flex justify-center gap-3 mb-8">
             <a
               href="https://instagram.com/johnsonreviews"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:text-[#DB7D2D] hover:border-[#DB7D2D] transition-colors"
+              className="w-9 h-9 rounded-full border border-[#CFD6D9]/25 flex items-center justify-center text-[#CFD6D9]/70 hover:text-[#52A3A9] hover:border-[#52A3A9] transition-colors"
               aria-label="Instagram"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 448 512">
@@ -49,7 +63,7 @@ export const Footer = async () => {
               href="https://twitter.com/xjohnsonreviews"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:text-[#DB7D2D] hover:border-[#DB7D2D] transition-colors"
+              className="w-9 h-9 rounded-full border border-[#CFD6D9]/25 flex items-center justify-center text-[#CFD6D9]/70 hover:text-[#52A3A9] hover:border-[#52A3A9] transition-colors"
               aria-label="Twitter"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 512 512">
@@ -60,7 +74,7 @@ export const Footer = async () => {
               href="https://www.facebook.com/johnsonreviews"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:text-[#DB7D2D] hover:border-[#DB7D2D] transition-colors"
+              className="w-9 h-9 rounded-full border border-[#CFD6D9]/25 flex items-center justify-center text-[#CFD6D9]/70 hover:text-[#52A3A9] hover:border-[#52A3A9] transition-colors"
               aria-label="Facebook"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 320 512">
@@ -71,10 +85,10 @@ export const Footer = async () => {
 
           {/* Subscribe */}
           <p
-            className="text-white/70 text-sm mb-4"
-            style={{ fontFamily: '"Jost", sans-serif' }}
+            className="text-[#CFD6D9]/60 text-xs mb-4 tracking-wide"
+            style={{ fontFamily: '"Lato", system-ui, sans-serif', fontWeight: 300 }}
           >
-            Sign up and get all the fresh news and updates.
+            Sign up and receive fresh reviews, guides, and updates.
           </p>
           <SubscribeForm />
         </div>
@@ -83,16 +97,16 @@ export const Footer = async () => {
       {/* Bottom bar */}
       <div className="border-t border-white/10 py-5 px-4 text-center">
         <p
-          className="text-white/60 text-sm"
-          style={{ fontFamily: '"Jost", sans-serif' }}
+          className="text-[#CFD6D9]/40 text-xs"
+          style={{ fontFamily: '"Lato", system-ui, sans-serif', fontWeight: 300 }}
         >
           © {new Date().getFullYear()} {siteTitle}. All rights reserved.
         </p>
-        <div className="flex justify-center gap-6 mt-2 text-sm">
-          <Link href="/privacy" className="text-white/50 hover:text-[#DB7D2D] transition-colors text-xs">
+        <div className="flex justify-center gap-6 mt-2 text-xs">
+          <Link href="/privacy" className="text-[#CFD6D9]/35 hover:text-[#52A3A9] transition-colors text-[10px] tracking-[0.1em]">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="text-white/50 hover:text-[#DB7D2D] transition-colors text-xs">
+          <Link href="/terms" className="text-[#CFD6D9]/35 hover:text-[#52A3A9] transition-colors text-[10px] tracking-[0.1em]">
             Terms of Service
           </Link>
         </div>

@@ -3,11 +3,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { label: "Local Guides", prefix: "Level ", value: 10, suffix: "+", span: "col" },
-  { label: "Photo Views", prefix: "", value: 132010497, suffix: "+", span: "col" },
-  { label: "Local Guide Points", prefix: "", value: 112222, suffix: "+", span: "col" },
-  { label: "Photos Shared", prefix: "", value: 27497, suffix: "+", span: "half" },
-  { label: "Reviews", prefix: "", value: 500, suffix: "+", span: "half" },
+  { label: "Local Guides Level", prefix: "Level ", value: 10, suffix: "+" },
+  { label: "Photo Views", prefix: "", value: 132010497, suffix: "+" },
+  { label: "Local Guide Points", prefix: "", value: 112222, suffix: "+" },
+  { label: "Photos Shared", prefix: "", value: 27497, suffix: "+" },
+  { label: "Reviews", prefix: "", value: 500, suffix: "+" },
 ];
 
 function formatNumber(n: number): string {
@@ -41,22 +41,31 @@ interface StatCardProps {
 }
 
 const StatCard = ({ label, prefix, value, suffix, inView }: StatCardProps) => {
-  const count = useCounter(value, 2000, inView);
+  const count = useCounter(value, 2400, inView);
   return (
-    <div className="text-center">
+    <div className="text-center px-4">
+      {/* Decorative gold micro-line */}
+      <div className="flex justify-center mb-4">
+        <div style={{ width: 24, height: 1, background: "#D5C17A" }} />
+      </div>
       <p
-        className="text-xs font-bold uppercase tracking-[2px] mb-3"
-        style={{ color: "#DB7D2D", fontFamily: '"Jost", sans-serif' }}
-      >
-        {label}
-      </p>
-      <p
-        className="text-4xl md:text-5xl text-white font-bold"
-        style={{ fontFamily: '"Oswald", sans-serif' }}
+        className="text-[#352F2C] font-normal mb-2"
+        style={{
+          fontFamily: '"Cormorant Garamond", Georgia, serif',
+          fontSize: "clamp(2rem, 4vw, 3.25rem)",
+          fontWeight: 500,
+          letterSpacing: "-0.01em",
+        }}
       >
         {prefix}
         {formatNumber(count)}
         {suffix}
+      </p>
+      <p
+        className="text-[#6C6864] text-[10px] uppercase tracking-[0.22em]"
+        style={{ fontFamily: '"Lato", system-ui, sans-serif', fontWeight: 400 }}
+      >
+        {label}
       </p>
     </div>
   );
@@ -83,38 +92,57 @@ export const QuickStats = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-[70px] bg-[#191A1B] overflow-hidden"
+      className="relative py-20 md:py-28 overflow-hidden"
       id="stats"
+      style={{ backgroundColor: "#F4DDCD", backgroundImage: "none" }}
     >
-      {/* Subtle blob background */}
+      {/* Very subtle blush texture blob — desaturated */}
       <div
-        className="absolute inset-0 opacity-50"
+        className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
           backgroundImage:
             "url(https://brandonj117.sg-host.com/wp-content/uploads/2021/03/blob_bgnd-1.png)",
           backgroundPosition: "top center",
           backgroundRepeat: "no-repeat",
+          filter: "grayscale(1) brightness(1.4)",
         }}
       />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4">
-        {/* Section title */}
-        <h2
-          className="text-center text-white text-3xl md:text-4xl font-bold uppercase mb-14"
-          style={{ fontFamily: '"Oswald", sans-serif' }}
-        >
-          Quick Stats
-        </h2>
+      <div className="relative z-10 max-w-[1100px] mx-auto px-4">
+        {/* Section heading */}
+        <div className="text-center mb-16">
+          <p
+            className="text-[#52A3A9] text-[10px] uppercase tracking-[0.32em] mb-4"
+            style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
+          >
+            By the Numbers
+          </p>
+          <h2
+            className="text-[#352F2C]"
+            style={{
+              fontFamily: '"Cormorant Garamond", Georgia, serif',
+              fontWeight: 600,
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+            }}
+          >
+            A Legacy of Discovery
+          </h2>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <div style={{ width: 36, height: 1, background: "#D5C17A" }} />
+            <svg width="5" height="5" viewBox="0 0 5 5" fill="none">
+              <rect x="2.5" y="0" width="3.54" height="3.54" fill="#D5C17A" transform="rotate(45 2.5 0)" />
+            </svg>
+            <div style={{ width: 36, height: 1, background: "#D5C17A" }} />
+          </div>
+        </div>
 
-        {/* Row 1: 3 stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-10 mb-8">
           {stats.slice(0, 3).map((s) => (
             <StatCard key={s.label} {...s} inView={inView} />
           ))}
         </div>
-
-        {/* Row 2: 2 stats centered */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-0 md:px-[10%]">
+        <div className="grid grid-cols-2 gap-10 max-w-xl mx-auto">
           {stats.slice(3).map((s) => (
             <StatCard key={s.label} {...s} inView={inView} />
           ))}

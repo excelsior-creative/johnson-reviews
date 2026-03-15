@@ -21,22 +21,28 @@ const pressLogos = [
 
 export const AsSeenIn = () => {
   return (
-    <section className="bg-white py-6 px-4 md:px-10">
-      <div className="max-w-5xl mx-auto">
+    <section className="bg-[#F9F7F4] py-8 px-4 md:px-10 border-b border-[#CFD6D9]/60">
+      <div className="max-w-4xl mx-auto">
+        {/* Eyebrow label */}
         <p
-          className="text-center text-xs uppercase tracking-[5px] text-gray-500 mb-5"
-          style={{ fontFamily: '"Jost", sans-serif' }}
+          className="text-center text-[10px] uppercase tracking-[0.38em] text-[#6C6864] mb-6"
+          style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
         >
-          as seen in
+          As Seen In
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        {/* Decorative rule */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div style={{ width: 32, height: 1, background: "#D5C17A" }} />
+        </div>
+        {/* Logos */}
+        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-14">
           {pressLogos.map((logo, i) => (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               key={i}
               src={logo.src}
               alt={logo.name}
-              className="h-10 md:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+              className="h-8 md:h-10 w-auto object-contain opacity-50 hover:opacity-80 transition-opacity grayscale hover:grayscale-0"
             />
           ))}
         </div>

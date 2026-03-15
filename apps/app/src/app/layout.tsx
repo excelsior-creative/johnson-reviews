@@ -28,11 +28,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Dancing+Script:wght@700&family=Unna:ital,wght@0,400;0,700;1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body style={{ backgroundColor: "#191A1B", color: "#ffffff" }}>
+      <body style={{ backgroundColor: "#F9F7F4", color: "#352F2C" }}>
         {children}
         {shouldShowToolbar && <VercelToolbar />}
         <script

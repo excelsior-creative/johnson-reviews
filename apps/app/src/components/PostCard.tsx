@@ -22,7 +22,7 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
     : null;
 
   return (
-    <article className="group bg-[#191A1B] overflow-hidden">
+    <article className="group bg-white overflow-hidden border border-[#CFD6D9]/60 hover:border-[#52A3A9]/40 transition-colors">
       <Link href={`/blog/${post.slug}`}>
         {/* Thumbnail */}
         <div className="relative overflow-hidden" style={{ paddingBottom: "66%" }}>
@@ -37,15 +37,15 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 bg-[#2a2b2c] flex items-center justify-center">
-              <span className="text-white/30 text-sm">No image</span>
+            <div className="absolute inset-0 bg-[#F4DDCD]/40 flex items-center justify-center">
+              <span className="text-[#6C6864]/40 text-sm">No image</span>
             </div>
           )}
           {/* Category badge */}
-          {primaryCategory && typeof primaryCategory === 'object' && (
+          {primaryCategory && typeof primaryCategory === "object" && (
             <div
-              className="absolute top-0 left-0 bg-[#191A1B] text-white text-[10px] font-bold uppercase tracking-[2px] px-3 py-1.5"
-              style={{ fontFamily: '"Jost", sans-serif' }}
+              className="absolute top-0 left-0 bg-white text-[#6C6864] text-[9px] font-normal uppercase tracking-[0.22em] px-3 py-1.5"
+              style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
             >
               {primaryCategory.name}
             </div>
@@ -53,14 +53,14 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
         </div>
 
         {/* Content */}
-        <div className="pt-5 pb-0">
+        <div className="px-5 pt-5 pb-0">
           <h3
-            className="text-white font-medium leading-snug mb-5 group-hover:text-[#DB7D2D] transition-colors"
+            className="text-[#352F2C] font-normal leading-snug mb-4 group-hover:text-[#52A3A9] transition-colors"
             style={{
-              fontFamily: '"Oswald", sans-serif',
-              fontSize: "24px",
+              fontFamily: '"Cormorant Garamond", Georgia, serif',
+              fontSize: "1.45rem",
               fontWeight: 500,
-              lineHeight: "1.4",
+              lineHeight: "1.35",
             }}
           >
             {post.title}
@@ -68,8 +68,8 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
 
           {post.excerpt && (
             <p
-              className="text-white/60 text-sm leading-relaxed mb-5 line-clamp-3"
-              style={{ fontFamily: '"Jost", sans-serif' }}
+              className="text-[#6C6864] text-sm leading-relaxed mb-4 line-clamp-3"
+              style={{ fontFamily: '"Lato", system-ui, sans-serif', fontWeight: 300 }}
             >
               {post.excerpt}
             </p>
@@ -77,15 +77,21 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
         </div>
 
         {/* Meta */}
-        <div className="pt-3 border-t border-[#E7E7E7]/10">
+        <div className="px-5 pb-5 pt-3 border-t border-[#CFD6D9]/60 flex items-center justify-between">
           {formattedDate && (
             <span
-              className="text-[#DB7D2D] text-xs font-bold uppercase"
-              style={{ fontFamily: '"Unna", serif' }}
+              className="text-[#D5C17A] text-[10px] uppercase tracking-[0.18em]"
+              style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
             >
               {formattedDate}
             </span>
           )}
+          <span
+            className="text-[#52A3A9] text-[10px] uppercase tracking-[0.14em] opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ fontFamily: '"Lato", system-ui, sans-serif' }}
+          >
+            Read →
+          </span>
         </div>
       </Link>
     </article>
