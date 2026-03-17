@@ -14,6 +14,7 @@ import { Categories } from "@/collections/Categories";
 import { Media } from "@/collections/Media";
 import { Pages } from "@/collections/Pages";
 import { Posts } from "@/collections/Posts";
+import { Reviews } from "@/collections/Reviews";
 import { Tags } from "@/collections/Tags";
 import { Users } from "@/collections/Users";
 import { ContentGenerationSettings } from "@/globals/ContentGenerationSettings";
@@ -51,7 +52,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Posts, Pages, Media, Categories, Tags],
+  collections: [Users, Posts, Pages, Media, Categories, Tags, Reviews],
   globals: [SiteSettings, ContentGenerationSettings, Header, Footer],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET ?? "",
