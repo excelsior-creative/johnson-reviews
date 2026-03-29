@@ -9,17 +9,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div
       className="flex min-h-screen flex-col"
       data-theme="frontend"
-      style={{ backgroundColor: "#191A1B", color: "#ffffff" }}
+      style={{ backgroundColor: "#131313", color: "#e5e2e1" }}
     >
       <Providers>
         <SearchProvider>
-          {/* Navbar — full width, no container constraint (matches reference) */}
-          <div className="w-full bg-[#191A1B] border-b border-white/10">
-            <div className="max-w-[1200px] mx-auto">
-              <Navbar />
-            </div>
-          </div>
-          <main className="flex-grow bg-[#191A1B]">
+          {/* Navbar — fixed, full width, glass panel */}
+          <Navbar />
+          {/* pt-20 to clear the 80px fixed navbar */}
+          <main className="flex-grow" style={{ backgroundColor: "#131313" }}>
             {children}
           </main>
           <Footer />

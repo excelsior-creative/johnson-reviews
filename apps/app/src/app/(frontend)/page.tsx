@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
-    <div className="flex flex-col bg-[#191A1B]">
+    <div className="flex flex-col" style={{ backgroundColor: "#131313" }}>
       {/* 1. Hero — full-height dark hero with dancing script headline */}
       <Hero />
 

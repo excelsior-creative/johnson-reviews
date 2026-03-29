@@ -69,10 +69,13 @@ export interface Config {
   collections: {
     users: User;
     posts: Post;
+    pages: Page;
     media: Media;
     categories: Category;
     tags: Tag;
+    reviews: Review;
     search: Search;
+    redirects: Redirect;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,10 +85,13 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -98,10 +104,14 @@ export interface Config {
   globals: {
     'site-settings': SiteSetting;
     'content-generation-settings': ContentGenerationSetting;
+    header: Header;
+    footer: Footer;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'content-generation-settings': ContentGenerationSettingsSelect<false> | ContentGenerationSettingsSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: User;
@@ -283,6 +293,127 @@ export interface Tag {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL path segment (e.g. "about" → /pages/about)
+   */
+  slug: string;
+  layout: (
+    | {
+        heading: string;
+        subheading?: string | null;
+        backgroundImage?: (number | null) | Media;
+        ctaLabel?: string | null;
+        ctaUrl?: string | null;
+        theme?: ('light' | 'dark' | 'brand') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hero';
+      }
+    | {
+        richText: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        layout?: ('full' | 'centered') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'content';
+      }
+    | {
+        media: number | Media;
+        caption?: string | null;
+        size?: ('small' | 'medium' | 'full') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mediaBlock';
+      }
+    | {
+        heading: string;
+        description?: string | null;
+        primaryButtonLabel?: string | null;
+        primaryButtonUrl?: string | null;
+        secondaryButtonLabel?: string | null;
+        secondaryButtonUrl?: string | null;
+        theme?: ('brand' | 'dark' | 'white') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'cta';
+      }
+    | {
+        heading?: string | null;
+        subheading?: string | null;
+        displayMode?: ('grid' | 'carousel' | 'list') | null;
+        /**
+         * Number of reviews to show
+         */
+        limit?: number | null;
+        /**
+         * Leave blank to show all categories
+         */
+        filterByCategory?: (number | Category)[] | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'reviews';
+      }
+  )[];
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  /**
+   * The raw reviewId from Google
+   */
+  googleReviewId: string;
+  businessName: string;
+  /**
+   * Auto-generated from businessName
+   */
+  slug: string;
+  address?: string | null;
+  rating: number;
+  /**
+   * Relative date string from Google (e.g. "4 months ago")
+   */
+  reviewDate?: string | null;
+  reviewText?: string | null;
+  photos?:
+    | {
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  totalPhotoCount?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -299,6 +430,29 @@ export interface Search {
   excerpt?: string | null;
   slug?: string | null;
   status?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  from: string;
+  to?: {
+    type?: ('reference' | 'custom') | null;
+    reference?:
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null);
+    url?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -335,6 +489,10 @@ export interface PayloadLockedDocument {
         value: number | Post;
       } | null)
     | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
       } | null)
@@ -347,8 +505,16 @@ export interface PayloadLockedDocument {
         value: number | Tag;
       } | null)
     | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
         relationTo: 'search';
         value: number | Search;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -451,6 +617,80 @@ export interface PostsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              backgroundImage?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              theme?: T;
+              id?: T;
+              blockName?: T;
+            };
+        content?:
+          | T
+          | {
+              richText?: T;
+              layout?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaBlock?:
+          | T
+          | {
+              media?: T;
+              caption?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              primaryButtonLabel?: T;
+              primaryButtonUrl?: T;
+              secondaryButtonLabel?: T;
+              secondaryButtonUrl?: T;
+              theme?: T;
+              id?: T;
+              blockName?: T;
+            };
+        reviews?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              displayMode?: T;
+              limit?: T;
+              filterByCategory?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -525,6 +765,28 @@ export interface TagsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  googleReviewId?: T;
+  businessName?: T;
+  slug?: T;
+  address?: T;
+  rating?: T;
+  reviewDate?: T;
+  reviewText?: T;
+  photos?:
+    | T
+    | {
+        url?: T;
+        id?: T;
+      };
+  totalPhotoCount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "search_select".
  */
 export interface SearchSelect<T extends boolean = true> {
@@ -534,6 +796,22 @@ export interface SearchSelect<T extends boolean = true> {
   excerpt?: T;
   slug?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?:
+    | T
+    | {
+        type?: T;
+        reference?: T;
+        url?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -672,6 +950,61 @@ export interface ContentGenerationSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  navItems?:
+    | {
+        label: string;
+        url: string;
+        openInNewTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Header CTA button label
+   */
+  ctaLabel?: string | null;
+  /**
+   * Header CTA button URL
+   */
+  ctaUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  columns?:
+    | {
+        heading?: string | null;
+        links?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText?: string | null;
+  socialLinks?:
+    | {
+        platform: 'instagram' | 'facebook' | 'tiktok' | 'pinterest' | 'twitter' | 'youtube';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
@@ -731,6 +1064,55 @@ export interface ContentGenerationSettingsSelect<T extends boolean = true> {
     | {
         dataExtractionPrompt?: T;
         imageGenerationPrompt?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        openInNewTab?: T;
+        id?: T;
+      };
+  ctaLabel?: T;
+  ctaUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyrightText?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -45,12 +45,26 @@ export const CategoryGrid = () => {
           <div className="absolute inset-0 border border-white/20" />
           {/* Label */}
           <div className="absolute inset-0 flex items-center justify-center p-8">
-            <span
-              className="text-white text-xl font-bold text-center leading-tight"
-              style={{ fontFamily: '"Jost", sans-serif', fontWeight: 700 }}
-            >
-              {cat.name}
-            </span>
+            <div className="text-center">
+              <span
+                className="block mb-2"
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: "10px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  color: "#f2ca50",
+                }}
+              >
+                Explore
+              </span>
+              <span
+                className="text-white text-xl font-bold text-center leading-tight tracking-tighter"
+                style={{ fontFamily: '"Noto Serif", serif', fontWeight: 700 }}
+              >
+                {cat.name}
+              </span>
+            </div>
           </div>
         </Link>
       ))}

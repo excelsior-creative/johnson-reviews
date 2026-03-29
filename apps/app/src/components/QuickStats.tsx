@@ -46,13 +46,13 @@ const StatCard = ({ label, prefix, value, suffix, inView }: StatCardProps) => {
     <div className="text-center">
       <p
         className="text-xs font-bold uppercase tracking-[2px] mb-3"
-        style={{ color: "#DB7D2D", fontFamily: '"Jost", sans-serif' }}
+        style={{ color: "#f2ca50", fontFamily: '"Inter", sans-serif' }}
       >
         {label}
       </p>
       <p
-        className="text-4xl md:text-5xl text-white font-bold"
-        style={{ fontFamily: '"Oswald", sans-serif' }}
+        className="text-4xl md:text-5xl text-white font-bold tracking-tighter"
+        style={{ fontFamily: '"Noto Serif", serif' }}
       >
         {prefix}
         {formatNumber(count)}
@@ -83,7 +83,8 @@ export const QuickStats = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-[70px] bg-[#191A1B] overflow-hidden"
+      className="relative py-[70px] overflow-hidden"
+      style={{ backgroundColor: "#1c1b1b" }}
       id="stats"
     >
       {/* Subtle blob background */}
@@ -100,8 +101,8 @@ export const QuickStats = () => {
       <div className="relative z-10 max-w-[1200px] mx-auto px-4">
         {/* Section title */}
         <h2
-          className="text-center text-white text-3xl md:text-4xl font-bold uppercase mb-14"
-          style={{ fontFamily: '"Oswald", sans-serif' }}
+          className="text-center text-white text-3xl md:text-4xl font-bold uppercase mb-14 tracking-tighter"
+          style={{ fontFamily: '"Noto Serif", serif' }}
         >
           Quick Stats
         </h2>
