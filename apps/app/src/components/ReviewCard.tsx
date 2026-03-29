@@ -3,8 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 interface ReviewCardProps {
-  review: any
-  priority?: boolean
+  review: any;
+  priority?: boolean;
 }
 
 function StarRating({ rating }: { rating: number }) {
@@ -15,8 +15,8 @@ function StarRating({ rating }: { rating: number }) {
           key={i}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
-          fill={i < rating ? "#DB7D2D" : "none"}
-          stroke={i < rating ? "#DB7D2D" : "#6b7280"}
+          fill={i < rating ? "#f2ca50" : "none"}
+          stroke={i < rating ? "#f2ca50" : "#4d4635"}
           strokeWidth="1.5"
           className="w-4 h-4"
         >
@@ -24,17 +24,21 @@ function StarRating({ rating }: { rating: number }) {
         </svg>
       ))}
     </div>
-  )
+  );
 }
 
 export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
-  const firstPhoto = review.photos?.[0]?.url as string | undefined
+  const firstPhoto = review.photos?.[0]?.url as string | undefined;
   const truncatedText = review.reviewText
-    ? review.reviewText.slice(0, 150) + (review.reviewText.length > 150 ? '…' : '')
-    : null
+    ? review.reviewText.slice(0, 150) +
+      (review.reviewText.length > 150 ? "…" : "")
+    : null;
 
   return (
-    <article className="group bg-[#1e1f20] overflow-hidden rounded-sm flex flex-col">
+    <article
+      className="group overflow-hidden flex flex-col"
+      style={{ backgroundColor: "#1c1b1b" }}
+    >
       {/* Thumbnail */}
       <Link href={`/reviews/${review.slug}`}>
         <div className="relative overflow-hidden" style={{ paddingBottom: "56.25%" }}>
@@ -46,19 +50,33 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               quality={80}
               priority={priority}
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-105 transition-all duration-700"
             />
           ) : (
-            <div className="absolute inset-0 bg-[#2a2b2c] flex items-center justify-center">
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ backgroundColor: "#20201f" }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-12 text-white/20"
+                className="w-10 h-10"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                style={{ color: "rgba(229,226,225,0.2)" }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
               </svg>
             </div>
           )}
@@ -66,17 +84,18 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
       </Link>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
+      <div className="p-6 flex flex-col flex-1">
         <StarRating rating={review.rating} />
 
         <Link href={`/reviews/${review.slug}`}>
           <h3
-            className="mt-3 text-white font-medium leading-snug group-hover:text-[#DB7D2D] transition-colors"
+            className="mt-4 font-bold leading-snug group-hover:text-[#f2ca50] transition-colors"
             style={{
-              fontFamily: '"Oswald", sans-serif',
-              fontSize: "20px",
-              fontWeight: 500,
+              fontFamily: '"Noto Serif", serif',
+              fontSize: "1.2rem",
+              fontWeight: 700,
               lineHeight: "1.3",
+              color: "#e5e2e1",
             }}
           >
             {review.businessName}
@@ -85,8 +104,12 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
 
         {review.address && (
           <p
-            className="mt-1 text-white/50 text-xs leading-relaxed"
-            style={{ fontFamily: '"Jost", sans-serif' }}
+            className="mt-1 leading-relaxed"
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.75rem",
+              color: "rgba(229,226,225,0.45)",
+            }}
           >
             {review.address}
           </p>
@@ -94,14 +117,19 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
 
         {truncatedText && (
           <p
-            className="mt-3 text-white/70 text-sm leading-relaxed flex-1"
-            style={{ fontFamily: '"Jost", sans-serif' }}
+            className="mt-3 text-sm leading-relaxed flex-1"
+            style={{
+              fontFamily: '"Noto Serif", serif',
+              fontStyle: "italic",
+              color: "rgba(229,226,225,0.6)",
+            }}
           >
             {truncatedText}
             {review.reviewText?.length > 150 && (
               <Link
                 href={`/reviews/${review.slug}`}
-                className="ml-1 text-[#DB7D2D] hover:underline text-xs"
+                className="ml-1 hover:underline text-xs"
+                style={{ color: "#f2ca50" }}
               >
                 Read more
               </Link>
@@ -110,11 +138,20 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
         )}
 
         {/* Meta */}
-        <div className="mt-4 pt-3 border-t border-[#E7E7E7]/10">
+        <div
+          className="mt-4 pt-4"
+          style={{ borderTop: "1px solid rgba(77,70,53,0.4)" }}
+        >
           {review.reviewDate && (
             <span
-              className="text-[#DB7D2D] text-xs font-bold uppercase"
-              style={{ fontFamily: '"Unna", serif' }}
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "10px",
+                fontWeight: 600,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                color: "#f2ca50",
+              }}
             >
               {review.reviewDate}
             </span>
@@ -122,5 +159,5 @@ export const ReviewCard = ({ review, priority = false }: ReviewCardProps) => {
         </div>
       </div>
     </article>
-  )
-}
+  );
+};

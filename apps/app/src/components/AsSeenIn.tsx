@@ -21,11 +21,17 @@ const pressLogos = [
 
 export const AsSeenIn = () => {
   return (
-    <section className="bg-white py-6 px-4 md:px-10">
+    <section className="py-8 px-4 md:px-10" style={{ backgroundColor: "#1c1b1b", borderBottom: "1px solid rgba(77,70,53,0.3)" }}>
       <div className="max-w-5xl mx-auto">
         <p
-          className="text-center text-xs uppercase tracking-[5px] text-gray-500 mb-5"
-          style={{ fontFamily: '"Jost", sans-serif' }}
+          className="text-center mb-6"
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontSize: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "0.4em",
+            color: "rgba(229,226,225,0.4)",
+          }}
         >
           as seen in
         </p>
@@ -36,7 +42,7 @@ export const AsSeenIn = () => {
               key={i}
               src={logo.src}
               alt={logo.name}
-              className="h-10 md:h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+              className="h-8 md:h-10 w-auto object-contain opacity-40 hover:opacity-70 transition-opacity grayscale"
             />
           ))}
         </div>
