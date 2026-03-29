@@ -13,13 +13,13 @@ export const SubscribeForm = () => {
       <input
         type="email"
         placeholder="Your Email Address"
-        className="flex-1 bg-transparent border border-white/30 border-r-0 text-white placeholder-white/40 px-4 py-3 text-sm focus:outline-none focus:border-[#DB7D2D]"
-        style={{ fontFamily: '"Jost", sans-serif' }}
+        className="flex-1 bg-transparent border border-white/30 border-r-0 text-white placeholder-white/40 px-4 py-3 text-sm focus:outline-none focus:border-[#f2ca50]"
+        style={{ fontFamily: 'Inter, sans-serif' }}
       />
       <button
         type="submit"
-        className="bg-[#DB7D2D] hover:bg-[#E8943A] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
-        style={{ fontFamily: '"Oswald", sans-serif' }}
+        className="bg-[#f2ca50] hover:bg-[#d4af37] text-[#131313] px-6 py-3 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
+        style={{ fontFamily: '"Noto Serif", serif' }}
       >
         Subscribe
       </button>
