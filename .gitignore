@@ -7,3 +7,5 @@ node_modules
 .env*.local
 .env.local
 brandonj117.sg-host.com/
+payload-types.ts
+apps/app/src/payload-types.ts
