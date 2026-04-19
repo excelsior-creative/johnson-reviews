@@ -122,6 +122,91 @@
     color: #d4af37;
   }
 
+  /* Editorial body for review / post detail pages.
+     Noto Serif, generous leading, flush-left, gold drop cap on the
+     first paragraph only. Used by LexicalContent when className is
+     "review-prose". */
+  .review-prose {
+    font-family: "Noto Serif", serif;
+    color: #e5e2e1;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    max-width: 65ch;
+  }
+  .review-prose > p {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .review-prose > p:first-of-type::first-letter {
+    float: left;
+    font-size: 5rem;
+    line-height: 1;
+    padding-right: 0.6rem;
+    padding-top: 0.35rem;
+    font-family: "Noto Serif", serif;
+    font-weight: 700;
+    color: #d4af37;
+  }
+  .review-prose h2,
+  .review-prose h3,
+  .review-prose h4 {
+    font-family: "Noto Serif", serif;
+    color: #e5e2e1;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .review-prose h2 {
+    font-size: 1.875rem;
+  }
+  .review-prose h3 {
+    font-size: 1.375rem;
+  }
+  .review-prose h4 {
+    font-size: 1.125rem;
+  }
+  .review-prose strong {
+    color: #f2ca50;
+    font-weight: 700;
+  }
+  .review-prose em {
+    color: #d3c5ad;
+  }
+  .review-prose blockquote {
+    border-left: 3px solid #f2ca50;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: rgba(229, 226, 225, 0.75);
+  }
+  .review-prose ul,
+  .review-prose ol {
+    padding-left: 1.5rem;
+    margin: 1.25rem 0;
+    color: rgba(229, 226, 225, 0.85);
+  }
+  .review-prose ul {
+    list-style: disc;
+  }
+  .review-prose ol {
+    list-style: decimal;
+  }
+  .review-prose ul li::marker,
+  .review-prose ol li::marker {
+    color: #f2ca50;
+  }
+  .review-prose a {
+    color: #f2ca50;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(242, 202, 80, 0.4);
+    transition: text-decoration-color 0.2s ease;
+  }
+  .review-prose a:hover {
+    text-decoration-color: #f2ca50;
+  }
+
   /* Grayscale → color hover (applied on parent group) */
   .grayscale-hover {
     filter: grayscale(100%);

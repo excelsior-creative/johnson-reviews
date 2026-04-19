@@ -145,7 +145,7 @@ export function LexicalContent({ content, className }: LexicalContentProps) {
     <div
       className={
         className ??
-        "prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/85 prose-p:leading-relaxed prose-strong:text-white prose-ul:text-white/85 prose-ol:text-white/85 prose-li:marker:text-[#DB7D2D] prose-blockquote:border-[#DB7D2D] prose-blockquote:text-white/70"
+        "prose prose-invert prose-lg max-w-none prose-headings:text-[#e5e2e1] prose-p:text-[#e5e2e1]/85 prose-p:leading-relaxed prose-strong:text-[#f2ca50] prose-ul:text-[#e5e2e1]/85 prose-ol:text-[#e5e2e1]/85 prose-li:marker:text-[#f2ca50] prose-blockquote:border-[#f2ca50] prose-blockquote:text-[#e5e2e1]/70"
       }
     >
       {children.map((node, i) => (
