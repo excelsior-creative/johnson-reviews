@@ -12,7 +12,7 @@ interface BlogSectionProps {
 
 export const BlogSection = async ({
   title = "Latest Reviews",
-  badge = "Selection",
+  badge = "The Journal",
   limit = 6,
 }: BlogSectionProps = {}) => {
   const payload = await getPayload({ config });
@@ -29,75 +29,54 @@ export const BlogSection = async ({
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-24 md:py-32 px-8 md:px-16" style={{ backgroundColor: "#1c1b1b" }}>
-      <div className="max-w-[1176px] mx-auto">
+    <section
+      className="py-24 md:py-32"
+      style={{ backgroundColor: "#0e0e0e" }}
+    >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         {/* Editorial section header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20 gap-8">
           <div>
             <span
               className="block mb-4"
               style={{
                 fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
+                fontSize: "0.7rem",
                 textTransform: "uppercase",
-                letterSpacing: "0.4em",
+                letterSpacing: "0.3em",
                 color: "#f2ca50",
               }}
             >
               {badge}
             </span>
             <h2
-              className="font-bold tracking-tighter"
+              className="font-bold"
               style={{
                 fontFamily: '"Noto Serif", serif',
                 fontSize: "clamp(2rem, 4vw, 3rem)",
                 color: "#e5e2e1",
-                lineHeight: "1",
+                lineHeight: "1.05",
               }}
             >
-              {title.toUpperCase()}
+              {title}
             </h2>
           </div>
           <Link
             href="/blog"
-            className="transition-colors hover:text-[#f2ca50]"
+            className="inline-flex items-center gap-3 pb-1 transition-colors hover:text-[#f2ca50]"
             style={{
               fontFamily: '"Inter", sans-serif',
-              fontSize: "10px",
+              fontSize: "0.7rem",
               textTransform: "uppercase",
-              letterSpacing: "0.15em",
-              color: "rgba(229,226,225,0.5)",
-              borderBottom: "1px solid #4d4635",
-              paddingBottom: "0.375rem",
+              letterSpacing: "0.25em",
+              color: "#d3c5ad",
+              borderBottom: "1px solid rgba(77,70,53,0.6)",
             }}
           >
             View All Reviews
-          </Link>
-        </div>
-
-        {/* Post grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {posts.map((post, index) => (
-            <PostCard key={post.id} post={post} priority={index === 0} />
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="flex justify-center mt-16">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-4 px-10 py-4 font-label uppercase text-xs font-bold transition-all group hover:bg-[#f2ca50] hover:border-[#f2ca50] hover:text-[#3c2f00]"
-            style={{
-              fontFamily: '"Inter", sans-serif',
-              letterSpacing: "0.2em",
-              border: "1px solid rgba(229,226,225,0.3)",
-              color: "#e5e2e1",
-            }}
-          >
-            More Stories
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+              className="h-3 w-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -106,6 +85,13 @@ export const BlogSection = async ({
               <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
+        </div>
+
+        {/* Post grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {posts.map((post, index) => (
+            <PostCard key={post.id} post={post} priority={index === 0} />
+          ))}
         </div>
       </div>
     </section>

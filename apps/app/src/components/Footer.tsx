@@ -14,181 +14,122 @@ export const Footer = async () => {
     // use default
   }
 
+  const linkStyle = {
+    fontFamily: '"Noto Serif", serif',
+    fontSize: "0.75rem",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.2em",
+    color: "rgba(229,226,225,0.7)",
+  };
+
   return (
-    <footer style={{ backgroundColor: "#1c1b1b" }}>
-      {/* Main footer body */}
-      <div
-        className="py-20 px-8 md:px-16"
-        style={{ borderTop: "1px solid rgba(77,70,53,0.4)" }}
+    <footer style={{ backgroundColor: "#131313" }}>
+      {/* The Inner Circle — subscribe */}
+      <section
+        className="py-24 md:py-32 px-8 md:px-16"
+        style={{ backgroundColor: "#0e0e0e" }}
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* Brand column */}
-          <div className="col-span-1 md:col-span-2">
-            <h2
-              className="font-bold tracking-tighter mb-6"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.5rem",
-                color: "#f2ca50",
-              }}
-            >
-              JOHNSON REVIEWS
-            </h2>
-            <p
-              className="leading-relaxed mb-8 max-w-md"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontStyle: "italic",
-                color: "rgba(229,226,225,0.5)",
-                fontSize: "0.9rem",
-              }}
-            >
-              Elevating the standard of taste through rigorous analysis, an
-              uncompromising palate, and a deep respect for the culinary arts.
-            </p>
-            <div className="flex gap-6">
-              {["Instagram", "Twitter", "LinkedIn"].map((social) => (
-                <a
-                  key={social}
-                  href="#"
-                  className="transition-colors hover:text-[#f2ca50]"
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "10px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.15em",
-                    color: "rgba(229,226,225,0.4)",
-                  }}
-                >
-                  {social}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h3
-              className="mb-6"
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+          <div className="md:col-span-7">
+            <span
+              className="block mb-4"
               style={{
                 fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
+                fontSize: "0.7rem",
                 textTransform: "uppercase",
-                letterSpacing: "0.2em",
+                letterSpacing: "0.4em",
                 color: "#f2ca50",
               }}
             >
-              Navigation
-            </h3>
-            <ul className="space-y-4">
-              {[
-                { name: "About", href: "/about" },
-                { name: "Restaurants", href: "/blog?category=restaurants" },
-                { name: "Hotels & Resorts", href: "/blog?category=hotels-resorts" },
-                { name: "Shopping", href: "/blog?category=shopping" },
-                { name: "Entertainment", href: "/blog?category=entertainment" },
-                { name: "Contact", href: "/contact" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-sm transition-colors hover:text-[#e5e2e1]"
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      color: "rgba(229,226,225,0.5)",
-                    }}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div>
+              The Inner Circle
+            </span>
             <h3
-              className="mb-6"
-              style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
-                textTransform: "uppercase",
-                letterSpacing: "0.2em",
-                color: "#f2ca50",
-              }}
-            >
-              The Collection
-            </h3>
-            <p
-              className="text-sm mb-6 leading-relaxed"
+              className="font-bold leading-tight mb-6"
               style={{
                 fontFamily: '"Noto Serif", serif',
-                fontStyle: "italic",
-                color: "rgba(229,226,225,0.5)",
+                fontSize: "clamp(2rem, 4vw, 3rem)",
+                color: "#e5e2e1",
               }}
             >
-              Sign up for fresh news, updates, and exclusive access.
+              Join the Private Collection
+            </h3>
+            <p
+              className="italic leading-relaxed max-w-lg"
+              style={{
+                fontFamily: '"Noto Serif", serif',
+                fontSize: "1.05rem",
+                color: "#d3c5ad",
+              }}
+            >
+              Gain exclusive access to unpublished reviews, cellar consultations,
+              and private table invitations across the globe.
             </p>
+          </div>
+          <div className="md:col-span-5">
             <SubscribeForm />
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Bottom bar */}
+      {/* Bottom Bar */}
       <div
-        className="py-6 px-8 md:px-16"
-        style={{ borderTop: "1px solid rgba(77,70,53,0.2)" }}
+        className="py-12 px-6 md:px-12"
+        style={{ borderTop: "1px solid rgba(77,70,53,0.15)" }}
       >
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p
-            style={{
-              fontFamily: '"Inter", sans-serif',
-              fontSize: "10px",
-              textTransform: "uppercase",
-              letterSpacing: "0.15em",
-              color: "rgba(229,226,225,0.3)",
-            }}
-          >
-            © {new Date().getFullYear()} {siteTitle}. All Rights Reserved.
-          </p>
-          <div className="flex gap-6 items-center">
-            <Link
-              href="/privacy"
-              className="transition-colors hover:text-[#f2ca50]"
+        <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div
+              className="font-bold"
               style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                color: "rgba(229,226,225,0.3)",
+                fontFamily: '"Noto Serif", serif',
+                fontSize: "1.25rem",
+                color: "#d4af37",
               }}
             >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="transition-colors hover:text-[#f2ca50]"
-              style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                color: "rgba(229,226,225,0.3)",
-              }}
-            >
-              Terms of Service
-            </Link>
+              {siteTitle}
+            </div>
             <p
               style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
+                fontFamily: '"Noto Serif", serif',
+                fontSize: "0.75rem",
                 textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                color: "rgba(229,226,225,0.3)",
+                letterSpacing: "0.2em",
+                color: "rgba(229,226,225,0.5)",
               }}
             >
-              Designed for the Uncompromising Palate.
+              © {new Date().getFullYear()} {siteTitle}. All Rights Reserved.
             </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8">
+            <Link
+              href="/terms"
+              className="transition-colors hover:text-[#d4af37]"
+              style={linkStyle}
+            >
+              Terms
+            </Link>
+            <Link
+              href="/privacy"
+              className="transition-colors hover:text-[#d4af37]"
+              style={linkStyle}
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/contact"
+              className="transition-colors hover:text-[#d4af37]"
+              style={linkStyle}
+            >
+              Contact
+            </Link>
+            <Link
+              href="/about"
+              className="transition-colors hover:text-[#d4af37]"
+              style={linkStyle}
+            >
+              Press
+            </Link>
           </div>
         </div>
       </div>

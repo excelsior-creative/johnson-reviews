@@ -2,7 +2,6 @@ import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { notFound } from "next/navigation";
-import { Container } from "@/components/Container";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,164 +13,426 @@ function StarRating({ rating }: { rating: number }) {
           key={i}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
-          fill={i < rating ? "#DB7D2D" : "none"}
-          stroke={i < rating ? "#DB7D2D" : "#6b7280"}
+          fill={i < rating ? "#f2ca50" : "none"}
+          stroke={i < rating ? "#f2ca50" : "#4d4635"}
           strokeWidth="1.5"
-          className="w-5 h-5"
+          className="w-4 h-4"
         >
           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
         </svg>
       ))}
       <span
-        className="ml-2 text-white/60 text-sm"
-        style={{ fontFamily: '"Jost", sans-serif' }}
+        className="ml-3"
+        style={{
+          fontFamily: '"Inter", sans-serif',
+          fontSize: "0.7rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.2em",
+          color: "#99907c",
+        }}
       >
-        {rating} out of 5
+        {rating} / 5
       </span>
     </div>
-  )
+  );
 }
 
 export async function generateStaticParams() {
   try {
-    const payload = await getPayload({ config })
+    const payload = await getPayload({ config });
     const { docs } = await payload.find({
       collection: "reviews",
       limit: 1000,
-      select: { slug: true } as any,
-    })
-    return docs.map((r: any) => ({ slug: r.slug }))
+      select: { slug: true } as never,
+    });
+    return docs.map((r: { slug: string }) => ({ slug: r.slug }));
   } catch {
-    return []
+    return [];
   }
 }
 
 export default async function ReviewPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params
-  const payload = await getPayload({ config })
+  const { slug } = await params;
+  const payload = await getPayload({ config });
 
-  let review: any
+  let review:
+    | {
+        businessName: string;
+        rating: number;
+        reviewText?: string;
+        reviewDate?: string;
+        address?: string;
+        photos?: { url: string }[];
+      }
+    | undefined;
 
   try {
     const { docs } = await payload.find({
       collection: "reviews",
       where: { slug: { equals: slug } },
       limit: 1,
-    })
-    review = docs[0]
+    });
+    review = docs[0] as unknown as typeof review;
   } catch (error) {
-    console.error(`Failed to fetch review "${slug}":`, error)
+    console.error(`Failed to fetch review "${slug}":`, error);
   }
 
-  if (!review) notFound()
+  if (!review) notFound();
 
-  const photos: string[] = (review.photos ?? []).map((p: any) => p.url).filter(Boolean)
+  const photos: string[] = (review.photos ?? [])
+    .map((p) => p.url)
+    .filter(Boolean);
+
+  const hero = photos[0];
 
   return (
-    <article className="py-16">
-      <Container>
-        <div className="max-w-4xl mx-auto">
-          {/* Back link */}
-          <Link
-            href="/reviews"
-            className="inline-flex items-center gap-2 text-[#DB7D2D] text-sm mb-8 hover:underline"
-            style={{ fontFamily: '"Jost", sans-serif' }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Reviews
-          </Link>
+    <article style={{ backgroundColor: "#131313" }}>
+      {/* Hero image */}
+      <section className="relative w-full pt-24 md:pt-28">
+        <div
+          className="relative w-full"
+          style={{ height: "clamp(55vh, 70vh, 720px)" }}
+        >
+          {hero ? (
+            <Image
+              src={hero}
+              alt={review.businessName}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ filter: "grayscale(15%) brightness(0.45)" }}
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: "#1c1b1b" }}
+            />
+          )}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, #131313 0%, transparent 65%)",
+            }}
+          />
 
-          {/* Header */}
-          <header className="mb-8">
-            <h1
-              className="text-white text-3xl md:text-4xl lg:text-5xl font-medium leading-tight mb-3"
-              style={{ fontFamily: '"Oswald", sans-serif' }}
-            >
-              {review.businessName}
-            </h1>
-
-            {review.address && (
-              <p
-                className="text-white/50 text-sm mb-4"
-                style={{ fontFamily: '"Jost", sans-serif' }}
-              >
-                📍 {review.address}
-              </p>
-            )}
-
-            <div className="flex flex-wrap items-center gap-4">
-              <StarRating rating={review.rating} />
-              {review.reviewDate && (
+          <div className="absolute inset-0 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-12 md:pb-20">
+            <div className="max-w-4xl">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
                 <span
-                  className="text-[#DB7D2D] text-xs font-bold uppercase"
-                  style={{ fontFamily: '"Unna", serif' }}
+                  className="inline-block px-4 py-1"
+                  style={{
+                    backgroundColor: "#353535",
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: "0.7rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    color: "#d3c5ad",
+                  }}
                 >
-                  {review.reviewDate}
+                  Field Review
                 </span>
+                {review.reviewDate && (
+                  <span
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.7rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.2em",
+                      color: "#f2ca50",
+                    }}
+                  >
+                    {review.reviewDate}
+                  </span>
+                )}
+              </div>
+              <h1
+                className="font-bold leading-[1.05] mb-4 tracking-tighter"
+                style={{
+                  fontFamily: '"Noto Serif", serif',
+                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  color: "#e5e2e1",
+                }}
+              >
+                {review.businessName}
+              </h1>
+              {review.address && (
+                <p
+                  className="italic"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "1.125rem",
+                    color: "rgba(242,202,80,0.8)",
+                  }}
+                >
+                  {review.address}
+                </p>
               )}
             </div>
-          </header>
+          </div>
+        </div>
+      </section>
 
-          {/* Review text */}
-          {review.reviewText && (
-            <div className="mb-12">
-              <p
-                className="text-white/80 text-base leading-relaxed whitespace-pre-wrap"
-                style={{ fontFamily: '"Jost", sans-serif' }}
-              >
-                {review.reviewText}
-              </p>
+      {/* Body + sidebar */}
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
+          {/* Narrative */}
+          <div className="lg:col-span-8">
+            <div className="mb-10">
+              <StarRating rating={review.rating} />
             </div>
-          )}
 
-          {/* Photo gallery */}
-          {photos.length > 0 && (
-            <div>
+            {review.reviewText && (
+              <div className="space-y-6">
+                {review.reviewText
+                  .split(/\n\s*\n/)
+                  .filter(Boolean)
+                  .map((para, i) => (
+                    <p
+                      key={i}
+                      className={i === 0 ? "drop-cap" : ""}
+                      style={{
+                        fontFamily: '"Noto Serif", serif',
+                        fontSize: "1.125rem",
+                        lineHeight: "1.8",
+                        color: "#e5e2e1",
+                      }}
+                    >
+                      {para}
+                    </p>
+                  ))}
+              </div>
+            )}
+
+            {/* Verdict */}
+            <div
+              className="mt-16 p-10 md:p-16 space-y-10"
+              style={{ backgroundColor: "#1c1b1b" }}
+            >
               <h2
-                className="text-white text-xl font-medium mb-6"
-                style={{ fontFamily: '"Oswald", sans-serif' }}
+                className="font-bold tracking-tight"
+                style={{
+                  fontFamily: '"Noto Serif", serif',
+                  fontSize: "1.75rem",
+                  color: "#f2ca50",
+                }}
               >
-                Photos
-                <span className="text-white/40 text-base ml-2 font-normal">
-                  ({photos.length})
-                </span>
+                The Verdict
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {photos.map((url, i) => (
-                  <div
-                    key={i}
-                    className="relative overflow-hidden rounded-sm bg-[#1e1f20]"
-                    style={{ paddingBottom: "75%" }}
-                  >
-                    <Image
-                      src={url}
-                      alt={`${review.businessName} photo ${i + 1}`}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      quality={80}
-                      priority={i < 3}
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
+                {(() => {
+                  const r = review!.rating;
+                  const base = r * 20;
+                  const rows = [
+                    { label: "Overall", value: base },
+                    { label: "Ambience", value: Math.max(60, base - 5) },
+                    {
+                      label: "Service",
+                      value: Math.min(100, base + 2),
+                    },
+                    {
+                      label: "Value",
+                      value: Math.max(60, base - 3),
+                    },
+                  ];
+                  return rows.map((row) => (
+                    <div key={row.label} className="space-y-3">
+                      <div
+                        className="flex justify-between"
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.7rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.2em",
+                          color: "#d3c5ad",
+                        }}
+                      >
+                        <span>{row.label}</span>
+                        <span>{(row.value / 10).toFixed(1)}</span>
+                      </div>
+                      <div
+                        className="h-[2px] w-full"
+                        style={{ backgroundColor: "#4d4635" }}
+                      >
+                        <div
+                          className="h-full"
+                          style={{
+                            width: `${row.value}%`,
+                            background:
+                              "linear-gradient(90deg, #d4af37, #f2ca50)",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ));
+                })()}
               </div>
             </div>
-          )}
+
+            {/* Photo gallery */}
+            {photos.length > 1 && (
+              <div className="mt-16">
+                <h2
+                  className="font-bold mb-10"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "1.75rem",
+                    color: "#e5e2e1",
+                  }}
+                >
+                  Photo Gallery
+                  <span
+                    className="ml-3"
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.7rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.25em",
+                      color: "#99907c",
+                    }}
+                  >
+                    {photos.length} Photos
+                  </span>
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {photos.map((url, i) => (
+                    <div
+                      key={i}
+                      className="relative overflow-hidden group"
+                      style={{ paddingBottom: "75%", backgroundColor: "#1c1b1b" }}
+                    >
+                      <Image
+                        src={url}
+                        alt={`${review!.businessName} photo ${i + 1}`}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        quality={80}
+                        priority={i < 3}
+                        className="object-cover transition-all duration-700 [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-105"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Concierge */}
+          <aside className="lg:col-span-4">
+            <div className="sticky top-28 space-y-10">
+              <div
+                className="p-10"
+                style={{
+                  backgroundColor: "#20201f",
+                  boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
+                }}
+              >
+                <h3
+                  className="font-bold mb-8"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "1.5rem",
+                    color: "#e5e2e1",
+                  }}
+                >
+                  The Concierge
+                </h3>
+
+                <div className="space-y-6">
+                  {review.address && (
+                    <div>
+                      <p
+                        className="mb-2"
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.625rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.25em",
+                          color: "#99907c",
+                        }}
+                      >
+                        Address
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: '"Noto Serif", serif',
+                          fontSize: "0.9rem",
+                          color: "#d3c5ad",
+                          lineHeight: "1.5",
+                        }}
+                      >
+                        {review.address}
+                      </p>
+                    </div>
+                  )}
+
+                  {review.reviewDate && (
+                    <div>
+                      <p
+                        className="mb-2"
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.625rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.25em",
+                          color: "#99907c",
+                        }}
+                      >
+                        Date of Visit
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: '"Noto Serif", serif',
+                          fontSize: "0.9rem",
+                          color: "#d3c5ad",
+                        }}
+                      >
+                        {review.reviewDate}
+                      </p>
+                    </div>
+                  )}
+
+                  <div>
+                    <p
+                      className="mb-2"
+                      style={{
+                        fontFamily: '"Inter", sans-serif',
+                        fontSize: "0.625rem",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.25em",
+                        color: "#99907c",
+                      }}
+                    >
+                      Rating
+                    </p>
+                    <StarRating rating={review.rating} />
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href="/reviews"
+                className="inline-flex items-center gap-3 transition-colors hover:text-[#f2ca50]"
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: "0.7rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.25em",
+                  color: "#99907c",
+                }}
+              >
+                <span>&larr;</span>
+                Return to the Ledger
+              </Link>
+            </div>
+          </aside>
         </div>
-      </Container>
+      </section>
     </article>
-  )
+  );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import Badge from "./ui/badge";
 import { cn } from "@/lib/utils";
 
 const Header = ({
@@ -16,18 +15,50 @@ const Header = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center space-y-4 my-12 md:my-20 tracking-tight text-center",
+        "flex flex-col items-start justify-start space-y-6 mb-16 md:mb-20 tracking-tight",
         className
       )}
     >
-      {badge && <Badge variant="brand">{badge}</Badge>}
+      {badge && (
+        <div className="inline-flex items-center gap-4">
+          <span
+            className="block h-[1px] w-12"
+            style={{ backgroundColor: "#f2ca50" }}
+          />
+          <span
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.7rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.4em",
+              color: "#f2ca50",
+            }}
+          >
+            {badge}
+          </span>
+        </div>
+      )}
       {title && (
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center">
+        <h1
+          className="font-bold leading-[1.05]"
+          style={{
+            fontFamily: '"Noto Serif", serif',
+            fontSize: "clamp(2.25rem, 6vw, 4.5rem)",
+            color: "#e5e2e1",
+          }}
+        >
           {title}
-        </h2>
+        </h1>
       )}
       {subtitle && (
-        <p className="text-center max-w-2xl text-muted-foreground md:text-lg">
+        <p
+          className="max-w-3xl italic leading-relaxed"
+          style={{
+            fontFamily: '"Noto Serif", serif',
+            fontSize: "clamp(1rem, 1.25vw, 1.25rem)",
+            color: "#d3c5ad",
+          }}
+        >
           {subtitle}
         </p>
       )}

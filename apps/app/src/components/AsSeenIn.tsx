@@ -21,28 +21,31 @@ const pressLogos = [
 
 export const AsSeenIn = () => {
   return (
-    <section className="py-8 px-4 md:px-10" style={{ backgroundColor: "#1c1b1b", borderBottom: "1px solid rgba(77,70,53,0.3)" }}>
-      <div className="max-w-5xl mx-auto">
+    <section
+      className="py-16 px-6 md:px-12"
+      style={{ backgroundColor: "#0e0e0e" }}
+    >
+      <div className="max-w-[1440px] mx-auto">
         <p
-          className="text-center mb-6"
+          className="text-center mb-10"
           style={{
             fontFamily: '"Inter", sans-serif',
-            fontSize: "10px",
+            fontSize: "0.65rem",
             textTransform: "uppercase",
             letterSpacing: "0.4em",
-            color: "rgba(229,226,225,0.4)",
+            color: "#99907c",
           }}
         >
-          as seen in
+          As Seen In
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+        <div className="flex flex-wrap items-center justify-center gap-12 md:gap-16">
           {pressLogos.map((logo, i) => (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               key={i}
               src={logo.src}
               alt={logo.name}
-              className="h-8 md:h-10 w-auto object-contain opacity-40 hover:opacity-70 transition-opacity grayscale"
+              className="h-7 md:h-9 w-auto object-contain opacity-40 hover:opacity-80 transition-opacity duration-500 grayscale"
             />
           ))}
         </div>
