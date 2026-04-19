@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Johnson Reviews | Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary-fixed-variant": "#574500",
+                        "on-secondary": "#382f1e",
+                        "background": "#131313",
+                        "primary": "#f2ca50",
+                        "on-secondary-fixed": "#221b0b",
+                        "secondary-fixed": "#f0e0c8",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-container": "#c5b79f",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#554127",
+                        "on-tertiary-fixed-variant": "#574329",
+                        "inverse-surface": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#313030",
+                        "surface": "#131313",
+                        "secondary-container": "#524835",
+                        "on-primary": "#3c2f00",
+                        "on-tertiary": "#3f2d15",
+                        "tertiary-fixed": "#fcdeba",
+                        "surface-tint": "#e9c349",
+                        "surface-container": "#20201f",
+                        "on-secondary-fixed-variant": "#4f4533",
+                        "outline-variant": "#4d4635",
+                        "primary-fixed-dim": "#e9c349",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-fixed-dim": "#dfc29f",
+                        "outline": "#99907c",
+                        "surface-container-highest": "#353535",
+                        "primary-container": "#d4af37",
+                        "on-primary-fixed": "#241a00",
+                        "surface-bright": "#393939",
+                        "on-surface": "#e5e2e1",
+                        "tertiary": "#e7c9a6",
+                        "on-tertiary-fixed": "#281903",
+                        "on-primary-container": "#554300",
+                        "primary-fixed": "#ffe088",
+                        "secondary": "#d3c5ad",
+                        "on-surface-variant": "#d0c5af",
+                        "inverse-primary": "#735c00",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#d3c5ad",
+                        "surface-variant": "#353535",
+                        "tertiary-container": "#caae8c",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a"
+                    },
+                    fontFamily: {
+                        "headline": ["Noto Serif"],
+                        "body": ["Noto Serif"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .text-shadow-premium {
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        .gilded-gradient {
+            background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #353535; border-radius: 0px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[#131313] dark:bg-[#131313] backdrop-blur-md bg-opacity-60 shadow-[0_4px_48px_rgba(229,226,225,0.06)] border-b-0">
+<div class="flex justify-between items-center w-full px-12 py-6 max-w-[1920px] mx-auto">
+<!-- Brand Logo -->
+<div class="font-serif text-3xl font-bold tracking-tighter text-[#D4AF37] dark:text-[#f2ca50]">
+                Johnson Reviews
+            </div>
+<!-- Navigation Links -->
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-serif text-lg tracking-wide text-[#e5e2e1] hover:text-[#D4AF37] transition-colors duration-300" href="#">Reviews</a>
+<a class="font-serif text-lg tracking-wide text-[#e5e2e1] hover:text-[#D4AF37] transition-colors duration-300" href="#">Trending</a>
+<a class="font-serif text-lg tracking-wide text-[#e5e2e1] hover:text-[#D4AF37] transition-colors duration-300" href="#">About</a>
+</div>
+<!-- Trailing Actions & Search -->
+<div class="flex items-center space-x-8">
+<div class="hidden lg:flex items-center border-b border-outline-variant py-1">
+<span class="material-symbols-outlined text-outline mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-on-surface placeholder-outline font-label text-xs uppercase tracking-widest w-48" placeholder="Search destinations..." type="text"/>
+</div>
+<button class="text-[#e5e2e1] hover:text-[#f2ca50] transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 bg-surface-container border border-outline-variant overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover grayscale contrast-125" data-alt="Portrait of a sophisticated male food critic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVn9s5sLMcHxQApKy6alpDbGP949FYCO5jCZgHW8vwlsD3R1UcBTKsm9Ti51mOuTvz8NJx_sUwN_RGs2C8fVTmWkKf_fjMnGkcpW66PQn5gX37s8w8sDUO081U-SqA5r3LZupKf1S2snOg8RGfuAbap7lmKKmSS_cJ9kivvcEkgPLb4GYTwtot-DAmBGbPMR5MecIs0ZY8jQ8HN330eOxws5xnsZhX_l9UzPmbm0_fPBFu5OtibyFRlQfkofDdIRnhIu0vII0-6ZI"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative h-screen min-h-[800px] flex items-center overflow-hidden">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<img alt="Fine Dining Atmosphere" class="w-full h-full object-cover scale-105" data-alt="Dark moody interior of an upscale restaurant with gold accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvjU9T2-8BZR6PWAIu4pj1BzwmsPW4yXWHPCWDM93KQn7oABFnPXsftZhpb7_tllpwmIFNBcFsksPcJcdzyqSV7xRBClRB05JaSbC1hHHZAS-eqK1ZHXTSe16vjnF4kfRL-XH7Oimr6FzspV93O-KlAmrFTjuySqORcTnWeQldsrsZlb9HM_k9V40f0HvygijEY5G4C9xRSgATFGCObq3U2uvsb8J4xouLK_xxwC4Mx4uKVnXMgHgoIQ-A3KVRWPVTE2vb4FIhpKk"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 px-12 md:px-24 max-w-5xl">
+<div class="mb-6 inline-flex items-center space-x-3 text-primary tracking-[0.3em] font-label text-xs uppercase">
+<span class="w-12 h-[1px] bg-primary"></span>
+<span>Established 1984</span>
+</div>
+<h1 class="text-[3.5rem] md:text-[5.5rem] font-headline text-on-surface leading-[1.1] mb-8 font-bold tracking-tighter">
+                The Art of the <br/>Critique
+            </h1>
+<p class="text-xl md:text-2xl font-serif italic text-secondary-fixed-dim max-w-2xl mb-12 leading-relaxed">
+                Elevating the Standard of Taste through rigorous analysis and an uncompromising palate.
+            </p>
+<div class="flex items-center space-x-8">
+<button class="gilded-gradient px-12 py-5 font-label text-xs uppercase tracking-[0.2em] text-on-primary font-bold transition-all duration-300 hover:translate-y-[-4px] shadow-lg">
+                    Read the Journal
+                </button>
+<button class="border border-outline px-12 py-5 font-label text-xs uppercase tracking-[0.2em] text-primary transition-all duration-300 hover:bg-surface-container-high">
+                    Explore Rankings
+                </button>
+</div>
+</div>
+</header>
+<!-- Editor's Choice Section -->
+<section class="py-32 px-12 max-w-[1440px] mx-auto bg-surface-dim">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-xl">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-primary mb-4 block">Curated Excellence</span>
+<h2 class="text-4xl md:text-5xl font-headline font-bold text-on-surface">Editor's Choice</h2>
+</div>
+<p class="text-outline max-w-md font-serif italic text-lg leading-relaxed">
+                "We do not merely eat; we witness the convergence of technique, tradition, and audacity."
+            </p>
+</div>
+<!-- Asymmetric Bento-like Card Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Feature Card 1 (Large) -->
+<div class="md:col-span-8 group relative bg-surface-container-low overflow-hidden cursor-pointer">
+<div class="aspect-[16/9] overflow-hidden">
+<img alt="Haute Cuisine" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0" data-alt="Close up of a perfectly plated gold-leafed dessert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvI_LMrw8If7rmY-TGdcXMVwZmpoX8_mWogU58_zB_xZzk9yeeSuu8bUKCwKOxZh9hjN2jC8TdKYbtjAmo3dR7auAffOP41BMyl49IbeSsyZJJhNaV5KjlYr_pkHpxFBMbEG80Tms_FwXSMjBwNq4Wif81I-7GSwx-JnId1HaYK91-tzHAlxjR00i8UaSrO1_5LLtwuHzcRcR5jOtjaAyD1SMXRLiDUU9HFSghplmFzG5UxLk22LNXFeLfLDWvZ9_uUJbvyQBVtVA"/>
+</div>
+<div class="absolute top-0 right-0 p-8">
+<div class="bg-surface p-6 shadow-2xl border-l-4 border-primary">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline block mb-2">9.8 Score</span>
+<h3 class="text-2xl font-headline font-bold text-on-surface mb-2">L'Ambroisie, Paris</h3>
+<p class="text-secondary text-sm font-serif italic">The definitive standard of French classicism.</p>
+</div>
+</div>
+</div>
+<!-- Feature Card 2 (Small Tall) -->
+<div class="md:col-span-4 group relative bg-surface-container-low overflow-hidden cursor-pointer">
+<div class="h-full min-h-[400px]">
+<img alt="Mixology Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale" data-alt="Sophisticated bartender pouring a cocktail in a dimly lit bar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBezfutA6AP1R595cxj876ZILogbrggEXtsLqrtYWMjkc-2HqmBo3cVAtKb9GDNaI5Nnnh-ZfSQ6v9wDcZZ-OID-230CFPqYx598gJEc4wcrtecz5wrAgiC1DonK1pq9GdBd_ArW9I0vSCLhBCaONbSDODnWPfByU_zWxP8vkOWyk9_ttxIqoI_b4kWOjeibJXOo-OMz0QyEViUumSx8UKVfM5lWr1B74AiVWDyXONMx7QgUQBptLny_DtI2XTxkmWgkl0kwePgFbU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<div class="bg-surface-container-highest inline-block px-4 py-1 mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-primary">Rare Vintages</span>
+</div>
+<h3 class="text-2xl font-headline font-bold text-on-surface">The Alchemist's Den</h3>
+<p class="text-secondary-fixed-dim text-sm mt-2 font-serif italic">Tokyo's hidden sanctuary for rare spirits.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Destinations Grid -->
+<section class="py-32 bg-surface">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="mb-20 text-center">
+<h2 class="text-4xl md:text-5xl font-headline font-bold text-on-surface mb-4">Trending Destinations</h2>
+<div class="w-24 h-[1px] bg-primary mx-auto"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-0 border border-outline-variant/30">
+<!-- Grid Item 1 -->
+<div class="p-12 border-r border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors duration-500 group">
+<span class="font-label text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500 mb-8 block">01</span>
+<h4 class="text-xl font-headline font-bold mb-4">San Sebastián</h4>
+<p class="text-secondary text-sm leading-relaxed font-serif italic">An exploration of Basque fire and coastal heritage.</p>
+<a class="inline-flex items-center mt-8 text-primary font-label text-[10px] uppercase tracking-[0.2em]" href="#">
+                        View Guide <span class="material-symbols-outlined ml-2 text-sm">trending_flat</span>
+</a>
+</div>
+<!-- Grid Item 2 -->
+<div class="p-12 border-r border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors duration-500 group">
+<span class="font-label text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500 mb-8 block">02</span>
+<h4 class="text-xl font-headline font-bold mb-4">Kyoto</h4>
+<p class="text-secondary text-sm leading-relaxed font-serif italic">Where silence becomes the most vital ingredient.</p>
+<a class="inline-flex items-center mt-8 text-primary font-label text-[10px] uppercase tracking-[0.2em]" href="#">
+                        View Guide <span class="material-symbols-outlined ml-2 text-sm">trending_flat</span>
+</a>
+</div>
+<!-- Grid Item 3 -->
+<div class="p-12 border-r border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors duration-500 group">
+<span class="font-label text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500 mb-8 block">03</span>
+<h4 class="text-xl font-headline font-bold mb-4">Copenhagen</h4>
+<p class="text-secondary text-sm leading-relaxed font-serif italic">Redefining the relationship between earth and plate.</p>
+<a class="inline-flex items-center mt-8 text-primary font-label text-[10px] uppercase tracking-[0.2em]" href="#">
+                        View Guide <span class="material-symbols-outlined ml-2 text-sm">trending_flat</span>
+</a>
+</div>
+<!-- Grid Item 4 -->
+<div class="p-12 border-b border-outline-variant/30 hover:bg-surface-container-low transition-colors duration-500 group">
+<span class="font-label text-4xl text-outline-variant group-hover:text-primary transition-colors duration-500 mb-8 block">04</span>
+<h4 class="text-xl font-headline font-bold mb-4">Oaxaca</h4>
+<p class="text-secondary text-sm leading-relaxed font-serif italic">The soul of smoke and the alchemy of corn.</p>
+<a class="inline-flex items-center mt-8 text-primary font-label text-[10px] uppercase tracking-[0.2em]" href="#">
+                        View Guide <span class="material-symbols-outlined ml-2 text-sm">trending_flat</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Sommelier Badge Feature -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-[1440px] mx-auto px-12 grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+<div class="relative">
+<div class="absolute -top-12 -left-12 w-64 h-64 border border-outline-variant/20 -z-10"></div>
+<img alt="The Vault" class="w-full grayscale border-l-8 border-primary shadow-2xl" data-alt="Elegant wine cellar with backlit bottles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC-pFlw4B3_d3PF1YpwmsLiO87A4EdLW3fU6nsIHIi4J_xDAVQQvvwiVLzdlaMVfEzYj3ua-rnLhZ3iVQ1C_jsPMUIsYfeShvc3TrUj0PsXSYNOT60Q4KhrEkL-hE5fvmbemuS_IHUpTcWVEd0vIow1Aagl02gP76K7TD2vxq3x7VivUBP_Z3ay8tvtk4uMI3G4tWG-pkzEXE37MXYhO3U5udBFj2wTz5U2sOb7Pn4918ABmnjVCQJ1dnh-KJ6n-Fwndl4poWtY-U"/>
+</div>
+<div>
+<span class="font-label text-xs uppercase tracking-[0.4em] text-primary mb-6 block">The Inner Circle</span>
+<h3 class="text-[3rem] font-headline font-bold leading-tight mb-8">Join the Private Collection</h3>
+<p class="text-lg text-secondary font-serif leading-relaxed mb-12 italic">
+                    Gain exclusive access to unpublished reviews, cellar consultations, and private table invitations across the globe.
+                </p>
+<div class="space-y-4 mb-12">
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-primary">verified</span>
+<span class="font-label text-sm uppercase tracking-widest">Early Reservation Access</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-primary">wine_bar</span>
+<span class="font-label text-sm uppercase tracking-widest">Sommelier Consultations</span>
+</div>
+</div>
+<button class="bg-primary-container px-16 py-6 font-label text-xs uppercase tracking-[0.3em] text-on-primary font-bold transition-all hover:bg-primary">
+                    Request Invitation
+                </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#131313] dark:bg-[#131313] border-t-0">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-12 py-16 mt-20 max-w-[1920px] mx-auto">
+<div class="mb-12 md:mb-0">
+<div class="font-serif text-xl text-[#D4AF37] mb-4">Johnson Reviews</div>
+<p class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70">© 2024 Johnson Reviews. All Rights Reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-12">
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Terms</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Privacy</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Contact</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Press</a>
+</div>
+<div class="mt-12 md:mt-0 flex space-x-8">
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">public</span>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">mail</span>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">share</span>
+</div>
+</div>
+</footer>
+</body></html>

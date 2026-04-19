@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>L'Art de Vivre - Johnson Reviews</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#574500",
+              "on-secondary": "#382f1e",
+              "background": "#131313",
+              "primary": "#f2ca50",
+              "on-secondary-fixed": "#221b0b",
+              "secondary-fixed": "#f0e0c8",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-container": "#c5b79f",
+              "on-error": "#690005",
+              "on-tertiary-container": "#554127",
+              "on-tertiary-fixed-variant": "#574329",
+              "inverse-surface": "#e5e2e1",
+              "error": "#ffb4ab",
+              "inverse-on-surface": "#313030",
+              "surface": "#131313",
+              "secondary-container": "#524835",
+              "on-primary": "#3c2f00",
+              "on-tertiary": "#3f2d15",
+              "tertiary-fixed": "#fcdeba",
+              "surface-tint": "#e9c349",
+              "surface-container": "#20201f",
+              "on-secondary-fixed-variant": "#4f4533",
+              "outline-variant": "#4d4635",
+              "primary-fixed-dim": "#e9c349",
+              "surface-container-low": "#1c1b1b",
+              "tertiary-fixed-dim": "#dfc29f",
+              "outline": "#99907c",
+              "surface-container-highest": "#353535",
+              "primary-container": "#d4af37",
+              "on-primary-fixed": "#241a00",
+              "surface-bright": "#393939",
+              "on-surface": "#e5e2e1",
+              "tertiary": "#e7c9a6",
+              "on-tertiary-fixed": "#281903",
+              "on-primary-container": "#554300",
+              "primary-fixed": "#ffe088",
+              "secondary": "#d3c5ad",
+              "on-surface-variant": "#d0c5af",
+              "inverse-primary": "#735c00",
+              "surface-container-lowest": "#0e0e0e",
+              "on-background": "#e5e2e1",
+              "secondary-fixed-dim": "#d3c5ad",
+              "surface-variant": "#353535",
+              "tertiary-container": "#caae8c",
+              "on-error-container": "#ffdad6",
+              "surface-dim": "#131313",
+              "error-container": "#93000a"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Noto Serif"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 4rem;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            font-family: 'Noto Serif', serif;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #353535; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<nav class="bg-[#131313] dark:bg-[#131313] backdrop-blur-md bg-opacity-60 docked full-width top-0 z-50 bg-surface-variant/60 backdrop-blur-[20px] shadow-[0_4px_48px_rgba(229,226,225,0.06)] fixed w-full">
+<div class="flex justify-between items-center w-full px-12 py-6 max-w-[1920px] mx-auto">
+<div class="font-serif text-3xl font-bold tracking-tighter text-[#D4AF37] dark:text-[#f2ca50]">
+                Johnson Reviews
+            </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-serif text-lg tracking-wide text-[#f2ca50] border-b-2 border-[#D4AF37] pb-1" href="#">Reviews</a>
+<a class="font-serif text-lg tracking-wide text-[#e5e2e1] hover:text-[#D4AF37] transition-colors duration-300" href="#">Trending</a>
+<a class="font-serif text-lg tracking-wide text-[#e5e2e1] hover:text-[#D4AF37] transition-colors duration-300" href="#">About</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:block relative">
+<input class="bg-surface-container-low border-none border-b border-outline-variant focus:ring-0 focus:border-primary text-sm w-64 py-2 px-0 text-on-surface placeholder:text-outline font-label" placeholder="Search culinary excellence..." type="text"/>
+</div>
+<button class="text-[#D4AF37] hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="User profile" data-alt="Close-up portrait of a professional male food critic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJfRxlmHzyKkyXdv5PzF_wx3JSNX2LNxYiTkrZHLrVkC5cBai-hpQS1mhJlBg0zdDwcpL573ve1WXVWWOAQPKTXyZYAPrtMt-UXfPFEbwN4HB-JCv3yyYf7yw1ptTiKQAkYwqF0Y2-z33Rwgg92o2UzZd07cQbgViCUn0C02j1IArmTgppTnTMbu4azaZXCt38rXUS13-lpAdcWnUfwJcxkD7DuCxjfAAu4aAVLSuGgnJ-7fy2GpiL5qE7fMD9ZS5ucKMxvprWHto"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative h-[870px] w-full overflow-hidden">
+<div class="absolute inset-0">
+<img alt="Signature Dish" class="w-full h-full object-cover grayscale-[20%] brightness-[0.4]" data-alt="Exquisitely plated gourmet seafood dish with golden garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEahdmUWInegthxx7JBLf9AZCH_WpmbWy5UHZqiCuww10PG8lSUAeKY6n6zWXwnkWWY3Te2yuKs5amhO2u0mLAchWRBN5VuAojsr8JXy6sCxLBw7HRycOMHbV6SfY5AjnC4WSXtfmjqZ-newIwuCJKpfMDPaCtGzHZhsnPO70RYFBNabvd_lQXUnDLn7DLHIi5yZA1AG-sZrvdDzwAB2UKWLJo-j0C-zVauSj16xVSCYb-LL2iQDDvoGzC5Ky8BYZUpPM8H1JynO4"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="relative h-full max-w-[1920px] mx-auto px-12 flex flex-col justify-end pb-20">
+<div class="max-w-4xl">
+<div class="flex items-center gap-4 mb-6">
+<span class="bg-surface-container-highest px-4 py-1 text-[0.7rem] font-label tracking-[0.2em] text-secondary uppercase">Three Stars</span>
+<span class="text-primary font-label text-[0.7rem] tracking-[0.2em] uppercase">Paris, France</span>
+</div>
+<h1 class="font-headline text-6xl md:text-8xl text-on-surface leading-tight mb-4 tracking-tighter">L'Art de Vivre</h1>
+<p class="font-headline text-2xl text-primary/80 italic max-w-2xl">A symphony of seasonal ingredients conducted with the precision of a master horologist.</p>
+</div>
+</div>
+</section>
+<!-- Main Content & Sidebar Grid -->
+<section class="max-w-[1920px] mx-auto px-12 py-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-20">
+<!-- Narrative Section (8 Columns) -->
+<div class="lg:col-span-8 space-y-12">
+<div class="space-y-8">
+<p class="font-body text-xl text-on-surface leading-relaxed drop-cap text-left">
+                            Experience at L'Art de Vivre is not merely a meal; it is an immersion into the very soul of French gastronomy. Nestled within a discreet limestone facade in the 8th Arrondissement, this temple of taste challenges the boundaries of traditional fine dining while remaining deeply rooted in the soil of its heritage. Chef Julian Vasseur has crafted a menu that breathes with the rhythm of the seasons, where every micro-green and reduction serves a distinct narrative purpose.
+                        </p>
+<p class="font-body text-xl text-on-surface leading-relaxed text-left">
+                            The signature Langoustine, poached in brown butter and scented with Meyer lemon, arrives under a glass cloche filled with the aroma of coastal pine. It is a sensory revelation. The texture—tender yet resilient—speaks of a kitchen that respects the ingredient above all else. As the evening unfolds, one realizes that the true brilliance lies in the silences between the courses, the impeccable timing of the staff who move like ghosts through the candlelit salon.
+                        </p>
+</div>
+<!-- Image Gallery Fragment -->
+<div class="grid grid-cols-2 gap-8 py-8">
+<div class="h-[400px] bg-surface-container-low">
+<img alt="Interior Ambience" class="w-full h-full object-cover" data-alt="Opulent restaurant interior with crystal chandeliers and velvet seating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6eWi7b_1ayl0rK3IS0ZtQ9FLeCJdHFCCSoGgQqG8zgKMb71SaQogqalNk37c7B8ipcomBGXMtQ2iI70EX2loIseePOa5Wnv__wwYrvrsREcZIIjYXCGrD0wCTaYDDktsLWkE6CVtJDmTQnknE5ClTCGPkv3Lt26Ahz_Lest6zkbRjj-1dGPfObQseQvX2umbQTuVt88fGHNfsK3sEwkzoYFSAZc_Uocrme62Y1dmVNc2_-ByjozZewp2qIEXgVgGu8w-5ivq28sE"/>
+</div>
+<div class="h-[400px] bg-surface-container-low mt-12">
+<img alt="Wine Cellar" class="w-full h-full object-cover" data-alt="Rows of premium vintage wine bottles in a dark cellar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaHkC6shS4riaNJQcAyQT2SPIng9qki4HgIVx4lcYQF5-5Z5-2-MWU74MbVEgA_-3Pw13Q9NEKOgH2Vr1KD6dRMONpchVKv7vNyO6WOgD8I-EMYi6VQoMM60MHwS-HM8ZP1ofiPtL1Ru7hvzH86zZzPVCTJrJNzA7Q6Anoh6cJbhqPKRzUIZ0n41JcateDAP6TPm3MyX5DlUnFQtX0QanOma1vKB9d5XfIH2rEYAHTw-oM6Ahvj5rr1uvuOW7N8CurHuJbU4CG0pE"/>
+</div>
+</div>
+<!-- The Verdict -->
+<div class="bg-surface-container-low p-16 space-y-12">
+<h2 class="font-headline text-3xl text-primary tracking-tight">The Verdict</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+<!-- Gastronomy -->
+<div class="space-y-3">
+<div class="flex justify-between font-label text-[0.7rem] uppercase tracking-widest text-on-surface-variant">
+<span>Gastronomy</span>
+<span>9.8</span>
+</div>
+<div class="h-[2px] w-full bg-outline-variant">
+<div class="h-full bg-primary-container" style="width: 98%"></div>
+</div>
+</div>
+<!-- Ambience -->
+<div class="space-y-3">
+<div class="flex justify-between font-label text-[0.7rem] uppercase tracking-widest text-on-surface-variant">
+<span>Ambience</span>
+<span>9.5</span>
+</div>
+<div class="h-[2px] w-full bg-outline-variant">
+<div class="h-full bg-primary-container" style="width: 95%"></div>
+</div>
+</div>
+<!-- Service -->
+<div class="space-y-3">
+<div class="flex justify-between font-label text-[0.7rem] uppercase tracking-widest text-on-surface-variant">
+<span>Service</span>
+<span>10.0</span>
+</div>
+<div class="h-[2px] w-full bg-outline-variant">
+<div class="h-full bg-primary-container" style="width: 100%"></div>
+</div>
+</div>
+<!-- Wine Program -->
+<div class="space-y-3">
+<div class="flex justify-between font-label text-[0.7rem] uppercase tracking-widest text-on-surface-variant">
+<span>Wine Program</span>
+<span>9.2</span>
+</div>
+<div class="h-[2px] w-full bg-outline-variant">
+<div class="h-full bg-primary-container" style="width: 92%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Concierge Sidebar (4 Columns) -->
+<aside class="lg:col-span-4">
+<div class="sticky top-32 space-y-10">
+<div class="bg-surface-container p-10 border-none shadow-[0_48px_100px_rgba(0,0,0,0.3)]">
+<h3 class="font-headline text-2xl text-on-surface mb-8">Concierge</h3>
+<div class="space-y-8 font-label">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="location_on">location_on</span>
+<div>
+<p class="text-[0.65rem] uppercase tracking-widest text-outline mb-1">Address</p>
+<p class="text-sm text-on-surface-variant">14 Avenue Montaigne, 75008 Paris, France</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="payments">payments</span>
+<div>
+<p class="text-[0.65rem] uppercase tracking-widest text-outline mb-1">Price Tier</p>
+<p class="text-sm text-on-surface-variant">€€€€ · Tasting Menus from €280</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="schedule">schedule</span>
+<div>
+<p class="text-[0.65rem] uppercase tracking-widest text-outline mb-1">Hours</p>
+<p class="text-sm text-on-surface-variant">Tue - Sat: 19:00 - 23:00</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="restaurant_menu">restaurant_menu</span>
+<div>
+<p class="text-[0.65rem] uppercase tracking-widest text-outline mb-1">Cuisine</p>
+<p class="text-sm text-on-surface-variant">Modern Haute Cuisine</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-10 bg-gradient-to-r from-primary-container to-primary text-on-primary py-5 font-label text-[0.75rem] font-bold uppercase tracking-[0.3em] hover:translate-y-[-2px] transition-all duration-300">
+                                Reserve Table
+                            </button>
+</div>
+<!-- Map Placeholder -->
+<div class="h-64 bg-surface-container-low flex items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 grayscale opacity-40 group-hover:scale-110 transition-transform duration-1000">
+<img alt="Map Location" class="w-full h-full object-cover" data-alt="Simplified stylistic map of Paris street grid" data-location="Paris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkZWRtBAXdjlsVG4hywLMLjavh48kYmvmkCRu_j3Uf4qThQRe_pw3uaWQKB34uYqXfznkS2ITVkcCOOwreGnrwkmp0AUB5XD8Q7yEfkuxX6rNZMcHrn6yd2tbN--uTOYuyYFQr9SMEbgUNqLcxPXErx0wBzUIQvMOg2WQCk6wUcgdPQuGlbaVKMB0jXOlIGdm3A6UN2_TsgSQLjsXipqYOiOAcgSIaqqXeRdXtLIFlRsLdqo_qpW0CrTrhWBvFoW0CKO9MAKbO--E"/>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2" data-icon="explore">explore</span>
+<span class="font-label text-[0.6rem] uppercase tracking-widest text-primary">View in Maps</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#131313] dark:bg-[#131313] full-width border-t-0 tonal-shift-bg-surface-container-low flat-no-shadows">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-12 py-16 mt-20 max-w-[1920px] mx-auto border-t border-outline-variant/10">
+<div class="mb-10 md:mb-0">
+<div class="font-serif text-xl text-[#D4AF37] mb-2">Johnson Reviews</div>
+<p class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70">© 2024 Johnson Reviews. All Rights Reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Terms</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Privacy</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Contact</a>
+<a class="font-serif text-sm tracking-widest uppercase text-[#e5e2e1]/70 hover:text-[#D4AF37] transition-colors duration-200" href="#">Press</a>
+</div>
+</div>
+</footer>
+</body></html>
