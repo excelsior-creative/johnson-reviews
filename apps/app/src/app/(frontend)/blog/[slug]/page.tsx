@@ -2,15 +2,19 @@ import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { notFound } from "next/navigation";
-import { Container } from "@/components/Container";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { LexicalContent } from "@/components/LexicalContent";
 import Image from "next/image";
-import { Media, Post } from "@/payload-types";
+import Link from "next/link";
+import { Media, Post, Category, Tag } from "@/payload-types";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const payload = await getPayload({ config });
   let post: Post | undefined;
@@ -23,11 +27,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           equals: slug,
         },
       },
-      depth: 2, // populate gallery images
+      depth: 2,
     });
     post = posts[0] as Post;
   } catch (error) {
-    console.error(`Failed to fetch blog post "${slug}" during page render.`, error);
+    console.error(
+      `Failed to fetch blog post "${slug}" during page render.`,
+      error
+    );
   }
 
   if (!post) {
@@ -35,12 +42,23 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   }
 
   const featuredImage = post.featuredImage as Media | undefined;
+  const categories = (post.categories as Category[]) || [];
+  const tags = (post.tags as Tag[]) || [];
+  const primaryCategory = categories[0];
 
-  // Build gallery images array from the gallery field
+  const formattedDate = post.publishedDate
+    ? new Date(post.publishedDate).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null;
+
   const galleryImages =
     post.gallery
       ?.map((item) => {
-        const img = typeof item.image === "object" ? (item.image as Media) : undefined;
+        const img =
+          typeof item.image === "object" ? (item.image as Media) : undefined;
         if (!img?.url) return null;
         return {
           url: img.url,
@@ -53,46 +71,286 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
   return (
-    <article className="py-20">
-      <Container>
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <header className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-              {post.title}
-            </h1>
-            {post.excerpt && (
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                {post.excerpt}
-              </p>
-            )}
-          </header>
-
-          {/* Featured image */}
-          {featuredImage?.url && (
-            <div className="relative aspect-video mb-12 rounded-2xl overflow-hidden shadow-xl">
-              <Image
-                src={featuredImage.url}
-                alt={featuredImage.alt || post.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
-
-          {/* Post content */}
-          <LexicalContent content={post.content} />
-
-          {/* Photo Gallery */}
-          {galleryImages.length > 0 && (
-            <PhotoGallery
-              images={galleryImages as { url: string; alt?: string; caption?: string }[]}
-              title="Photo Gallery"
+    <article style={{ backgroundColor: "#131313" }}>
+      {/* Hero — full-bleed image with title overlay */}
+      <section className="relative w-full overflow-hidden pt-24 md:pt-28">
+        <div
+          className="relative w-full"
+          style={{ height: "clamp(60vh, 80vh, 870px)" }}
+        >
+          {featuredImage?.url ? (
+            <Image
+              src={featuredImage.url}
+              alt={featuredImage.alt || post.title}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ filter: "grayscale(20%) brightness(0.4)" }}
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: "#1c1b1b" }}
             />
           )}
+
+          {/* Bottom gradient */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, #131313 0%, transparent 60%)",
+            }}
+          />
+
+          {/* Title block positioned at bottom */}
+          <div className="absolute inset-0 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-12 md:pb-20">
+            <div className="max-w-4xl">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                {primaryCategory &&
+                  typeof primaryCategory === "object" && (
+                    <span
+                      className="inline-block px-4 py-1"
+                      style={{
+                        backgroundColor: "#353535",
+                        fontFamily: '"Inter", sans-serif',
+                        fontSize: "0.7rem",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.2em",
+                        color: "#d3c5ad",
+                      }}
+                    >
+                      {primaryCategory.name}
+                    </span>
+                  )}
+                {formattedDate && (
+                  <span
+                    style={{
+                      fontFamily: '"Inter", sans-serif',
+                      fontSize: "0.7rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.2em",
+                      color: "#f2ca50",
+                    }}
+                  >
+                    {formattedDate}
+                  </span>
+                )}
+              </div>
+              <h1
+                className="font-bold leading-[1.05] mb-4 tracking-tighter"
+                style={{
+                  fontFamily: '"Noto Serif", serif',
+                  fontSize: "clamp(2.5rem, 7vw, 6rem)",
+                  color: "#e5e2e1",
+                }}
+              >
+                {post.title}
+              </h1>
+              {post.excerpt && (
+                <p
+                  className="italic max-w-2xl"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "clamp(1.125rem, 1.5vw, 1.5rem)",
+                    color: "rgba(242,202,80,0.85)",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {post.excerpt}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-      </Container>
+      </section>
+
+      {/* Content + sidebar grid */}
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
+          {/* Narrative */}
+          <div className="lg:col-span-8">
+            <LexicalContent content={post.content} dropCap />
+
+            {/* Tags */}
+            {tags.length > 0 && (
+              <div
+                className="mt-16 pt-10"
+                style={{ borderTop: "1px solid rgba(77,70,53,0.3)" }}
+              >
+                <span
+                  className="block mb-5"
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: "0.65rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.3em",
+                    color: "#99907c",
+                  }}
+                >
+                  Sommelier Badges
+                </span>
+                <div className="flex flex-wrap gap-3">
+                  {tags.map((tag) =>
+                    typeof tag === "object" ? (
+                      <span
+                        key={tag.id}
+                        className="inline-block px-4 py-2"
+                        style={{
+                          backgroundColor: "#353535",
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.625rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.2em",
+                          color: "#d3c5ad",
+                        }}
+                      >
+                        {tag.name}
+                      </span>
+                    ) : null
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Gallery */}
+            {galleryImages.length > 0 && (
+              <div className="mt-16">
+                <PhotoGallery
+                  images={
+                    galleryImages as {
+                      url: string;
+                      alt?: string;
+                      caption?: string;
+                    }[]
+                  }
+                  title="Photo Gallery"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar — "Concierge" */}
+          <aside className="lg:col-span-4">
+            <div className="sticky top-28 space-y-10">
+              <div
+                className="p-10"
+                style={{
+                  backgroundColor: "#20201f",
+                  boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
+                }}
+              >
+                <h3
+                  className="font-bold mb-8"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "1.5rem",
+                    color: "#e5e2e1",
+                  }}
+                >
+                  The Concierge
+                </h3>
+
+                <div className="space-y-6">
+                  {categories.length > 0 && (
+                    <div>
+                      <p
+                        className="mb-2"
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.625rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.25em",
+                          color: "#99907c",
+                        }}
+                      >
+                        Collection
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {categories.map((c) =>
+                          typeof c === "object" ? (
+                            <Link
+                              key={c.id}
+                              href={`/blog?category=${c.slug}`}
+                              className="transition-colors hover:text-[#f2ca50]"
+                              style={{
+                                fontFamily: '"Noto Serif", serif',
+                                fontSize: "0.9rem",
+                                color: "#d3c5ad",
+                              }}
+                            >
+                              {c.name}
+                            </Link>
+                          ) : null
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {formattedDate && (
+                    <div>
+                      <p
+                        className="mb-2"
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.625rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.25em",
+                          color: "#99907c",
+                        }}
+                      >
+                        Date of Visit
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: '"Noto Serif", serif',
+                          fontSize: "0.9rem",
+                          color: "#d3c5ad",
+                        }}
+                      >
+                        {formattedDate}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center w-full mt-10 py-5 font-bold transition-transform duration-300 hover:-translate-y-1"
+                  style={{
+                    background:
+                      "linear-gradient(to right, #d4af37, #f2ca50)",
+                    color: "#3c2f00",
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: "0.7rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.3em",
+                  }}
+                >
+                  Plan a Visit
+                </Link>
+              </div>
+
+              {/* Back link */}
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-3 transition-colors hover:text-[#f2ca50]"
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: "0.7rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.25em",
+                  color: "#99907c",
+                }}
+              >
+                <span>&larr;</span>
+                Return to the Journal
+              </Link>
+            </div>
+          </aside>
+        </div>
+      </section>
     </article>
   );
 }

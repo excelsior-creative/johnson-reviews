@@ -22,10 +22,13 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
     : null;
 
   return (
-    <article className="group cursor-pointer" style={{ backgroundColor: "#131313" }}>
-      <Link href={`/blog/${post.slug}`}>
+    <article
+      className="group cursor-pointer h-full flex flex-col"
+      style={{ backgroundColor: "#1c1b1b" }}
+    >
+      <Link href={`/blog/${post.slug}`} className="h-full flex flex-col">
         {/* Thumbnail — grayscale to full color on hover */}
-        <div className="relative overflow-hidden" style={{ paddingBottom: "66%" }}>
+        <div className="relative overflow-hidden h-[280px] md:h-[320px]">
           {featuredImage?.url ? (
             <Image
               src={featuredImage.url}
@@ -34,94 +37,87 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               quality={80}
               priority={priority}
-              className="object-cover [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-110 transition-all duration-700"
+              className="object-cover transition-all duration-700 [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0" style={{ backgroundColor: "#20201f" }} />
-          )}
-
-          {/* Category badge */}
-          {primaryCategory && typeof primaryCategory === "object" && (
             <div
-              className="absolute top-0 left-0 px-3 py-1.5 z-10"
-              style={{
-                backgroundColor: "#131313",
-                color: "#e5e2e1",
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "10px",
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
-              }}
-            >
-              {primaryCategory.name}
-            </div>
+              className="absolute inset-0"
+              style={{ backgroundColor: "#20201f" }}
+            />
           )}
+          {/* Subtle scrim */}
+          <div
+            className="absolute inset-0 transition-colors"
+            style={{ background: "rgba(0,0,0,0.2)" }}
+          />
         </div>
 
         {/* Content */}
-        <div className="pt-6">
-          {/* Category + date meta row */}
-          <div className="flex items-center gap-3 mb-4">
-            {primaryCategory && typeof primaryCategory === "object" && (
-              <span
+        <div className="p-8 flex flex-col flex-1">
+          <div className="flex justify-between items-start mb-4 gap-4">
+            <div>
+              {primaryCategory && typeof primaryCategory === "object" && (
+                <span
+                  style={{
+                    fontFamily: '"Inter", sans-serif',
+                    fontSize: "0.625rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    color: "#99907c",
+                  }}
+                >
+                  {primaryCategory.name}
+                </span>
+              )}
+              <h3
+                className="font-bold leading-snug mt-2 group-hover:text-[#f2ca50] transition-colors"
                 style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "10px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                  color: "#f2ca50",
+                  fontFamily: '"Noto Serif", serif',
+                  fontSize: "1.25rem",
+                  lineHeight: "1.3",
+                  color: "#e5e2e1",
                 }}
               >
-                {primaryCategory.name}
-              </span>
-            )}
-            {primaryCategory && formattedDate && (
-              <div className="h-[1px] w-8" style={{ backgroundColor: "#4d4635" }} />
-            )}
-            {formattedDate && (
-              <span
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "10px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                  color: "rgba(229,226,225,0.4)",
-                }}
-              >
-                {formattedDate}
-              </span>
-            )}
+                {post.title}
+              </h3>
+            </div>
           </div>
-
-          <h3
-            className="font-bold leading-snug mb-4 group-hover:text-[#f2ca50] transition-colors"
-            style={{
-              fontFamily: '"Noto Serif", serif',
-              fontSize: "1.375rem",
-              lineHeight: "1.3",
-              color: "#e5e2e1",
-            }}
-          >
-            {post.title}
-          </h3>
 
           {post.excerpt && (
             <p
-              className="text-sm leading-relaxed line-clamp-3"
+              className="italic line-clamp-3 mb-6"
               style={{
                 fontFamily: '"Noto Serif", serif',
-                fontStyle: "italic",
-                color: "rgba(229,226,225,0.5)",
+                fontSize: "0.875rem",
+                color: "#d3c5ad",
+                lineHeight: "1.7",
               }}
             >
               {post.excerpt}
             </p>
           )}
-        </div>
 
-        {/* Bottom divider */}
-        <div className="mt-5" style={{ borderTop: "1px solid rgba(77,70,53,0.3)" }} />
+          {/* Bottom meta */}
+          {formattedDate && (
+            <div className="mt-auto pt-4 flex items-center gap-3">
+              <div
+                className="h-[1px] w-8"
+                style={{ backgroundColor: "#4d4635" }}
+              />
+              <span
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: "0.625rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  color: "rgba(229,226,225,0.4)",
+                }}
+              >
+                {formattedDate}
+              </span>
+            </div>
+          )}
+        </div>
       </Link>
     </article>
   );

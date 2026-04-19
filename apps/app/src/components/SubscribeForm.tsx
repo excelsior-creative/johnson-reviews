@@ -9,19 +9,42 @@ export const SubscribeForm = () => {
   };
 
   return (
-    <form className="flex gap-0 max-w-sm mx-auto" onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Your Email Address"
-        className="flex-1 bg-transparent border border-white/30 border-r-0 text-white placeholder-white/40 px-4 py-3 text-sm focus:outline-none focus:border-[#DB7D2D]"
-        style={{ fontFamily: '"Jost", sans-serif' }}
-      />
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+      <div
+        className="relative"
+        style={{ borderBottom: "1px solid rgba(77,70,53,0.6)" }}
+      >
+        <input
+          type="email"
+          placeholder="Your Email Address"
+          className="w-full bg-transparent py-4 focus:outline-none"
+          style={{
+            fontFamily: '"Noto Serif", serif',
+            fontSize: "1.125rem",
+            color: "#e5e2e1",
+          }}
+          onFocus={(e) =>
+            (e.currentTarget.parentElement!.style.borderBottomColor = "#f2ca50")
+          }
+          onBlur={(e) =>
+            (e.currentTarget.parentElement!.style.borderBottomColor =
+              "rgba(77,70,53,0.6)")
+          }
+        />
+      </div>
       <button
         type="submit"
-        className="bg-[#DB7D2D] hover:bg-[#E8943A] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
-        style={{ fontFamily: '"Oswald", sans-serif' }}
+        className="inline-flex self-start items-center px-12 py-5 font-bold transition-all duration-300 hover:-translate-y-1"
+        style={{
+          background: "linear-gradient(135deg, #f2ca50 0%, #d4af37 100%)",
+          color: "#3c2f00",
+          fontFamily: '"Inter", sans-serif',
+          fontSize: "0.7rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.3em",
+        }}
       >
-        Subscribe
+        Request Invitation
       </button>
     </form>
   );

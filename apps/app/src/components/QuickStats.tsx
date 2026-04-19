@@ -3,11 +3,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { label: "Local Guides", prefix: "Level ", value: 10, suffix: "+", span: "col" },
-  { label: "Photo Views", prefix: "", value: 132010497, suffix: "+", span: "col" },
-  { label: "Local Guide Points", prefix: "", value: 112222, suffix: "+", span: "col" },
-  { label: "Photos Shared", prefix: "", value: 27497, suffix: "+", span: "half" },
-  { label: "Reviews", prefix: "", value: 500, suffix: "+", span: "half" },
+  { label: "Local Guide Level", prefix: "", value: 10, suffix: "+" },
+  { label: "Photo Views", prefix: "", value: 132010497, suffix: "+" },
+  { label: "Guide Points", prefix: "", value: 112222, suffix: "+" },
+  { label: "Photos Shared", prefix: "", value: 27497, suffix: "+" },
+  { label: "Reviews Published", prefix: "", value: 500, suffix: "+" },
 ];
 
 function formatNumber(n: number): string {
@@ -43,20 +43,34 @@ interface StatCardProps {
 const StatCard = ({ label, prefix, value, suffix, inView }: StatCardProps) => {
   const count = useCounter(value, 2000, inView);
   return (
-    <div className="text-center">
+    <div className="text-left">
       <p
-        className="text-xs font-bold uppercase tracking-[2px] mb-3"
-        style={{ color: "#f2ca50", fontFamily: '"Inter", sans-serif' }}
-      >
-        {label}
-      </p>
-      <p
-        className="text-4xl md:text-5xl text-white font-bold tracking-tighter"
-        style={{ fontFamily: '"Noto Serif", serif' }}
+        className="font-bold tracking-tighter mb-3"
+        style={{
+          fontFamily: '"Noto Serif", serif',
+          fontSize: "clamp(2rem, 3.5vw, 3rem)",
+          color: "#f2ca50",
+          lineHeight: "1",
+        }}
       >
         {prefix}
         {formatNumber(count)}
         {suffix}
+      </p>
+      <div
+        className="h-[1px] w-10 mb-3"
+        style={{ backgroundColor: "#4d4635" }}
+      />
+      <p
+        style={{
+          fontFamily: '"Inter", sans-serif',
+          fontSize: "0.7rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.25em",
+          color: "#99907c",
+        }}
+      >
+        {label}
       </p>
     </div>
   );
@@ -83,40 +97,40 @@ export const QuickStats = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-[70px] overflow-hidden"
-      style={{ backgroundColor: "#1c1b1b" }}
+      className="relative py-24 md:py-32"
+      style={{ backgroundColor: "#131313" }}
       id="stats"
     >
-      {/* Subtle blob background */}
-      <div
-        className="absolute inset-0 opacity-50"
-        style={{
-          backgroundImage:
-            "url(https://brandonj117.sg-host.com/wp-content/uploads/2021/03/blob_bgnd-1.png)",
-          backgroundPosition: "top center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4">
-        {/* Section title */}
-        <h2
-          className="text-center text-white text-3xl md:text-4xl font-bold uppercase mb-14 tracking-tighter"
-          style={{ fontFamily: '"Noto Serif", serif' }}
-        >
-          Quick Stats
-        </h2>
-
-        {/* Row 1: 3 stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {stats.slice(0, 3).map((s) => (
-            <StatCard key={s.label} {...s} inView={inView} />
-          ))}
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12">
+        {/* Section header */}
+        <div className="mb-16 md:mb-20">
+          <span
+            className="block mb-4"
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.7rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.3em",
+              color: "#f2ca50",
+            }}
+          >
+            The Sommelier&rsquo;s Ledger
+          </span>
+          <h2
+            className="font-bold max-w-3xl"
+            style={{
+              fontFamily: '"Noto Serif", serif',
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+              color: "#e5e2e1",
+              lineHeight: "1.05",
+            }}
+          >
+            A Quiet Tally of Crossings.
+          </h2>
         </div>
 
-        {/* Row 2: 2 stats centered */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-0 md:px-[10%]">
-          {stats.slice(3).map((s) => (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-y-12 gap-x-8">
+          {stats.map((s) => (
             <StatCard key={s.label} {...s} inView={inView} />
           ))}
         </div>
