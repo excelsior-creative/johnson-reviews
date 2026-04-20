@@ -13,7 +13,7 @@ export const Hero = () => {
       style={{
         minHeight: "100vh",
         background:
-          "url('https://brandonj117.sg-host.com/wp-content/uploads/2021/04/johnson-reviews2.jpg') center center / cover no-repeat",
+          "url('/images/hero/johnson-reviews2.jpg') center center / cover no-repeat",
       }}
     >
       {/* Layered gradients — dark editorial */}

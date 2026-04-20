@@ -3,19 +3,15 @@ import React from "react";
 const pressLogos = [
   {
     name: "Google Local Guides",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2021/03/220-2209071_a-special-offer-from-google-local-guides-google.png",
+    src: "/images/press/google-local-guides.png",
   },
   {
     name: "OpenTable",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2021/03/OTLogo_fullhor_r1a-01-2.png",
+    src: "/images/press/opentable.png",
   },
   {
     name: "Yelp",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2023/08/yelp.png",
-  },
-  {
-    name: "Google Local Guides",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2023/08/220-2209071_a-special-offer-from-google-local-guides-google-1.png",
+    src: "/images/press/yelp.png",
   },
 ];
 
