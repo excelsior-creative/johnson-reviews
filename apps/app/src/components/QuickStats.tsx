@@ -114,7 +114,7 @@ export const QuickStats = () => {
               color: "#f2ca50",
             }}
           >
-            The Sommelier&rsquo;s Ledger
+            From Brandon&rsquo;s Google Local Guide profile
           </span>
           <h2
             className="font-bold max-w-3xl"
@@ -125,7 +125,7 @@ export const QuickStats = () => {
               lineHeight: "1.05",
             }}
           >
-            A Quiet Tally of Crossings.
+            Years of reviews, photos, and visits.
           </h2>
         </div>
 

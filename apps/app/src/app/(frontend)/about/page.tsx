@@ -11,9 +11,9 @@ export default function AboutPage() {
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <Header
-          badge="The Masthead"
-          title="The Standard of Taste."
-          subtitle="Johnson Reviews is the private ledger of a lifelong field critic — a record of the kitchens, counters, and corners worth crossing a city for."
+          badge="About"
+          title="The Johnsons, on the road."
+          subtitle="Johnson Reviews is Brandon Johnson's running log of restaurants, hotels, and family travel — written down so other families can decide what's worth the drive."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 mt-16">
@@ -28,11 +28,13 @@ export default function AboutPage() {
                 color: "#e5e2e1",
               }}
             >
-              Established in 1984 as a pocket notebook and refined over four
-              decades into this living archive, Johnson Reviews is a record of
-              every establishment that met — or failed to meet — the standard.
-              Each critique is written as it was eaten, and each rating is
-              earned, never granted.
+              Hi — I&rsquo;m Brandon. I&rsquo;m a Google Local Guide (Level 10,
+              500+ reviews, 27,000+ photos shared) based in Orange County. The
+              Johnsons travel a lot, eat out more than we probably should, and
+              for years I&rsquo;ve been writing all of it down on Google Maps.
+              This site is the long-form version of those reviews — the ones
+              with enough detail to actually help another family plan a trip,
+              pick a restaurant, or skip a place we wished we&rsquo;d skipped.
             </p>
             <p
               style={{
@@ -42,10 +44,11 @@ export default function AboutPage() {
                 color: "#e5e2e1",
               }}
             >
-              The mission is simple: elevate the standard of taste through
-              rigorous analysis, an uncompromising palate, and a deep respect
-              for the craft of hospitality. We visit anonymously, we pay our
-              own tabs, and we answer only to the reader.
+              The rules are simple. We pay for our own meals and stays. We only
+              review places we&rsquo;ve actually been. We tell you what worked
+              and what didn&rsquo;t, with the kid logistics other families ask
+              about — parking, kid menu, wait time, stroller-friendly,
+              reservation needed.
             </p>
 
             <blockquote
@@ -60,8 +63,8 @@ export default function AboutPage() {
                 lineHeight: "1.5",
               }}
             >
-              We do not merely eat; we witness the convergence of technique,
-              tradition, and audacity.
+              If a place is good, we say so. If a place fell short, we say that
+              too — with context, and without being mean about it.
             </blockquote>
 
             <p
@@ -72,10 +75,12 @@ export default function AboutPage() {
                 color: "#e5e2e1",
               }}
             >
-              The publication rates across four axes — gastronomy, ambience,
-              service, and value — and refuses to soften judgement for the
-              sake of accommodation. What you read here is what was plated,
-              poured, and paid for.
+              Most of what you&rsquo;ll find here is centered on Orange County
+              and SoCal — Dana Point, Irvine, Laguna, San Juan Capistrano,
+              Anaheim — plus the places we travel to often: Las Vegas,
+              Disneyland, San Diego, Puerto Vallarta. Reviews are tagged by
+              location and by category so you can browse the way you actually
+              think about a trip.
             </p>
           </div>
 
@@ -97,14 +102,14 @@ export default function AboutPage() {
                     color: "#e5e2e1",
                   }}
                 >
-                  The Pillars
+                  How we work
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Anonymous Visits",
-                    "Tabs Paid In Full",
-                    "Four-Axis Rating",
-                    "No Courtesy Soft-Pedalling",
+                    "We pay for every meal and stay",
+                    "We only review places we've been",
+                    "Family-friendly notes on every post",
+                    "Honest, never mean",
                   ].map((item) => (
                     <li
                       key={item}
@@ -141,7 +146,7 @@ export default function AboutPage() {
                     color: "#99907c",
                   }}
                 >
-                  Established
+                  Google Local Guide
                 </span>
                 <p
                   className="font-bold"
@@ -152,7 +157,18 @@ export default function AboutPage() {
                     lineHeight: "1",
                   }}
                 >
-                  1984
+                  Level 10
+                </p>
+                <p
+                  className="mt-2"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "0.85rem",
+                    color: "#d3c5ad",
+                    fontStyle: "italic",
+                  }}
+                >
+                  500+ reviews · 27,000+ photos
                 </p>
               </div>
 
@@ -168,7 +184,7 @@ export default function AboutPage() {
                   letterSpacing: "0.3em",
                 }}
               >
-                Request Invitation
+                Get in touch
               </Link>
             </div>
           </aside>

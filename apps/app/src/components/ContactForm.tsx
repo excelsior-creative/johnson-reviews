@@ -115,8 +115,8 @@ export const ContactForm = () => {
             lineHeight: "1.7",
           }}
         >
-          Your message has been entered into the ledger. We&rsquo;ll be in
-          touch as soon as the next press run allows.
+          Got it — your message is in. We&rsquo;ll get back to you within a
+          few days.
         </p>
         <button
           onClick={() => setState("idle")}

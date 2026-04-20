@@ -189,7 +189,7 @@ export default async function PostPage({
                     color: "#99907c",
                   }}
                 >
-                  Sommelier Badges
+                  Tags
                 </span>
                 <div className="flex flex-wrap gap-3">
                   {tags.map((tag) =>
