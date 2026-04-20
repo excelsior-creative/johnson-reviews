@@ -51,13 +51,6 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🟢 FYI
 
-8. **Legacy image dependency.** The site currently loads many
-   images (including the Hero background and "As Seen In" logos)
-   from the old `brandonj117.sg-host.com` server. If SG-Host
-   expires, the site breaks visually. I'll backlog a migration
-   into Payload Media; flagging so you don't accidentally cancel
-   that hosting.
-
 9. **Suspicious components.** `CalculatorSection` and
    `ServicesSection` exist in the codebase but I can't tell what
    they do on a reviews site. Probably dead code from the
@@ -69,4 +62,16 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ## Answered
 
-_(empty)_
+8. **[ANSWERED 2026-04-20]** Legacy image dependency. Brandon
+   directed: "Go ahead and make sure you migrate the assets."
+   Done — hero background + three press logos copied from the
+   local WordPress mirror in `reference/wp-content/uploads/`
+   into `apps/app/public/images/` and `Hero.tsx` +
+   `AsSeenIn.tsx` updated to use the local paths. No runtime
+   code still references `brandonj117.sg-host.com`. Remaining
+   SG-Host references are build-time migration scripts
+   (`migrate-wp.ts`, `migrate-galleries.ts`,
+   `remigrate-content.ts`) plus CEO documentation — those don't
+   affect the live site. Legacy post featured images that may
+   still live on SG-Host are a separate pass during the review
+   migration; will handle per-post as we migrate.

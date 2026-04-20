@@ -2,17 +2,25 @@
 
 ## Ingestion
 
-The current site loads many images directly from
-`brandonj117.sg-host.com/wp-content/...` (the legacy SG-Host
-WordPress server). This is fragile — if SG-Host expires or
-Brandon pulls the plug, the site breaks visually overnight.
+**Runtime SG-Host dependency: resolved (2026-04-20).** Hero
+background and three "As Seen In" logos moved into
+`apps/app/public/images/` from the local WordPress mirror at
+`reference/wp-content/uploads/`. No component in `apps/app/src`
+still hot-links `brandonj117.sg-host.com` at runtime. Remaining
+SG-Host strings in the repo are build-time migration scripts
+(`migrate-wp.ts`, `migrate-galleries.ts`,
+`remigrate-content.ts`) — those only run on our machines, not in
+production.
 
-**Action items (in backlog):**
-- Mirror all referenced legacy images into `apps/app/public` or
-  Payload Media before SG-Host is decommissioned.
-- For new reviews, ingest from Google Photos shared albums (when
-  Brandon grants access) or from a folder Brandon drops into
-  `apps/app/uploads/` for processing.
+**Still open:** legacy post featured images that may point to
+SG-Host via Payload Media `url` fields. Will be cleaned
+per-post during the review-migration pass (queue in
+`/ceo/review-queue.md`). Low urgency because the migration
+scripts rehost to Media storage on re-run.
+
+**New-photo pipeline:** ingest from Google Photos shared albums
+(once Brandon grants access) or from a folder Brandon drops
+into `apps/app/uploads/` for processing.
 
 ## Standards
 

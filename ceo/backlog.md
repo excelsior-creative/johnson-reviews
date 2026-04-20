@@ -11,12 +11,18 @@ promote into roadmap when ready.
 - [ ] Audit `AboutSection` — verify it isn't double-rendering with
   the dedicated `/about` page.
 - [ ] Verify `SubscribeForm` is wired to a real provider (likely not).
-- [ ] Replace press-logo source URLs in `AsSeenIn.tsx` from the
+- [x] Replace press-logo source URLs in `AsSeenIn.tsx` from the
   legacy `brandonj117.sg-host.com` host with assets we own. Right
   now the redesign depends on the old SG-Host server staying up.
-- [ ] Same for the Hero background image — it's loaded from
+  *(Done 2026-04-20 — logos moved into
+  `apps/app/public/images/press/`. 4th duplicate Google Local
+  Guides entry dropped.)*
+- [x] Same for the Hero background image — it's loaded from
   `brandonj117.sg-host.com/wp-content/...`. Needs to be moved into
-  `apps/app/public` or Payload Media.
+  `apps/app/public` or Payload Media. *(Done 2026-04-20 — now
+  served from `apps/app/public/images/hero/johnson-reviews2.jpg`.)*
+- [ ] Audit Payload Media `url` fields on legacy posts for
+  SG-Host references — separate pass during per-review migration.
 - [ ] Footer link audit (tap each one).
 - [ ] 404 page design.
 - [ ] Loading / Suspense skeleton design.
