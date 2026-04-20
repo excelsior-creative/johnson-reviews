@@ -6,25 +6,25 @@ const categories = [
     number: "01",
     name: "Restaurants",
     href: "/blog?category=restaurants",
-    tagline: "Where fire meets craftsmanship at the table.",
+    tagline: "Sit-down dinners, brunch spots, drive-thrus, taquerías. Honest takes.",
   },
   {
     number: "02",
     name: "Hotels & Resorts",
     href: "/blog?category=hotels-resorts",
-    tagline: "Sanctuaries of hospitality, curated with care.",
+    tagline: "Where the Johnsons actually slept. Family-friendly notes included.",
   },
   {
     number: "03",
     name: "Entertainment",
     href: "/blog?category=entertainment",
-    tagline: "Theatres, cinemas, and cultural escapes.",
+    tagline: "Theme parks, movie theaters, golf, concerts — what's worth doing.",
   },
   {
     number: "04",
     name: "Shopping",
     href: "/blog?category=shopping",
-    tagline: "Boutiques and bazaars worth the detour.",
+    tagline: "Big-box and boutique. Places worth stopping at on a longer trip.",
   },
 ];
 
@@ -42,7 +42,7 @@ export const CategoryGrid = () => {
               color: "#e5e2e1",
             }}
           >
-            Trending Destinations
+            Browse by category
           </h2>
           <div
             className="w-24 h-[1px] mx-auto"

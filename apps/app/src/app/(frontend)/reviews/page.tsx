@@ -49,9 +49,9 @@ export default async function ReviewsPage({
     <div className="pt-28 md:pt-40 pb-24 md:pb-32">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <Header
-          badge="Field Dispatches"
-          title="The Ledger of Judgement."
-          subtitle="Real experiences from real places — a curated travel journal of reviews."
+          badge="Reviews"
+          title="Every place we've written up."
+          subtitle="Restaurants, hotels, attractions, and shops — filterable by rating. Drawn from Brandon's Google Local Guide profile and the long-form posts on the site."
         />
 
         {/* Rating filters */}
@@ -124,7 +124,7 @@ export default async function ReviewsPage({
                 fontSize: "1.125rem",
               }}
             >
-              No entries in the ledger yet.
+              No reviews here yet — check back soon.
             </p>
           </div>
         )}

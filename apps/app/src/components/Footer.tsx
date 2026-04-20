@@ -24,7 +24,7 @@ export const Footer = async () => {
 
   return (
     <footer style={{ backgroundColor: "#131313" }}>
-      {/* The Inner Circle — subscribe */}
+      {/* Newsletter — subscribe */}
       <section
         className="py-24 md:py-32 px-8 md:px-16"
         style={{ backgroundColor: "#0e0e0e" }}
@@ -41,7 +41,7 @@ export const Footer = async () => {
                 color: "#f2ca50",
               }}
             >
-              The Inner Circle
+              Stay in the loop
             </span>
             <h3
               className="font-bold leading-tight mb-6"
@@ -51,7 +51,7 @@ export const Footer = async () => {
                 color: "#e5e2e1",
               }}
             >
-              Join the Private Collection
+              New reviews to your inbox.
             </h3>
             <p
               className="italic leading-relaxed max-w-lg"
@@ -61,8 +61,9 @@ export const Footer = async () => {
                 color: "#d3c5ad",
               }}
             >
-              Gain exclusive access to unpublished reviews, cellar consultations,
-              and private table invitations across the globe.
+              Drop your email and we&rsquo;ll send you the latest restaurant,
+              hotel, and family-travel reviews when they go up. No spam, no
+              promotions — just the writeups.
             </p>
           </div>
           <div className="md:col-span-5">

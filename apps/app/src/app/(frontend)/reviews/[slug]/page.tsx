@@ -427,7 +427,7 @@ export default async function ReviewPage({
                 }}
               >
                 <span>&larr;</span>
-                Return to the Ledger
+                Back to all reviews
               </Link>
             </div>
           </aside>

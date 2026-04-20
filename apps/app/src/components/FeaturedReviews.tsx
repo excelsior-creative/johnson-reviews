@@ -44,7 +44,7 @@ export const FeaturedReviews = async () => {
                 color: "#f2ca50",
               }}
             >
-              Curated Excellence
+              Recently Reviewed
             </span>
             <h2
               className="font-bold"
@@ -55,7 +55,7 @@ export const FeaturedReviews = async () => {
                 lineHeight: "1.05",
               }}
             >
-              Editor&rsquo;s Choice
+              What we&rsquo;re recommending
             </h2>
           </div>
           <p
@@ -66,8 +66,9 @@ export const FeaturedReviews = async () => {
               fontSize: "1.05rem",
             }}
           >
-            &ldquo;We do not merely eat; we witness the convergence of technique,
-            tradition, and audacity.&rdquo;
+            The two latest places we sat down at, drove to, slept in, or walked
+            through. The Johnsons go a lot of places — these are the ones we
+            wrote up most recently.
           </p>
         </div>
 
@@ -119,7 +120,7 @@ export const FeaturedReviews = async () => {
                     color: "#99907c",
                   }}
                 >
-                  Critic&rsquo;s Choice
+                  Featured Review
                 </span>
                 <h3
                   className="font-bold mb-2 group-hover:text-[#f2ca50] transition-colors"
