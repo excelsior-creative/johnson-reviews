@@ -133,7 +133,7 @@ ${message}
           <tr>
             <td style="background-color: #1a1a1a; padding: 25px 30px; text-align: center;">
               <p style="margin: 10px 0 0 0; color: #444; font-size: 11px; text-transform: uppercase; letter-spacing: 2px;">
-                © ${new Date().getFullYear()} Template Site
+                © ${new Date().getFullYear()} Johnson Reviews
               </p>
             </td>
           </tr>

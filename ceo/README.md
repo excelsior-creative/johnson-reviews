@@ -29,7 +29,7 @@ https://johnsonreviews.com.
   past review slug. Useful for the migration backlog (`/ceo/review-queue.md`).
 - `ceo/` — this folder.
 
-## Current site state (as of 2026-04-20, first nightly run)
+## Current site state (as of 2026-04-21, second nightly run)
 
 - **Visual system: applied.** Dark luxury palette (#131313 base, #f2ca50 +
   #d4af37 gold), Noto Serif headlines, Inter labels, 0px corner radius.
@@ -53,6 +53,26 @@ https://johnsonreviews.com.
 - **No live deploy verified this run.** WebFetch to johnsonreviews.com
   returned 403/ECONNREFUSED — could be Vercel firewall, CF, or a real
   outage. Flagged as a question for Brandon. Did not block this run.
+- **SEO metadata fixed (2026-04-21).** `SITE_NAME` and tagline were
+  still hardcoded to "Template Site" / "Built with Next.js & Payload
+  CMS" for every OG tag, Twitter card, Organization schema, RSS,
+  contact email — despite the root layout overriding the title.
+  Fixed in tonight's PR.
+- **Schema coverage expanded (2026-04-21).** Added Person(Brandon),
+  BlogPosting(author=Person), Review + itemReviewed
+  (LocalBusiness/Restaurant/TouristAttraction/Hotel), Breadcrumb.
+  Wired `generateMetadata` + JSON-LD on blog/[slug] and
+  reviews/[slug].
+- **Fabricated rating axes removed (2026-04-21).** Review detail
+  page was synthesizing "Ambience / Service / Value" scores from
+  the overall rating via a formula. Killed per ADR 0002.
+- **Author bio shipped (2026-04-21).** `AuthorBio` component on
+  both post + review detail sidebars. Closes OKR KR3.2.
+- **Dead code deleted (2026-04-21).** `CalculatorSection`,
+  `ServicesSection`, `AboutSection` — all unused template leftovers.
+- **Review intake prompt shipped (2026-04-21).**
+  `/ceo/prompts/intake.md` is the operating doc for any Claude
+  instance handling a Brandon-initiated review.
 
 ## Operating rhythm
 

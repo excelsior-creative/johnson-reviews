@@ -123,7 +123,15 @@ _(Brandon: when you correct a draft or a published post, log the
 correction here as a one-liner so the voice doc evolves. The agent
 will read this every night.)_
 
-- _(empty — first night)_
+- 2026-04-21 (agent self-correction, not Brandon): removed residual
+  luxury-critic phrases from the review pages — **"The Concierge"**
+  (sidebar header), **"Plan a Visit"** (CTA), **"Return to the
+  Journal"** (back link), **"The Discovery"** (blog index badge),
+  **"The Search For Perfection"** (blog index title), **"Field
+  Review"** (review page badge), **"The Verdict"** (fabricated
+  rating axes — see ADR 0002), **"Experience Tiers / Michelin
+  Starred"** (blog index filter). The Gilded Legacy *visual system*
+  stays; Gilded Legacy *copy* never applied to Johnson Reviews.
 
 ---
 

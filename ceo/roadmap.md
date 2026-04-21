@@ -2,17 +2,28 @@
 
 ## Now (this week)
 
-- 🟡 **Replace luxury-critic placeholder copy** site-wide. Started
-  2026-04-20. First pass tonight: Hero, FeaturedReviews, CategoryGrid,
-  QuickStats. Voice.md is the rubric.
+- ✅ **Replace luxury-critic placeholder copy** site-wide. Pass 1
+  (2026-04-20): Hero, FeaturedReviews, CategoryGrid, QuickStats,
+  About, Contact, Reviews index/detail headers. Pass 2 (2026-04-21):
+  blog index ("The Discovery / Michelin Starred" tier filter gone),
+  BlogSection badge, blog/[slug] sidebar ("Concierge / Plan a
+  Visit"), reviews/[slug] sidebar + "Field Review" badge +
+  fabricated Verdict block (see ADR 0002). Voice.md §8 has the log.
 - ⬜ **Verify the live deploy.** WebFetch from agent returned 403/
   ECONNREFUSED. Could be Vercel firewall, CF, or a real outage.
   Brandon: confirm site is up and what URL is canonical
   (`johnsonreviews.com` vs `www.johnsonreviews.com`).
-- ⬜ **Author bio block on Posts.** E-E-A-T signal. Show "Reviewed by
-  Brandon Johnson, Google Local Guide Level 10 · 500+ reviews · OC."
-  Plus a small portrait + link to Google Local Guide profile.
+- ✅ **Author bio block on Posts.** 2026-04-21 — `AuthorBio`
+  component (compact + full variants). Placed in sidebar on both
+  blog/[slug] and reviews/[slug]. Links to /about + conditional
+  Google Local Guide profile link (gated on env var; URL pending
+  Brandon per INBOX #11).
 - ⬜ **About page** rewritten on-voice.
+- ✅ **Schema coverage refactor.** 2026-04-21 — structured-data.ts
+  expanded: Person (Brandon), Organization (founder → Person),
+  WebSite, BlogPosting (author → Person), Review + itemReviewed
+  (Restaurant/LocalBusiness/TouristAttraction/Hotel), Breadcrumb.
+  generateMetadata wired on blog/[slug] + reviews/[slug].
 
 ## Next (this month)
 

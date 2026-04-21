@@ -133,8 +133,38 @@ Brandon:
 3. **Do you have current photos?** Some of the SG-Host images
    may need replacement.
 
-The existing legacy posts WERE imported to Payload via the
-WordPress importer (PR #1, 2021 timestamps preserved). Tomorrow's
-infrastructure step: query Payload to confirm which of these slugs
-already exist as drafts or published Posts and which need
-re-import.
+**Correction 2026-04-21:** The assumption above — that legacy posts
+were imported via a WordPress importer — was **wrong**. I audited
+`apps/app/src/seed/index.ts` (only creates 3 sample template posts)
+and `apps/app/scripts/import-reviews.ts` (imports Google Reviews
+into the `reviews` collection, NOT `posts`). There is no automated
+WP → Posts pipeline.
+
+**Ground truth:**
+- `reference/<slug>/` — 60+ file mirrors of legacy WP posts. Text
+  + image URLs to `brandonj117.sg-host.com`. This is the raw
+  source material.
+- `posts` (Payload) — currently contains only seed sample content
+  in dev environments. Prod state unverified (no DB access from
+  agent).
+- `reviews` (Payload) — populated from Brandon's ~500 Google
+  reviews via `scripts/import-reviews.ts`. This is where
+  `/reviews/<slug>` pages get their data.
+
+**New migration flow (per `/ceo/prompts/intake.md` legacy-shortcut):**
+
+1. Agent reads the legacy WP HTML in `reference/<slug>/` as the
+   factual source.
+2. Agent strips off-brand phrasing ("hidden gem," "MUST VISIT,"
+   "culinary excellence," etc.).
+3. Agent drafts a refreshed Brandon-voice Post (400–700 words,
+   voice.md rubric).
+4. Agent proposes meta (title/slug/excerpt/tags/category), photos,
+   and internal links.
+5. Brandon signs off on the first few; after a pattern
+   stabilizes, we can propose publish-by-silence (INBOX ask #7).
+6. Agent creates the Post via Payload (or via seed/import script
+   if we batch) and ships.
+
+Apizza Doho is the proposed first migration — highest-density
+geographic cluster (Dana Point) + relatively self-contained review.

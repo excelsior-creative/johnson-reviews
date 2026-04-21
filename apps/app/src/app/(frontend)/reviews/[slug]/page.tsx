@@ -2,8 +2,70 @@ import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AuthorBio } from "@/components/AuthorBio";
+import { generatePageMetadata } from "@/lib/metadata";
+import {
+  combineSchemas,
+  generateBreadcrumbSchema,
+  generateReviewSchema,
+} from "@/lib/structured-data";
+
+type ReviewDoc = {
+  businessName: string;
+  slug: string;
+  rating: number;
+  reviewText?: string;
+  reviewDate?: string;
+  address?: string;
+  photos?: { url: string }[];
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+async function fetchReview(slug: string): Promise<ReviewDoc | undefined> {
+  try {
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "reviews",
+      where: { slug: { equals: slug } },
+      limit: 1,
+    });
+    return docs[0] as unknown as ReviewDoc | undefined;
+  } catch (error) {
+    console.error(`Failed to fetch review "${slug}":`, error);
+    return undefined;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const review = await fetchReview(slug);
+  if (!review) {
+    return {
+      title: "Review not found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const firstPhoto = review.photos?.[0]?.url;
+  const description =
+    (review.reviewText || "").slice(0, 180).replace(/\s+/g, " ") ||
+    `${review.businessName} — a Johnson Reviews write-up.`;
+
+  return generatePageMetadata({
+    title: review.businessName,
+    description,
+    path: `/reviews/${slug}`,
+    ogImage: firstPhoto,
+  });
+}
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -57,29 +119,7 @@ export default async function ReviewPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const payload = await getPayload({ config });
-
-  let review:
-    | {
-        businessName: string;
-        rating: number;
-        reviewText?: string;
-        reviewDate?: string;
-        address?: string;
-        photos?: { url: string }[];
-      }
-    | undefined;
-
-  try {
-    const { docs } = await payload.find({
-      collection: "reviews",
-      where: { slug: { equals: slug } },
-      limit: 1,
-    });
-    review = docs[0] as unknown as typeof review;
-  } catch (error) {
-    console.error(`Failed to fetch review "${slug}":`, error);
-  }
+  const review = await fetchReview(slug);
 
   if (!review) notFound();
 
@@ -89,8 +129,30 @@ export default async function ReviewPage({
 
   const hero = photos[0];
 
+  const schema = combineSchemas(
+    generateReviewSchema({
+      slug,
+      businessName: review.businessName,
+      rating: review.rating,
+      reviewText: review.reviewText,
+      reviewDate: review.reviewDate,
+      datePublishedISO: review.createdAt,
+      address: review.address,
+      imageUrls: photos,
+    }),
+    generateBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Reviews", path: "/reviews" },
+      { name: review.businessName, path: `/reviews/${slug}` },
+    ])
+  );
+
   return (
     <article style={{ backgroundColor: "#131313" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       {/* Hero image */}
       <section className="relative w-full pt-24 md:pt-28">
         <div
@@ -135,7 +197,7 @@ export default async function ReviewPage({
                     color: "#d3c5ad",
                   }}
                 >
-                  Field Review
+                  Review
                 </span>
                 {review.reviewDate && (
                   <span
@@ -209,69 +271,57 @@ export default async function ReviewPage({
               </div>
             )}
 
-            {/* Verdict */}
+            {/* Rating summary — only what Brandon actually rated on Google.
+                NOTE: the earlier "Verdict" panel synthesized Ambience / Service /
+                Value scores from the overall rating via a formula. That's
+                fabrication, and it's gone. If we want facet ratings later
+                they need to come from Brandon's own scoring, not math. */}
             <div
-              className="mt-16 p-10 md:p-16 space-y-10"
+              className="mt-16 p-10 md:p-16"
               style={{ backgroundColor: "#1c1b1b" }}
             >
-              <h2
-                className="font-bold tracking-tight"
+              <p
+                className="mb-4"
                 style={{
-                  fontFamily: '"Noto Serif", serif',
-                  fontSize: "1.75rem",
-                  color: "#f2ca50",
+                  fontFamily: '"Inter", sans-serif',
+                  fontSize: "0.7rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.3em",
+                  color: "#99907c",
                 }}
               >
-                The Verdict
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
-                {(() => {
-                  const r = review!.rating;
-                  const base = r * 20;
-                  const rows = [
-                    { label: "Overall", value: base },
-                    { label: "Ambience", value: Math.max(60, base - 5) },
-                    {
-                      label: "Service",
-                      value: Math.min(100, base + 2),
-                    },
-                    {
-                      label: "Value",
-                      value: Math.max(60, base - 3),
-                    },
-                  ];
-                  return rows.map((row) => (
-                    <div key={row.label} className="space-y-3">
-                      <div
-                        className="flex justify-between"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.7rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.2em",
-                          color: "#d3c5ad",
-                        }}
-                      >
-                        <span>{row.label}</span>
-                        <span>{(row.value / 10).toFixed(1)}</span>
-                      </div>
-                      <div
-                        className="h-[2px] w-full"
-                        style={{ backgroundColor: "#4d4635" }}
-                      >
-                        <div
-                          className="h-full"
-                          style={{
-                            width: `${row.value}%`,
-                            background:
-                              "linear-gradient(90deg, #d4af37, #f2ca50)",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ));
-                })()}
+                Brandon&rsquo;s rating
+              </p>
+              <div className="flex items-center gap-6 flex-wrap">
+                <span
+                  className="font-bold"
+                  style={{
+                    fontFamily: '"Noto Serif", serif',
+                    fontSize: "3rem",
+                    color: "#f2ca50",
+                    lineHeight: 1,
+                  }}
+                >
+                  {review!.rating}
+                  <span style={{ fontSize: "1.25rem", color: "#99907c" }}>
+                    {" "}
+                    / 5
+                  </span>
+                </span>
+                <StarRating rating={review!.rating} />
               </div>
+              <p
+                className="mt-4"
+                style={{
+                  fontFamily: '"Noto Serif", serif',
+                  fontSize: "0.95rem",
+                  color: "#99907c",
+                  fontStyle: "italic",
+                }}
+              >
+                Originally posted on Google as part of Brandon&rsquo;s Local
+                Guide profile.
+              </p>
             </div>
 
             {/* Photo gallery */}
@@ -322,7 +372,7 @@ export default async function ReviewPage({
             )}
           </div>
 
-          {/* Concierge */}
+          {/* Sidebar — details + author */}
           <aside className="lg:col-span-4">
             <div className="sticky top-28 space-y-10">
               <div
@@ -340,7 +390,7 @@ export default async function ReviewPage({
                     color: "#e5e2e1",
                   }}
                 >
-                  The Concierge
+                  The details
                 </h3>
 
                 <div className="space-y-6">
@@ -414,6 +464,8 @@ export default async function ReviewPage({
                   </div>
                 </div>
               </div>
+
+              <AuthorBio compact />
 
               <Link
                 href="/reviews"

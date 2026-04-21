@@ -4,15 +4,7 @@ import { VercelToolbar } from "@vercel/toolbar/next";
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  ...defaultMetadata,
-  title: {
-    default: "Johnson Reviews - Every Day a New Destination",
-    template: "%s | Johnson Reviews",
-  },
-  description:
-    "Embark on a culinary journey with Johnson Reviews, your premier guide to discovering hidden gems and top-notch dining and experiences across various destinations.",
-};
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children,

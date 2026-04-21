@@ -2,13 +2,68 @@ import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { LexicalContent } from "@/components/LexicalContent";
+import { AuthorBio } from "@/components/AuthorBio";
 import Image from "next/image";
 import Link from "next/link";
 import { Media, Post, Category, Tag } from "@/payload-types";
+import { generateArticleMetadata, SITE_URL } from "@/lib/metadata";
+import {
+  combineSchemas,
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const dynamic = "force-dynamic";
+
+async function fetchPost(slug: string): Promise<Post | undefined> {
+  try {
+    const payload = await getPayload({ config });
+    const { docs: posts } = await payload.find({
+      collection: "posts",
+      where: { slug: { equals: slug } },
+      depth: 2,
+      limit: 1,
+    });
+    return posts[0] as Post | undefined;
+  } catch (error) {
+    console.error(`Failed to fetch blog post "${slug}":`, error);
+    return undefined;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await fetchPost(slug);
+  if (!post) {
+    return {
+      title: "Review not found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const featuredImage = post.featuredImage as Media | undefined;
+  const ogImage = featuredImage?.url
+    ? featuredImage.url.startsWith("http")
+      ? featuredImage.url
+      : `${SITE_URL}${featuredImage.url}`
+    : undefined;
+
+  return generateArticleMetadata({
+    title: post.title,
+    description: post.excerpt || `${post.title} — a Johnson Reviews write-up.`,
+    slug: post.slug!,
+    ogImage,
+    publishedTime: post.publishedDate ?? post.createdAt,
+    modifiedTime: post.updatedAt,
+  });
+}
 
 export default async function PostPage({
   params,
@@ -16,26 +71,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const payload = await getPayload({ config });
-  let post: Post | undefined;
-
-  try {
-    const { docs: posts } = await payload.find({
-      collection: "posts",
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
-      depth: 2,
-    });
-    post = posts[0] as Post;
-  } catch (error) {
-    console.error(
-      `Failed to fetch blog post "${slug}" during page render.`,
-      error
-    );
-  }
+  const post = await fetchPost(slug);
 
   if (!post) {
     notFound();
@@ -70,8 +106,21 @@ export default async function PostPage({
       })
       .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
+  const schema = combineSchemas(
+    generateArticleSchema(post),
+    generateBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Reviews", path: "/blog" },
+      { name: post.title, path: `/blog/${post.slug}` },
+    ])
+  );
+
   return (
     <article style={{ backgroundColor: "#131313" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       {/* Hero — full-bleed image with title overlay */}
       <section className="relative w-full overflow-hidden pt-24 md:pt-28">
         <div
@@ -231,7 +280,7 @@ export default async function PostPage({
             )}
           </div>
 
-          {/* Sidebar — "Concierge" */}
+          {/* Sidebar — details + author */}
           <aside className="lg:col-span-4">
             <div className="sticky top-28 space-y-10">
               <div
@@ -249,7 +298,7 @@ export default async function PostPage({
                     color: "#e5e2e1",
                   }}
                 >
-                  The Concierge
+                  The details
                 </h3>
 
                 <div className="space-y-6">
@@ -265,7 +314,7 @@ export default async function PostPage({
                           color: "#99907c",
                         }}
                       >
-                        Collection
+                        Category
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {categories.map((c) =>
@@ -300,7 +349,7 @@ export default async function PostPage({
                           color: "#99907c",
                         }}
                       >
-                        Date of Visit
+                        Published
                       </p>
                       <p
                         style={{
@@ -314,23 +363,10 @@ export default async function PostPage({
                     </div>
                   )}
                 </div>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center w-full mt-10 py-5 font-bold transition-transform duration-300 hover:-translate-y-1"
-                  style={{
-                    background:
-                      "linear-gradient(to right, #d4af37, #f2ca50)",
-                    color: "#3c2f00",
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.7rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.3em",
-                  }}
-                >
-                  Plan a Visit
-                </Link>
               </div>
+
+              {/* Author — E-E-A-T signal */}
+              <AuthorBio compact />
 
               {/* Back link */}
               <Link
@@ -345,7 +381,7 @@ export default async function PostPage({
                 }}
               >
                 <span>&larr;</span>
-                Return to the Journal
+                Back to all reviews
               </Link>
             </div>
           </aside>
