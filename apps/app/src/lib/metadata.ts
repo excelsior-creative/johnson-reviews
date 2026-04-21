@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-export const SITE_NAME = "Template Site";
-export const SITE_TAGLINE = "Built with Next.js & Payload CMS";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://johnsonreviews.com";
+export const SITE_NAME = "Johnson Reviews";
+export const SITE_TAGLINE = "Real visits. Honest reviews.";
 export const DEFAULT_DESCRIPTION =
-  "A high-performance project template with integrated SEO and AI features.";
+  "Brandon Johnson — Google Local Guide Level 10, 500+ reviews — and his family write honest, specific reviews of the restaurants, hotels, and places they actually visit. Based in Orange County, California.";
+
+export const AUTHOR_NAME = "Brandon Johnson";
+export const AUTHOR_DESCRIPTION =
+  "Brandon Johnson is a family traveler and restaurant reviewer based in Orange County, California. He's a Google Local Guide (Level 10) with 500+ reviews and 27,000+ photos contributed, writing long-form reviews of the places the Johnson family actually visits.";
+export const AUTHOR_URL = `${SITE_URL}/about`;
+// Brandon's public Google Local Guide profile. Overridable via env so the
+// real URL can be supplied without committing it here until Brandon confirms.
+export const AUTHOR_LOCAL_GUIDE_URL =
+  process.env.NEXT_PUBLIC_LOCAL_GUIDE_URL || "";
 
 export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 
@@ -14,19 +26,24 @@ export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
-    "Next.js",
-    "Payload CMS",
-    "React",
-    "Tailwind CSS",
-    "SEO optimized",
+    "family travel blog",
+    "restaurant reviews",
+    "Orange County restaurants",
+    "Google Local Guide",
+    "Dana Point",
+    "Irvine restaurants",
+    "Las Vegas family travel",
+    "Disneyland family reviews",
+    "honest restaurant reviews",
+    "kid-friendly restaurants",
   ],
-  authors: [{ name: SITE_NAME, url: SITE_URL }],
-  creator: SITE_NAME,
+  authors: [{ name: AUTHOR_NAME, url: AUTHOR_URL }],
+  creator: AUTHOR_NAME,
   publisher: SITE_NAME,
   formatDetection: {
     email: false,
@@ -38,20 +55,20 @@ export const defaultMetadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: DEFAULT_DESCRIPTION,
     images: [
       {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Project Template`,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
@@ -165,7 +182,7 @@ export function generateArticleMetadata({
       type: "article",
       publishedTime,
       modifiedTime,
-      authors: author ? [author] : [SITE_NAME],
+      authors: author ? [author] : [AUTHOR_NAME],
       images: [
         {
           url: image,

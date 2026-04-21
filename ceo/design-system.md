@@ -99,9 +99,7 @@ quotations, taglines, secondary descriptions.
 | `SearchDialog`    | ✅           |                                                        |
 | `Logo`            | ✅           |                                                        |
 | `ContactDialog`   | ✅           |                                                        |
-| `AboutSection`    | ✅           |                                                        |
-| `CalculatorSection`| ?           | Unclear what this does in a reviews site               |
-| `ServicesSection` | ?            | Unclear what this does in a reviews site               |
+| `AuthorBio`       | ✅           | 2026-04-21 — E-E-A-T signal. Compact + full variants.   |
 | `SubscribeForm`   | ✅           | Newsletter form (no provider wired? to verify)         |
 
 ## Page templates from reference

@@ -12,7 +12,7 @@ interface BlogSectionProps {
 
 export const BlogSection = async ({
   title = "Latest Reviews",
-  badge = "The Journal",
+  badge = "Fresh from the road",
   limit = 6,
 }: BlogSectionProps = {}) => {
   const payload = await getPayload({ config });

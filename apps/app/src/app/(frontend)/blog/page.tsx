@@ -56,14 +56,14 @@ export default async function BlogPage({
     <div className="pt-28 md:pt-40 pb-24 md:pb-32">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <Header
-          badge="The Discovery"
+          badge="Reviews"
           title={
-            selectedCategory ? selectedCategory.name : "The Search For Perfection."
+            selectedCategory ? selectedCategory.name : "Every place we've written up."
           }
           subtitle={
             selectedCategory
-              ? `Reviews in the ${selectedCategory.name} collection, each a dispatch from the field.`
-              : "Reviews, dispatches, and editorials from the road — insights on restaurants, hotels, and stages we've judged worthy of note."
+              ? `All of our reviews tagged ${selectedCategory.name}.`
+              : "Restaurants, hotels, theme parks, coffee stops — places the Johnsons actually went, written up honestly."
           }
         />
 
@@ -81,7 +81,7 @@ export default async function BlogPage({
                   color: "#99907c",
                 }}
               >
-                Collections
+                Categories
               </h3>
               <ul className="space-y-4">
                 <li>
@@ -126,40 +126,6 @@ export default async function BlogPage({
               </ul>
             </div>
 
-            <div>
-              <h3
-                className="mb-6"
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.3em",
-                  color: "#99907c",
-                }}
-              >
-                Experience Tiers
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {["Editorial Pick", "Hidden Gem", "Michelin Starred"].map(
-                  (tier) => (
-                    <span
-                      key={tier}
-                      className="inline-block px-4 py-2 transition-colors"
-                      style={{
-                        border: "1px solid rgba(77,70,53,0.6)",
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: "0.625rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#e5e2e1",
-                      }}
-                    >
-                      {tier}
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
           </aside>
 
           {/* Main grid */}

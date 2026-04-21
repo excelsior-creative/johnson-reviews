@@ -77,17 +77,20 @@ The infrastructure that does NOT exist:
 
 ## Improvements in progress
 
-- Build the legacy-WP migration backlog into `/ceo/review-queue.md`
-  from the 60+ slugs already in `reference/`. This is the lowest-
-  friction starting point: Brandon went to all those places, the
-  factual basis already exists, the migration "interview" is
-  Brandon confirming or correcting the existing review.
-- Build a Brandon-facing intake prompt template (in
-  `/ceo/prompts/intake.md`) that the agent can use whenever Brandon
-  initiates a new review. **Pending — not started this run.**
-- Build a publish-readiness checklist (schema, alt text, internal
-  links, geotag stripping, related-reviews block, category page
-  refresh). **Pending — not started this run.**
+- ✅ **Intake prompt template shipped** at `/ceo/prompts/intake.md`
+  (2026-04-21). Covers openers, interview questions by place-shape,
+  things not to ask (incl. the no-axis-rating rule from ADR 0002),
+  draft structure, self-check, and a publish checklist.
+- ✅ **Publish-readiness checklist** — embedded in intake.md so any
+  instance can run it without cross-referencing.
+- ⬜ **Correction for review-queue.md**: yesterday's assumption that
+  legacy posts were already in Payload was wrong. There's no
+  WP → Posts importer. Each legacy migration is a conversational
+  pass. See review-queue.md for the updated flow.
+- ⬜ **First end-to-end migration** — Apizza Doho (Dana Point) is the
+  proposed proof-of-concept. The `reference/apizza-doho-.../` folder
+  is the factual source; the agent drafts a refreshed Brandon-voice
+  Post; Brandon signs off; agent publishes.
 
 ## Open questions for Brandon
 

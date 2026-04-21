@@ -49,6 +49,19 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
    reviews into long-form posts, OK if I publish after a quiet
    24 hours, or eyes on every one?
 
+11. **Google Local Guide profile URL.** Tonight I wired author +
+    Person schema and the bio block. I did **not** invent the
+    URL. Please drop it in — once you do, set
+    `NEXT_PUBLIC_LOCAL_GUIDE_URL=<url>` in Vercel env and both the
+    sidebar link + schema `sameAs` will light up automatically.
+
+12. **Confirm ADR 0002 — no fabricated rating axes.** I killed the
+    "Ambience / Service / Value" verdict block on review pages
+    because the scores were synthesized from the overall rating
+    (not you rating them). If you want real facet ratings, they
+    have to come from you rating them explicitly at intake. See
+    `/ceo/decisions/0002-no-fabricated-rating-axes.md`.
+
 ### 🟢 FYI
 
 8. **Legacy image dependency.** The site currently loads many
@@ -58,15 +71,33 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
    into Payload Media; flagging so you don't accidentally cancel
    that hosting.
 
-9. **Suspicious components.** `CalculatorSection` and
-   `ServicesSection` exist in the codebase but I can't tell what
-   they do on a reviews site. Probably dead code from the
-   original WP-clone scaffold. I'll audit + propose removal next
-   nightly run unless you want them kept.
+9. ~~**Suspicious components.**~~ **[ANSWERED 2026-04-21 by agent]**
+   `CalculatorSection` (commercial RE depreciation calculator),
+   `ServicesSection` (generic services scaffold), and
+   `AboutSection` (template "about us pitching Payload/Next.js as
+   the product") were all dead code with zero imports. Deleted
+   in tonight's PR.
 
 10. **Quarter OKRs.** Drafted in `/ceo/okrs.md`. Targets are best-
     guess. Confirm or revise.
 
+13. **Legacy reviews are not in Payload.** Clarifying the
+    review-queue assumption from 2026-04-20: the seed only
+    creates template sample posts; `scripts/import-reviews.ts`
+    populates the `reviews` collection from Google. There is no
+    WP → Posts importer. Each legacy migration is a
+    conversational pass per the new workflow in
+    `/ceo/prompts/intake.md`.
+
+14. **SEO metadata was wildly broken.** Before tonight, every page
+    emitted `"Template Site"` as the site name and `"Built with
+    Next.js & Payload CMS"` as the tagline in OG tags, Twitter
+    cards, Organization schema, RSS, and contact emails. Root
+    layout overrode the title but nothing else. Fixed tonight.
+    No action needed — just explaining why the PR touches so
+    many metadata-adjacent files.
+
 ## Answered
 
-_(empty)_
+- ~~#9 (suspicious components)~~ — closed 2026-04-21 by agent;
+  all three were dead code, deleted.
