@@ -1,4 +1,4 @@
-import { defaultMetadata } from "@/lib/metadata";
+import { defaultMetadata, SITE_NAME, SITE_TAGLINE, DEFAULT_DESCRIPTION } from "@/lib/metadata";
 import { generateGlobalSchema } from "@/lib/structured-data";
 import { VercelToolbar } from "@vercel/toolbar/next";
 import type { Metadata } from "next";
@@ -7,11 +7,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   ...defaultMetadata,
   title: {
-    default: "Johnson Reviews - Every Day a New Destination",
-    template: "%s | Johnson Reviews",
+    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Embark on a culinary journey with Johnson Reviews, your premier guide to discovering hidden gems and top-notch dining and experiences across various destinations.",
+  description: DEFAULT_DESCRIPTION,
 };
 
 export default function RootLayout({

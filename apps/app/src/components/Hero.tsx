@@ -1,19 +1,27 @@
 import React from "react";
 import Link from "next/link";
 
+// Env-overridable hero photo. When Brandon provides a real OC/travel photo,
+// drop it in /public or set NEXT_PUBLIC_HERO_IMAGE_URL to a hosted asset.
+// Fallback: a tonal gradient — on-brand, self-contained, never 404s.
+const HERO_IMAGE = process.env.NEXT_PUBLIC_HERO_IMAGE_URL || "";
+const HERO_FALLBACK_BG =
+  "radial-gradient(1200px 800px at 80% 30%, rgba(242,202,80,0.08) 0%, rgba(19,19,19,0) 55%), radial-gradient(1000px 700px at 15% 90%, rgba(212,175,55,0.06) 0%, rgba(19,19,19,0) 60%), linear-gradient(180deg, #1c1b1b 0%, #131313 100%)";
+
 /**
- * Hero — "The Art of the Critique"
- * Full-bleed image with editorial gold lede line, tight-tracking serif
- * display headline, and a gilded gradient CTA.
+ * Hero — full-bleed editorial hero with gilded lede, serif headline, CTAs.
  */
 export const Hero = () => {
+  const background = HERO_IMAGE
+    ? `url('${HERO_IMAGE}') center center / cover no-repeat`
+    : HERO_FALLBACK_BG;
+
   return (
     <section
       className="relative overflow-hidden flex items-center"
       style={{
         minHeight: "100vh",
-        background:
-          "url('https://brandonj117.sg-host.com/wp-content/uploads/2021/04/johnson-reviews2.jpg') center center / cover no-repeat",
+        background,
       }}
     >
       {/* Layered gradients — dark editorial */}

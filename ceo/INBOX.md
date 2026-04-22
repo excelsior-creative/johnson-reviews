@@ -67,6 +67,34 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 10. **Quarter OKRs.** Drafted in `/ceo/okrs.md`. Targets are best-
     guess. Confirm or revise.
 
+### Added 2026-04-22
+
+11. 🟡 **Apizza Doho migration — 7 blocking questions.** First
+    draft of the first legacy review migration lives at
+    `/ceo/drafts/apizza-doho-dana-point.md`. Brandon-voice
+    rewrite of the 2021 WP original, with 7 `[?? Brandon — ...]`
+    inline gaps. Open questions:
+
+    1. Concert venue that night? (Doheny? Laguna? Other?)
+    2. Which pizza(s) did you order?
+    3. Is the sausage meatball sub a regular menu item?
+    4. Parking / reservation / price dial / kid setup — whatever
+       you remember.
+    5. Would you go back? Who would you send?
+    6. Current photos, or should we request permission from the
+       restaurant for their public images?
+    7. Stamp this "Last visited: [year]" or refresh with a new
+       visit?
+
+    Answer whatever you remember; anything you don't, we'll mark
+    "not confirmed" or omit. The remaining cycle time to publish
+    is 15–30 minutes once I have your answers.
+
+12. 🟢 **Google Maps contributor URL.** The Person schema uses
+    `https://maps.google.com/maps/contrib/113321871517390024887`
+    as your `sameAs`. **Is that your real Local Guide profile?**
+    If not, paste the correct URL and I'll swap it.
+
 ## Answered
 
 _(empty)_

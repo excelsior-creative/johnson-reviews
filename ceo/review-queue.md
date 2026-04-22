@@ -19,7 +19,7 @@ to build a Location hub off of), then Irvine, then Las Vegas, then
 the rest.
 
 ### Dana Point, CA cluster — `legacy`
-- [ ] **Apizza Doho** — `apizza-doho-where-culinary-excellence-meets-cozy-ambiance-in-dana-point-ca`
+- [ ] **Apizza Doho** — `apizza-doho-where-culinary-excellence-meets-cozy-ambiance-in-dana-point-ca` · **draft** in `/ceo/drafts/apizza-doho-dana-point.md` (2026-04-22, awaiting Brandon answers on 7 flagged `[??]` spots)
 - [ ] **Chart House** — `dana-point-ca-chart-house-oceanfront-elegance-prime-rib-bliss`
 - [ ] **Maison Cafe & Market** — `maison-cafe-market-dana-point-breakfast-bliss`
 - [ ] **Ramos House Cafe** — `a-culinary-sojourn-at-ramos-house-cafe-where-every-bite-is-art` (technically SJC, adjacent)
@@ -107,7 +107,11 @@ the rest.
 
 ## In progress (drafting)
 
-_(empty — first night)_
+- **Apizza Doho (Dana Point)** — v0 draft at
+  `/ceo/drafts/apizza-doho-dana-point.md`. Blocked on Brandon
+  answering 7 `[?? ...]` questions (concert venue, which pizza,
+  parking/reservation/price, kid setup, whether to refresh, photo
+  source). Posted to Slack C0AHR2NJ361 2026-04-22.
 
 ## In review (Brandon redlining)
 
