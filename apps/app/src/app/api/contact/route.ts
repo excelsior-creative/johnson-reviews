@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { SITE_NAME } from "@/lib/metadata";
 
 type ContactRequest = {
   name: string;
@@ -79,7 +80,7 @@ function generateEmailHTML(
         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
           <!-- Header with gradient -->
           <tr>
-            <td style="background: #FF5722; padding: 40px 30px; text-align: center;">
+            <td style="background: #d4af37; padding: 40px 30px; text-align: center;">
               <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">
                 Contact Inquiry
               </h1>
@@ -93,7 +94,7 @@ function generateEmailHTML(
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="padding-bottom: 20px; border-bottom: 1px solid #eee;">
-                    <p style="margin: 0 0 5px 0; color: #FF5722; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
+                    <p style="margin: 0 0 5px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
                       From
                     </p>
                     <p style="margin: 0; color: #1a1a1a; font-size: 18px; font-weight: 600;">
@@ -103,7 +104,7 @@ function generateEmailHTML(
                 </tr>
                 <tr>
                   <td style="padding: 20px 0; border-bottom: 1px solid #eee;">
-                    <p style="margin: 0 0 5px 0; color: #FF5722; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
+                    <p style="margin: 0 0 5px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
                       Email
                     </p>
                     <p style="margin: 0;">
@@ -115,10 +116,10 @@ function generateEmailHTML(
                 </tr>
                 <tr>
                   <td style="padding-top: 20px;">
-                    <p style="margin: 0 0 10px 0; color: #FF5722; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
+                    <p style="margin: 0 0 10px 0; color: #d4af37; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">
                       Message
                     </p>
-                    <div style="background-color: #f9f9f9; border-left: 4px solid #FF5722; padding: 20px; border-radius: 0 4px 4px 0;">
+                    <div style="background-color: #f9f9f9; border-left: 4px solid #d4af37; padding: 20px; border-radius: 0 4px 4px 0;">
                       <p style="margin: 0; color: #333; font-size: 15px; line-height: 1.7; white-space: pre-wrap;">
 ${message}
                       </p>
@@ -133,7 +134,7 @@ ${message}
           <tr>
             <td style="background-color: #1a1a1a; padding: 25px 30px; text-align: center;">
               <p style="margin: 10px 0 0 0; color: #444; font-size: 11px; text-transform: uppercase; letter-spacing: 2px;">
-                © ${new Date().getFullYear()} Template Site
+                © ${new Date().getFullYear()} ${SITE_NAME}
               </p>
             </td>
           </tr>

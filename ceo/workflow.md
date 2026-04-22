@@ -77,17 +77,21 @@ The infrastructure that does NOT exist:
 
 ## Improvements in progress
 
-- Build the legacy-WP migration backlog into `/ceo/review-queue.md`
-  from the 60+ slugs already in `reference/`. This is the lowest-
-  friction starting point: Brandon went to all those places, the
-  factual basis already exists, the migration "interview" is
-  Brandon confirming or correcting the existing review.
-- Build a Brandon-facing intake prompt template (in
-  `/ceo/prompts/intake.md`) that the agent can use whenever Brandon
-  initiates a new review. **Pending — not started this run.**
-- Build a publish-readiness checklist (schema, alt text, internal
-  links, geotag stripping, related-reviews block, category page
-  refresh). **Pending — not started this run.**
+- ✅ Legacy-WP migration backlog built into `/ceo/review-queue.md`
+  from the 60+ slugs already in `reference/` (2026-04-20).
+- ✅ Brandon-facing intake prompt template at
+  `/ceo/prompts/intake.md` (2026-04-22).
+- ✅ Publish-readiness checklist at
+  `/ceo/prompts/publish-checklist.md` (2026-04-22).
+- ✅ First proof draft: Apizza Doho (Dana Point) in
+  `/ceo/drafts/apizza-doho-dana-point.md` (2026-04-22).
+  7 `[??]` blockers posted to Slack for batched answer.
+- ⬜ Wire a "draft → Payload Post draft" publisher so agents can
+  persist drafts directly into Payload instead of flat-file. Needs
+  an admin API key or agent user in Payload. Defer until Brandon
+  signs off on intake channel (INBOX #5).
+- ⬜ Photo-proposal automation from Google Photos (blocked on
+  INBOX #6 — Google Photos access posture).
 
 ## Open questions for Brandon
 

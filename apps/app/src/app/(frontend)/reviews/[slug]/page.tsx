@@ -322,7 +322,7 @@ export default async function ReviewPage({
             )}
           </div>
 
-          {/* Concierge */}
+          {/* Sidebar — at-a-glance facts */}
           <aside className="lg:col-span-4">
             <div className="sticky top-28 space-y-10">
               <div
@@ -340,7 +340,7 @@ export default async function ReviewPage({
                     color: "#e5e2e1",
                   }}
                 >
-                  The Concierge
+                  At a glance
                 </h3>
 
                 <div className="space-y-6">

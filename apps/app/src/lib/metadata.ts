@@ -1,12 +1,28 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-export const SITE_NAME = "Template Site";
-export const SITE_TAGLINE = "Built with Next.js & Payload CMS";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL || "https://johnsonreviews.com";
+export const SITE_NAME = "Johnson Reviews";
+export const SITE_TAGLINE = "Real visits. Honest reviews.";
 export const DEFAULT_DESCRIPTION =
-  "A high-performance project template with integrated SEO and AI features.";
+  "Brandon Johnson's long-form reviews of restaurants, hotels, and family travel — written after we've actually been there, with the kids, and with the logistics other families want to know.";
+
+export const AUTHOR_NAME = "Brandon Johnson";
+export const AUTHOR_TITLE = "Google Local Guide, Level 10";
+export const AUTHOR_LOCATION = "Orange County, California";
 
 export const DEFAULT_OG_IMAGE = "/og-image.jpg";
+
+export const DEFAULT_KEYWORDS = [
+  "family travel blog",
+  "restaurant reviews",
+  "Orange County restaurants",
+  "Dana Point restaurants",
+  "Irvine restaurants",
+  "Las Vegas family travel",
+  "Disneyland tips",
+  "family-friendly travel",
+];
 
 /**
  * Default metadata for the entire site
@@ -14,19 +30,13 @@ export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
-  keywords: [
-    "Next.js",
-    "Payload CMS",
-    "React",
-    "Tailwind CSS",
-    "SEO optimized",
-  ],
-  authors: [{ name: SITE_NAME, url: SITE_URL }],
-  creator: SITE_NAME,
+  keywords: DEFAULT_KEYWORDS,
+  authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+  creator: AUTHOR_NAME,
   publisher: SITE_NAME,
   formatDetection: {
     email: false,
@@ -38,20 +48,20 @@ export const defaultMetadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: DEFAULT_DESCRIPTION,
     images: [
       {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Project Template`,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
   },
@@ -152,6 +162,7 @@ export function generateArticleMetadata({
 }): Metadata {
   const url = `${SITE_URL}/blog/${slug}`;
   const image = ogImage || DEFAULT_OG_IMAGE;
+  const articleAuthor = author || AUTHOR_NAME;
 
   return {
     title,
@@ -165,7 +176,7 @@ export function generateArticleMetadata({
       type: "article",
       publishedTime,
       modifiedTime,
-      authors: author ? [author] : [SITE_NAME],
+      authors: [articleAuthor],
       images: [
         {
           url: image,
@@ -189,4 +200,3 @@ export function generateArticleMetadata({
       : { index: true, follow: true },
   };
 }
-
