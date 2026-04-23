@@ -84,7 +84,7 @@ export const Hero = () => {
           }}
         >
           <span className="block h-[1px] w-12" style={{ backgroundColor: "#f2ca50" }} />
-          <span>Established 1984</span>
+          <span>Brandon Johnson · Google Local Guide Level 10</span>
         </div>
 
         <h1
@@ -96,8 +96,8 @@ export const Hero = () => {
             color: "#e5e2e1",
           }}
         >
-          The Art of the <br />
-          <span style={{ fontStyle: "italic", color: "#f2ca50" }}>Critique</span>
+          Real visits. <br />
+          <span style={{ fontStyle: "italic", color: "#f2ca50" }}>Honest reviews.</span>
         </h1>
 
         <p
@@ -109,8 +109,9 @@ export const Hero = () => {
             fontSize: "clamp(1.125rem, 1.5vw, 1.5rem)",
           }}
         >
-          Elevating the Standard of Taste through rigorous analysis and an
-          uncompromising palate.
+          Restaurants, hotels, and family travel — written up after we&rsquo;ve
+          actually been there, with the kids, and brought back something worth
+          saying.
         </p>
 
         <div className="hero-fade-2 flex flex-col sm:flex-row gap-6">
@@ -125,10 +126,10 @@ export const Hero = () => {
               letterSpacing: "0.2em",
             }}
           >
-            Read the Journal
+            Browse the Reviews
           </Link>
           <Link
-            href="/reviews"
+            href="/about"
             className="hero-btn-outline inline-flex items-center justify-center gap-2 px-12 py-5"
             style={{
               fontFamily: '"Inter", sans-serif',
@@ -138,7 +139,7 @@ export const Hero = () => {
               letterSpacing: "0.2em",
             }}
           >
-            Explore Rankings
+            About the Johnsons
           </Link>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "@/components/Header";
 import { ContactForm } from "@/components/ContactForm";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 export const revalidate = 3600;
 
@@ -53,9 +53,9 @@ export default function ContactPage() {
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <Header
-          badge="Correspondence"
-          title="A Private Line."
-          subtitle="For press, private tables, reservation intelligence, or the return of a lost fountain pen. Dispatches are answered in the order received."
+          badge="Get in touch"
+          title="Say hello."
+          subtitle="Press, partnership, restaurant or hotel pitch, or just a tip on a place we should try — drop us a line. We read everything."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 mt-16">
@@ -65,23 +65,12 @@ export default function ContactPage() {
               <InfoRow
                 icon={<Mail className="w-5 h-5" />}
                 label="Email"
-                value="editor@johnsonreviews.com"
-              />
-              <InfoRow
-                icon={<Phone className="w-5 h-5" />}
-                label="Telephone"
-                value="+1 (555) 000-0000"
+                value="hello@johnsonreviews.com"
               />
               <InfoRow
                 icon={<MapPin className="w-5 h-5" />}
-                label="Correspondence Address"
-                value={
-                  <>
-                    14 Avenue Montaigne
-                    <br />
-                    Orange County, California
-                  </>
-                }
+                label="Based in"
+                value="Orange County, California"
               />
             </div>
 
@@ -102,7 +91,7 @@ export default function ContactPage() {
                   color: "#f2ca50",
                 }}
               >
-                Office Hours
+                Response time
               </span>
               <p
                 className="italic"
@@ -113,9 +102,8 @@ export default function ContactPage() {
                   lineHeight: "1.7",
                 }}
               >
-                Tuesday — Saturday
-                <br />
-                09:00 — 17:00 Pacific
+                Most messages get a reply within a couple of days.
+                For press inquiries, please mention your outlet and deadline.
               </p>
             </div>
           </div>
