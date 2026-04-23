@@ -70,18 +70,17 @@ function ParagraphNode({
   dropCap?: boolean;
 }) {
   const content = <InlineChildren children={node.children} />;
-  // Skip empty paragraphs
   const hasText = node.children?.some((c) => c.text?.trim());
   if (!hasText) return null;
   return (
     <p
       className={isFirst && dropCap ? "drop-cap" : ""}
       style={{
-        fontFamily: '"Noto Serif", serif',
-        fontSize: "1.125rem",
-        lineHeight: "1.8",
-        color: "#e5e2e1",
-        marginBottom: "1.5rem",
+        fontFamily: "var(--font-serif)",
+        fontSize: 19,
+        lineHeight: 1.7,
+        color: "var(--color-ink)",
+        marginBottom: "1.4em",
       }}
     >
       {content}
@@ -105,18 +104,17 @@ function HeadingNode({ node }: { node: LexicalNode }) {
   return React.createElement(
     tag,
     {
+      className: "display",
       style: {
-        fontFamily: '"Noto Serif", serif',
         fontSize: sizes[tag] ?? "1.5rem",
-        fontWeight: 700,
-        color: "#f2ca50",
+        fontWeight: 500,
+        color: "var(--color-ink)",
         marginTop: "2.5rem",
         marginBottom: "1rem",
-        lineHeight: "1.25",
-        letterSpacing: "-0.01em",
+        lineHeight: 1.18,
       },
     },
-    content
+    content,
   );
 }
 
@@ -124,9 +122,10 @@ function ListItemNode({ node }: { node: LexicalNode }) {
   return (
     <li
       style={{
-        fontFamily: '"Noto Serif", serif',
-        color: "#e5e2e1",
-        lineHeight: "1.7",
+        fontFamily: "var(--font-serif)",
+        fontSize: 19,
+        color: "var(--color-ink)",
+        lineHeight: 1.7,
         marginBottom: "0.5rem",
       }}
     >
@@ -156,15 +155,14 @@ function ListNode({ node }: { node: LexicalNode }) {
 function QuoteNode({ node }: { node: LexicalNode }) {
   return (
     <blockquote
+      className="display display-italic"
       style={{
-        fontFamily: '"Noto Serif", serif',
-        fontStyle: "italic",
-        fontSize: "1.375rem",
-        color: "#f2ca50",
-        borderLeft: "4px solid #d4af37",
+        fontSize: "clamp(22px, 2.4vw, 32px)",
+        color: "var(--color-accent)",
+        borderLeft: "1px solid var(--color-accent)",
         padding: "1rem 0 1rem 2rem",
         margin: "2.5rem 0",
-        lineHeight: "1.5",
+        lineHeight: 1.4,
       }}
     >
       <InlineChildren children={node.children} />

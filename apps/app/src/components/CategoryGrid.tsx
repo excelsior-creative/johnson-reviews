@@ -3,139 +3,126 @@ import Link from "next/link";
 
 const categories = [
   {
-    number: "01",
+    region: "Sit-down dinners, brunch, taquerías",
     name: "Restaurants",
+    count: "180+",
     href: "/blog?category=restaurants",
-    tagline: "Sit-down dinners, brunch spots, drive-thrus, taquerías. Honest takes.",
   },
   {
-    number: "02",
+    region: "Where the Johnsons actually slept",
     name: "Hotels & Resorts",
+    count: "60+",
     href: "/blog?category=hotels-resorts",
-    tagline: "Where the Johnsons actually slept. Family-friendly notes included.",
   },
   {
-    number: "03",
+    region: "Theme parks, golf, concerts",
     name: "Entertainment",
+    count: "120+",
     href: "/blog?category=entertainment",
-    tagline: "Theme parks, movie theaters, golf, concerts — what's worth doing.",
   },
   {
-    number: "04",
+    region: "Big-box and boutique stops",
     name: "Shopping",
+    count: "40+",
     href: "/blog?category=shopping",
-    tagline: "Big-box and boutique. Places worth stopping at on a longer trip.",
   },
 ];
 
 export const CategoryGrid = () => {
   return (
-    <section className="py-24 md:py-32" style={{ backgroundColor: "#131313" }}>
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        {/* Section header */}
-        <div className="text-center mb-20">
-          <h2
-            className="font-bold mb-4"
-            style={{
-              fontFamily: '"Noto Serif", serif',
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              color: "#e5e2e1",
-            }}
-          >
-            Browse by category
-          </h2>
-          <div
-            className="w-24 h-[1px] mx-auto"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent 0%, #f2ca50 50%, transparent 100%)",
-            }}
-          />
+    <section style={{ padding: "100px 0" }}>
+      <div className="container-jr">
+        <div
+          className="between"
+          style={{ marginBottom: 48, alignItems: "flex-end", flexWrap: "wrap", gap: 24 }}
+        >
+          <div>
+            <div className="kicker" style={{ marginBottom: 12 }}>
+              Browse By Section
+            </div>
+            <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)" }}>
+              The{" "}
+              <span
+                className="display-italic"
+                style={{ color: "var(--color-ink-dim)" }}
+              >
+                atlas.
+              </span>
+            </h2>
+          </div>
+          <Link href="/reviews" className="btn btn-ghost">
+            The Full Archive <span className="arrow">→</span>
+          </Link>
         </div>
 
-        {/* Bordered grid (single-line uniform borders per "No-Line" rule — used
-            sparingly here to form an editorial plate structure) */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-          style={{ border: "1px solid rgba(77,70,53,0.3)" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            gap: 1,
+            background: "var(--color-rule)",
+            border: "1px solid var(--color-rule)",
+          }}
+          className="atlas-grid"
         >
-          {categories.map((cat, i) => {
-            const isLastCol = (i + 1) % 4 === 0;
-            return (
-              <Link
-                key={cat.name}
-                href={cat.href}
-                className="group relative block p-10 md:p-12 transition-colors duration-500"
-                style={{
-                  borderRight: !isLastCol
-                    ? "1px solid rgba(77,70,53,0.3)"
-                    : "none",
-                  borderBottom: "1px solid rgba(77,70,53,0.3)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1c1b1b";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                }}
-              >
-                <span
-                  className="block mb-8 transition-colors duration-500 group-hover:text-[#f2ca50]"
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "2.5rem",
-                    color: "#4d4635",
-                  }}
-                >
-                  {cat.number}
-                </span>
-                <h4
-                  className="font-bold mb-4"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.375rem",
-                    color: "#e5e2e1",
-                  }}
+          {categories.map((cat) => (
+            <Link
+              key={cat.name}
+              href={cat.href}
+              className="atlas-cell group"
+              style={{
+                background: "var(--color-bg)",
+                padding: "40px 32px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: 240,
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              <div>
+                <div className="meta">{cat.region}</div>
+                <div
+                  className="display"
+                  style={{ fontSize: "clamp(24px, 2.4vw, 32px)", marginTop: 12 }}
                 >
                   {cat.name}
-                </h4>
-                <p
-                  className="italic leading-relaxed"
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  marginTop: 24,
+                }}
+              >
+                <div
                   style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "0.875rem",
-                    color: "#d3c5ad",
-                    lineHeight: "1.7",
+                    fontFamily: "var(--font-serif)",
+                    fontSize: 28,
+                    color: "var(--color-accent)",
                   }}
                 >
-                  {cat.tagline}
-                </p>
-                <span
-                  className="mt-8 inline-flex items-center gap-2"
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.625rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.2em",
-                    color: "#f2ca50",
-                  }}
-                >
-                  View Guide
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </Link>
-            );
-          })}
+                  {cat.count}
+                </div>
+                <div className="meta inline-flex items-center gap-2">
+                  Reviews <span className="arrow">→</span>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
+
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              .atlas-cell:hover { background: var(--color-bg-raised) !important; }
+              @media (max-width: 1024px) { .atlas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+              @media (max-width: 640px)  { .atlas-grid { grid-template-columns: 1fr !important; } }
+            `,
+          }}
+        />
       </div>
     </section>
   );

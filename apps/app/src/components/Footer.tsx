@@ -2,136 +2,140 @@ import React from "react";
 import Link from "next/link";
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import { SubscribeForm } from "./SubscribeForm";
+import { Wordmark } from "./Wordmark";
 
 export const Footer = async () => {
-  let siteTitle = "Johnson Reviews";
+  let siteTitle = "Johnson & Co.";
   try {
     const payload = await getPayload({ config });
     const siteSettings = await payload.findGlobal({ slug: "site-settings" });
-    siteTitle = siteSettings.siteTitle || siteTitle;
+    if (siteSettings?.siteTitle) siteTitle = siteSettings.siteTitle;
   } catch {
     // use default
   }
 
-  const linkStyle = {
-    fontFamily: '"Noto Serif", serif',
-    fontSize: "0.75rem",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.2em",
-    color: "rgba(229,226,225,0.7)",
-  };
-
   return (
-    <footer style={{ backgroundColor: "#131313" }}>
-      {/* Newsletter — subscribe */}
-      <section
-        className="py-24 md:py-32 px-8 md:px-16"
-        style={{ backgroundColor: "#0e0e0e" }}
-      >
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-          <div className="md:col-span-7">
-            <span
-              className="block mb-4"
-              style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: "0.7rem",
-                textTransform: "uppercase",
-                letterSpacing: "0.4em",
-                color: "#f2ca50",
-              }}
-            >
-              Stay in the loop
-            </span>
-            <h3
-              className="font-bold leading-tight mb-6"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "clamp(2rem, 4vw, 3rem)",
-                color: "#e5e2e1",
-              }}
-            >
-              New reviews to your inbox.
-            </h3>
-            <p
-              className="italic leading-relaxed max-w-lg"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.05rem",
-                color: "#d3c5ad",
-              }}
-            >
-              Drop your email and we&rsquo;ll send you the latest restaurant,
-              hotel, and family-travel reviews when they go up. No spam, no
-              promotions — just the writeups.
-            </p>
-          </div>
-          <div className="md:col-span-5">
-            <SubscribeForm />
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom Bar */}
-      <div
-        className="py-12 px-6 md:px-12"
-        style={{ borderTop: "1px solid rgba(77,70,53,0.15)" }}
-      >
-        <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div
-              className="font-bold"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.25rem",
-                color: "#d4af37",
-              }}
-            >
-              {siteTitle}
+    <footer className="footer-jr" style={{ marginTop: 120 }}>
+      <div className="container-jr">
+        <div
+          className="footer-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr 1fr",
+            gap: 60,
+            marginBottom: 60,
+          }}
+        >
+          {/* Brand column */}
+          <div className="footer-col">
+            <div style={{ textAlign: "left" }}>
+              <Wordmark />
             </div>
             <p
               style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "0.75rem",
-                textTransform: "uppercase",
-                letterSpacing: "0.2em",
-                color: "rgba(229,226,225,0.5)",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                fontSize: 17,
+                color: "var(--color-ink-dim)",
+                marginTop: 20,
+                maxWidth: 360,
+                lineHeight: 1.55,
               }}
             >
-              © {new Date().getFullYear()} {siteTitle}. All Rights Reserved.
+              An independent review publication covering restaurants, hotels,
+              and places worth the trip. Written by Brandon Johnson since 2019.
+              No sponsored content. No affiliate links.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-8">
-            <Link
-              href="/terms"
-              className="transition-colors hover:text-[#d4af37]"
-              style={linkStyle}
-            >
+          <div className="footer-col">
+            <h4>Sections</h4>
+            <ul>
+              <li>
+                <Link href="/blog?category=restaurants">Restaurants</Link>
+              </li>
+              <li>
+                <Link href="/blog?category=hotels-resorts">Hotels</Link>
+              </li>
+              <li>
+                <Link href="/blog?category=entertainment">Travel</Link>
+              </li>
+              <li>
+                <Link href="/reviews">The Archive</Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4>The Publication</h4>
+            <ul>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/blog">The Journal</Link>
+              </li>
+              <li>
+                <Link href="/about">Method</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4>Follow</h4>
+            <ul>
+              <li>
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://maps.google.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Maps
+                </a>
+              </li>
+              <li>
+                <a href="/feed.xml">RSS</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>
+            © {new Date().getFullYear()} {siteTitle}
+          </span>
+          <span className="hidden md:inline">
+            Set in Playfair · Inter · JetBrains Mono
+          </span>
+          <span style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            <Link href="/terms" className="hover:text-[color:var(--color-accent)] transition-colors">
               Terms
             </Link>
             <Link
               href="/privacy"
-              className="transition-colors hover:text-[#d4af37]"
-              style={linkStyle}
+              className="hover:text-[color:var(--color-accent)] transition-colors"
             >
               Privacy
             </Link>
             <Link
               href="/contact"
-              className="transition-colors hover:text-[#d4af37]"
-              style={linkStyle}
+              className="hover:text-[color:var(--color-accent)] transition-colors"
             >
               Contact
             </Link>
-            <Link
-              href="/about"
-              className="transition-colors hover:text-[#d4af37]"
-              style={linkStyle}
-            >
-              Press
-            </Link>
-          </div>
+          </span>
         </div>
       </div>
     </footer>

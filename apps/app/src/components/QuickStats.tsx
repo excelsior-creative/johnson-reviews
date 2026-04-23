@@ -3,75 +3,78 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { label: "Local Guide Level", prefix: "", value: 10, suffix: "+" },
-  { label: "Photo Views", prefix: "", value: 132010497, suffix: "+" },
-  { label: "Guide Points", prefix: "", value: 112222, suffix: "+" },
-  { label: "Photos Shared", prefix: "", value: 27497, suffix: "+" },
-  { label: "Reviews Published", prefix: "", value: 500, suffix: "+" },
+  { label: "Local Guide Level", value: 10, suffix: "" },
+  { label: "Photo Views", value: 132010497, suffix: "+" },
+  { label: "Guide Points", value: 112222, suffix: "+" },
+  { label: "Photos Shared", value: 27497, suffix: "+" },
+  { label: "Reviews Published", value: 500, suffix: "+" },
 ];
 
-function formatNumber(n: number): string {
+function formatNumber(n: number) {
   return n.toLocaleString("en-US");
 }
 
-function useCounter(target: number, duration: number = 2000, start: boolean = false) {
+function useCounter(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!start) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setCount(target);
+      return;
+    }
+    let raf = 0;
     let startTime: number | null = null;
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3); // ease-out cubic
     const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
+      if (startTime === null) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * target));
-      if (progress < 1) requestAnimationFrame(step);
+      setCount(Math.floor(ease(progress) * target));
+      if (progress < 1) raf = requestAnimationFrame(step);
     };
-    requestAnimationFrame(step);
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
   }, [target, duration, start]);
 
   return count;
 }
 
-interface StatCardProps {
+const StatCard = ({
+  label,
+  value,
+  suffix,
+  inView,
+}: {
   label: string;
-  prefix: string;
   value: number;
   suffix: string;
   inView: boolean;
-}
-
-const StatCard = ({ label, prefix, value, suffix, inView }: StatCardProps) => {
-  const count = useCounter(value, 2000, inView);
+}) => {
+  const count = useCounter(value, 1800, inView);
   return (
-    <div className="text-left">
-      <p
-        className="font-bold tracking-tighter mb-3"
+    <div>
+      <div
+        className="display"
         style={{
-          fontFamily: '"Noto Serif", serif',
-          fontSize: "clamp(2rem, 3.5vw, 3rem)",
-          color: "#f2ca50",
-          lineHeight: "1",
+          fontSize: "clamp(36px, 4vw, 56px)",
+          color: "var(--color-accent)",
+          letterSpacing: "-0.02em",
         }}
       >
-        {prefix}
         {formatNumber(count)}
         {suffix}
-      </p>
+      </div>
       <div
-        className="h-[1px] w-10 mb-3"
-        style={{ backgroundColor: "#4d4635" }}
-      />
-      <p
+        className="meta"
         style={{
-          fontFamily: '"Inter", sans-serif',
-          fontSize: "0.7rem",
-          textTransform: "uppercase",
-          letterSpacing: "0.25em",
-          color: "#99907c",
+          marginTop: 12,
+          paddingTop: 12,
+          borderTop: "1px solid var(--color-rule)",
         }}
       >
         {label}
-      </p>
+      </div>
     </div>
   );
 };
@@ -88,7 +91,7 @@ export const QuickStats = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.25 },
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -97,43 +100,61 @@ export const QuickStats = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-32"
-      style={{ backgroundColor: "#131313" }}
-      id="stats"
+      style={{
+        padding: "100px 0",
+        background: "var(--color-bg-raised)",
+        borderTop: "1px solid var(--color-rule)",
+        borderBottom: "1px solid var(--color-rule)",
+      }}
     >
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-12">
-        {/* Section header */}
-        <div className="mb-16 md:mb-20">
-          <span
-            className="block mb-4"
-            style={{
-              fontFamily: '"Inter", sans-serif',
-              fontSize: "0.7rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.3em",
-              color: "#f2ca50",
-            }}
+      <div className="container-jr">
+        <div
+          className="between"
+          style={{ marginBottom: 64, alignItems: "flex-end", flexWrap: "wrap", gap: 24 }}
+        >
+          <div>
+            <div className="kicker" style={{ marginBottom: 12 }}>
+              From the field, since MMXIX
+            </div>
+            <h2 className="display" style={{ fontSize: "clamp(36px, 5vw, 56px)" }}>
+              Years of reviews,{" "}
+              <span
+                className="display-italic"
+                style={{ color: "var(--color-ink-dim)" }}
+              >
+                photos, and visits.
+              </span>
+            </h2>
+          </div>
+          <div
+            className="meta italic"
+            style={{ fontFamily: "var(--font-serif)", color: "var(--color-ink-dim)", textTransform: "none", letterSpacing: 0, fontSize: 16 }}
           >
-            From Brandon&rsquo;s Google Local Guide profile
-          </span>
-          <h2
-            className="font-bold max-w-3xl"
-            style={{
-              fontFamily: '"Noto Serif", serif',
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              color: "#e5e2e1",
-              lineHeight: "1.05",
-            }}
-          >
-            Years of reviews, photos, and visits.
-          </h2>
+            Drawn from Brandon&rsquo;s Google Local Guide profile.
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-y-12 gap-x-8">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+            gap: 32,
+          }}
+          className="stats-grid"
+        >
           {stats.map((s) => (
             <StatCard key={s.label} {...s} inView={inView} />
           ))}
         </div>
+
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; row-gap: 48px !important; } }
+              @media (max-width: 640px)  { .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; row-gap: 40px !important; } }
+            `,
+          }}
+        />
       </div>
     </section>
   );

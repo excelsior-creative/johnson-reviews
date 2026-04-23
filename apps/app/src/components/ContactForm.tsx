@@ -8,28 +8,28 @@ type FormState = "idle" | "submitting" | "success" | "error";
 
 const fieldStyle: React.CSSProperties = {
   width: "100%",
-  backgroundColor: "transparent",
-  padding: "1rem 0",
-  fontFamily: '"Noto Serif", serif',
-  fontSize: "1rem",
-  color: "#e5e2e1",
+  background: "transparent",
+  padding: "12px 0",
+  fontFamily: "var(--font-serif)",
+  fontSize: 18,
+  color: "var(--color-ink)",
   border: "none",
   outline: "none",
 };
 
 const underlineStyle: React.CSSProperties = {
-  borderBottom: "1px solid rgba(77,70,53,0.6)",
-  transition: "border-color 0.3s ease",
+  borderBottom: "1px solid var(--color-rule-strong)",
+  transition: "border-color 0.25s ease",
 };
 
 const labelStyle: React.CSSProperties = {
   display: "block",
-  fontFamily: '"Inter", sans-serif',
-  fontSize: "0.625rem",
+  fontFamily: "var(--font-mono)",
+  fontSize: 10,
   textTransform: "uppercase",
   letterSpacing: "0.3em",
-  color: "#99907c",
-  marginBottom: "0.75rem",
+  color: "var(--color-ink-mute)",
+  marginBottom: 12,
 };
 
 export const ContactForm = () => {
@@ -69,78 +69,59 @@ export const ContactForm = () => {
       } catch (err) {
         setState("error");
         setErrorMessage(
-          err instanceof Error ? err.message : "Something went wrong"
+          err instanceof Error ? err.message : "Something went wrong",
         );
       }
     },
-    [name, email, message, executeRecaptcha]
+    [name, email, message, executeRecaptcha],
   );
 
   if (state === "success") {
     return (
-      <div
-        className="p-12 text-center"
-        style={{
-          backgroundColor: "#20201f",
-          boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
-        }}
-      >
-        <span
-          className="block mb-4"
-          style={{
-            fontFamily: '"Inter", sans-serif',
-            fontSize: "0.625rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.3em",
-            color: "#f2ca50",
-          }}
-        >
-          Dispatch Received
-        </span>
+      <div className="fade-in text-center" style={{ padding: "48px 0" }}>
+        <div className="kicker mb-4">Dispatch Received</div>
         <h3
-          className="font-bold mb-6"
-          style={{
-            fontFamily: '"Noto Serif", serif',
-            fontSize: "2rem",
-            color: "#e5e2e1",
-          }}
+          className="display"
+          style={{ fontSize: 36, marginBottom: 16 }}
         >
           Thank you.
         </h3>
         <p
-          className="italic mb-10"
+          className="italic mb-10 text-pretty"
           style={{
-            fontFamily: '"Noto Serif", serif',
-            color: "#d3c5ad",
-            lineHeight: "1.7",
+            fontFamily: "var(--font-serif)",
+            color: "var(--color-ink-dim)",
+            lineHeight: 1.7,
+            fontSize: 18,
+            maxWidth: 480,
+            margin: "0 auto 40px",
           }}
         >
-          Got it — your message is in. We&rsquo;ll get back to you within a
-          few days.
+          Got it — your message is in. We&rsquo;ll get back to you within a few
+          days.
         </p>
         <button
+          type="button"
           onClick={() => setState("idle")}
-          className="inline-flex items-center px-10 py-4 font-bold transition-transform hover:-translate-y-1"
-          style={{
-            border: "1px solid #99907c",
-            color: "#f2ca50",
-            fontFamily: '"Inter", sans-serif',
-            fontSize: "0.7rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.3em",
-          }}
+          className="btn"
         >
-          Send Another
+          Send Another <span className="arrow">→</span>
         </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-7">
+      <div className="kicker mb-2">Write In</div>
+
       <div>
         <label style={labelStyle}>Your Name</label>
-        <div style={underlineStyle}>
+        <div
+          style={underlineStyle}
+          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-accent)")}
+          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-rule-strong)")}
+        >
           <input
             type="text"
             value={name}
@@ -155,7 +136,11 @@ export const ContactForm = () => {
 
       <div>
         <label style={labelStyle}>Email Address</label>
-        <div style={underlineStyle}>
+        <div
+          style={underlineStyle}
+          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-accent)")}
+          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-rule-strong)")}
+        >
           <input
             type="email"
             value={email}
@@ -170,7 +155,11 @@ export const ContactForm = () => {
 
       <div>
         <label style={labelStyle}>Your Dispatch</label>
-        <div style={underlineStyle}>
+        <div
+          style={underlineStyle}
+          onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-accent)")}
+          onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--color-rule-strong)")}
+        >
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -185,11 +174,8 @@ export const ContactForm = () => {
 
       {state === "error" && (
         <p
-          style={{
-            fontFamily: '"Inter", sans-serif',
-            fontSize: "0.75rem",
-            color: "#ffb4ab",
-          }}
+          className="meta"
+          style={{ color: "var(--color-danger)", textTransform: "none", letterSpacing: 0, fontSize: 14, fontFamily: "var(--font-serif)", fontStyle: "italic" }}
         >
           {errorMessage}
         </p>
@@ -198,23 +184,17 @@ export const ContactForm = () => {
       <button
         type="submit"
         disabled={state === "submitting"}
-        className="inline-flex items-center justify-center px-12 py-5 font-bold transition-transform duration-300 hover:-translate-y-1 disabled:opacity-60 disabled:hover:translate-y-0"
-        style={{
-          background: "linear-gradient(135deg, #f2ca50 0%, #d4af37 100%)",
-          color: "#3c2f00",
-          fontFamily: '"Inter", sans-serif',
-          fontSize: "0.7rem",
-          textTransform: "uppercase",
-          letterSpacing: "0.3em",
-        }}
+        className="btn btn-primary"
       >
         {state === "submitting" ? (
           <>
-            <Loader2 className="w-4 h-4 mr-3 animate-spin" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin" />
             Sending…
           </>
         ) : (
-          "Send Dispatch"
+          <>
+            Send Dispatch <span className="arrow">→</span>
+          </>
         )}
       </button>
     </form>

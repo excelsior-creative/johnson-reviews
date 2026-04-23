@@ -1,195 +1,266 @@
-import Header from "@/components/Header";
+import React from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { NewsletterInline } from "@/components/NewsletterInline";
 
 export const revalidate = 3600;
 
 export default function AboutPage() {
   return (
-    <div
-      className="pt-28 md:pt-40 pb-24 md:pb-32"
-      style={{ backgroundColor: "#131313" }}
-    >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        <Header
-          badge="About"
-          title="The Johnsons, on the road."
-          subtitle="Johnson Reviews is Brandon Johnson's running log of restaurants, hotels, and family travel — written down so other families can decide what's worth the drive."
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20 mt-16">
-          {/* Main column */}
-          <div className="lg:col-span-8 space-y-10">
-            <p
-              className="drop-cap"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.125rem",
-                lineHeight: "1.8",
-                color: "#e5e2e1",
-              }}
-            >
-              Hi — I&rsquo;m Brandon. I&rsquo;m a Google Local Guide (Level 10,
-              500+ reviews, 27,000+ photos shared) based in Orange County. The
-              Johnsons travel a lot, eat out more than we probably should, and
-              for years I&rsquo;ve been writing all of it down on Google Maps.
-              This site is the long-form version of those reviews — the ones
-              with enough detail to actually help another family plan a trip,
-              pick a restaurant, or skip a place we wished we&rsquo;d skipped.
-            </p>
-            <p
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.125rem",
-                lineHeight: "1.8",
-                color: "#e5e2e1",
-              }}
-            >
-              The rules are simple. We pay for our own meals and stays. We only
-              review places we&rsquo;ve actually been. We tell you what worked
-              and what didn&rsquo;t, with the kid logistics other families ask
-              about — parking, kid menu, wait time, stroller-friendly,
-              reservation needed.
-            </p>
-
-            <blockquote
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontStyle: "italic",
-                fontSize: "1.5rem",
-                color: "#f2ca50",
-                borderLeft: "4px solid #d4af37",
-                padding: "1rem 0 1rem 2rem",
-                margin: "2rem 0",
-                lineHeight: "1.5",
-              }}
-            >
-              If a place is good, we say so. If a place fell short, we say that
-              too — with context, and without being mean about it.
-            </blockquote>
-
-            <p
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "1.125rem",
-                lineHeight: "1.8",
-                color: "#e5e2e1",
-              }}
-            >
-              Most of what you&rsquo;ll find here is centered on Orange County
-              and SoCal — Dana Point, Irvine, Laguna, San Juan Capistrano,
-              Anaheim — plus the places we travel to often: Las Vegas,
-              Disneyland, San Diego, Puerto Vallarta. Reviews are tagged by
-              location and by category so you can browse the way you actually
-              think about a trip.
-            </p>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="lg:col-span-4">
-            <div
-              className="p-10 space-y-10"
-              style={{
-                backgroundColor: "#20201f",
-                boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
-              }}
-            >
-              <div>
-                <h3
-                  className="font-bold mb-6"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.5rem",
-                    color: "#e5e2e1",
-                  }}
-                >
-                  How we work
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    "We pay for every meal and stay",
-                    "We only review places we've been",
-                    "Family-friendly notes on every post",
-                    "Honest, never mean",
-                  ].map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3"
-                      style={{
-                        fontFamily: '"Noto Serif", serif',
-                        fontSize: "0.95rem",
-                        color: "#d3c5ad",
-                        lineHeight: "1.6",
-                      }}
-                    >
-                      <span
-                        className="flex-shrink-0 mt-[0.4em]"
-                        style={{
-                          width: "6px",
-                          height: "6px",
-                          backgroundColor: "#f2ca50",
-                        }}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
+    <div className="page-body">
+      {/* Editorial split intro */}
+      <section style={{ padding: "120px 0 80px" }}>
+        <div className="container-jr">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: 80,
+              alignItems: "center",
+            }}
+            className="about-grid"
+          >
+            <div>
+              <div className="kicker rise mb-7">About the Publication</div>
+              <h1
+                className="display rise-1 text-balance"
+                style={{ fontSize: "clamp(48px, 6.5vw, 96px)" }}
+              >
+                An independent review publication,{" "}
                 <span
-                  className="block mb-3"
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.625rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.25em",
-                    color: "#99907c",
-                  }}
+                  className="display-italic"
+                  style={{ color: "var(--color-accent)" }}
                 >
-                  Google Local Guide
+                  run by one person.
                 </span>
-                <p
-                  className="font-bold"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "2.25rem",
-                    color: "#f2ca50",
-                    lineHeight: "1",
-                  }}
-                >
-                  Level 10
-                </p>
-                <p
-                  className="mt-2"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "0.85rem",
-                    color: "#d3c5ad",
-                    fontStyle: "italic",
-                  }}
-                >
-                  500+ reviews · 27,000+ photos
-                </p>
-              </div>
-
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center w-full py-5 font-bold transition-transform duration-300 hover:-translate-y-1"
+              </h1>
+              <p
+                className="rise-2 italic text-pretty"
                 style={{
-                  background: "linear-gradient(to right, #d4af37, #f2ca50)",
-                  color: "#3c2f00",
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.3em",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 22,
+                  color: "var(--color-ink-dim)",
+                  marginTop: 32,
+                  lineHeight: 1.55,
                 }}
               >
-                Get in touch
-              </Link>
+                Johnson &amp; Co. is the review project of Brandon Johnson — a
+                Google Maps Level 10 Local Guide with 500+ reviews, 27,000+
+                original photos, and 132 million photo views. Started in 2019 as
+                a personal notebook, it&rsquo;s now a working publication.
+              </p>
             </div>
-          </aside>
+            <div className="rise-2 photo" style={{ aspectRatio: "4 / 5" }}>
+              <Image
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80"
+                alt="Brandon Johnson"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Stats */}
+      <section
+        style={{
+          padding: "80px 0",
+          borderTop: "1px solid var(--color-rule)",
+          borderBottom: "1px solid var(--color-rule)",
+        }}
+      >
+        <div className="container-jr">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+              gap: 40,
+            }}
+            className="stats-grid"
+          >
+            {[
+              ["500+", "Reviews published"],
+              ["27,000+", "Original photographs"],
+              ["132M+", "Photo views"],
+              ["Level 10", "Google Local Guide"],
+            ].map(([n, l]) => (
+              <div key={l}>
+                <div
+                  className="display"
+                  style={{
+                    fontSize: "clamp(36px, 4vw, 64px)",
+                    color: "var(--color-accent)",
+                  }}
+                >
+                  {n}
+                </div>
+                <div
+                  className="meta"
+                  style={{
+                    marginTop: 12,
+                    paddingTop: 12,
+                    borderTop: "1px solid var(--color-rule)",
+                  }}
+                >
+                  {l}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Method */}
+      <section style={{ padding: "120px 0" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <div className="kicker mb-8">The Method</div>
+          <h2
+            className="display"
+            style={{ fontSize: "clamp(36px, 5vw, 56px)" }}
+          >
+            How we{" "}
+            <span
+              className="display-italic"
+              style={{ color: "var(--color-accent)" }}
+            >
+              do this.
+            </span>
+          </h2>
+          <div className="prose" style={{ marginTop: 48 }}>
+            <p className="drop-cap">
+              Every place written about on this site has been visited at our own
+              expense. We don&rsquo;t take press trips. We don&rsquo;t accept
+              comped meals. We don&rsquo;t run sponsored content or affiliate
+              links. This is the editorial line, and it isn&rsquo;t going to
+              change.
+            </p>
+            <p>
+              We usually visit a place more than once before writing about it.
+              For restaurants, we aim for at least two visits — enough to see
+              the kitchen on a regular night and on a busy one. For hotels, we
+              stay a minimum of two nights.
+            </p>
+            <p>
+              Scores are a 10-point scale, calibrated against the full archive.
+              A 9+ means we&rsquo;d rearrange a trip to go back. An 8-range
+              score is a confident recommendation. Anything below 7, we
+              generally don&rsquo;t publish.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Three principles */}
+      <section
+        style={{
+          padding: "80px 0 120px",
+          background: "var(--color-bg-raised)",
+          borderTop: "1px solid var(--color-rule)",
+          borderBottom: "1px solid var(--color-rule)",
+        }}
+      >
+        <div className="container-jr">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gap: 60,
+            }}
+            className="principles-grid"
+          >
+            {[
+              [
+                "No Sponsors.",
+                "Every visit is paid for by us. No free meals, no press trips, no “experiences” gifted in exchange for coverage.",
+              ],
+              [
+                "No Affiliates.",
+                "No booking links, no referral commissions, no Amazon tags. When we point you somewhere, we have no financial stake in it.",
+              ],
+              [
+                "No Shortcuts.",
+                "We revisit before we re-publish. Scores update when places change. Reviews get edited when we’re wrong.",
+              ],
+            ].map(([t, d]) => (
+              <div key={t}>
+                <div
+                  className="display"
+                  style={{ fontSize: 36, marginBottom: 16 }}
+                >
+                  {t.slice(0, -1)}
+                  <span style={{ color: "var(--color-accent)" }}>.</span>
+                </div>
+                <div
+                  className="text-pretty"
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontSize: 17,
+                    color: "var(--color-ink-dim)",
+                    lineHeight: 1.55,
+                  }}
+                >
+                  {d}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Editor note */}
+      <section style={{ padding: "120px 0" }}>
+        <div
+          className="container-jr text-center"
+          style={{ maxWidth: 760 }}
+        >
+          <div className="kicker mb-8">A Note from the Editor</div>
+          <p
+            className="italic text-pretty"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 24,
+              lineHeight: 1.55,
+              color: "var(--color-ink),",
+            }}
+          >
+            I started writing these reviews for myself and for friends who kept
+            asking. I kept writing them because it turned out to be the kind of
+            work that pays attention back. If you&rsquo;ve read this far, thank
+            you. If you ever want to argue with a score, the address is in the
+            footer.
+          </p>
+          <div style={{ marginTop: 48 }}>
+            <div className="signature" style={{ fontSize: 44 }}>
+              Brandon J.
+            </div>
+            <div className="meta" style={{ marginTop: 12 }}>
+              Editor · Orange County, California
+            </div>
+          </div>
+          <div style={{ marginTop: 40 }}>
+            <Link href="/contact" className="btn">
+              Get in touch <span className="arrow">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <NewsletterInline compact />
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @media (max-width: 900px) {
+              .about-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+              .principles-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+              .stats-grid { grid-template-columns: 1fr 1fr !important; row-gap: 40px !important; }
+            }
+          `,
+        }}
+      />
     </div>
   );
 }

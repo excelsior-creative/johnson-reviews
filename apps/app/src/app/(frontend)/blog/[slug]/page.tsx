@@ -7,6 +7,7 @@ import { LexicalContent } from "@/components/LexicalContent";
 import Image from "next/image";
 import Link from "next/link";
 import { Media, Post, Category, Tag } from "@/payload-types";
+import { NewsletterInline } from "@/components/NewsletterInline";
 
 export const dynamic = "force-dynamic";
 
@@ -22,28 +23,19 @@ export default async function PostPage({
   try {
     const { docs: posts } = await payload.find({
       collection: "posts",
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
+      where: { slug: { equals: slug } },
       depth: 2,
     });
     post = posts[0] as Post;
   } catch (error) {
-    console.error(
-      `Failed to fetch blog post "${slug}" during page render.`,
-      error
-    );
+    console.error(`Failed to fetch blog post "${slug}":`, error);
   }
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
   const featuredImage = post.featuredImage as Media | undefined;
-  const categories = (post.categories as Category[]) || [];
-  const tags = (post.tags as Tag[]) || [];
+  const categories = (post.categories as Category[]) ?? [];
+  const tags = (post.tags as Tag[]) ?? [];
   const primaryCategory = categories[0];
 
   const formattedDate = post.publishedDate
@@ -62,7 +54,7 @@ export default async function PostPage({
         if (!img?.url) return null;
         return {
           url: img.url,
-          alt: img.alt || post.title,
+          alt: img.alt || post!.title,
           caption: item.caption ?? undefined,
           width: img.width ?? undefined,
           height: img.height ?? undefined,
@@ -71,286 +63,185 @@ export default async function PostPage({
       .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
   return (
-    <article style={{ backgroundColor: "#131313" }}>
-      {/* Hero — full-bleed image with title overlay */}
-      <section className="relative w-full overflow-hidden pt-24 md:pt-28">
-        <div
-          className="relative w-full"
-          style={{ height: "clamp(60vh, 80vh, 870px)" }}
-        >
-          {featuredImage?.url ? (
-            <Image
-              src={featuredImage.url}
-              alt={featuredImage.alt || post.title}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-              style={{ filter: "grayscale(20%) brightness(0.4)" }}
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: "#1c1b1b" }}
-            />
-          )}
-
-          {/* Bottom gradient */}
+    <article className="page-body">
+      {/* Hero */}
+      <section
+        style={{
+          position: "relative",
+          height: "min(82vh, 880px)",
+          overflow: "hidden",
+        }}
+      >
+        {featuredImage?.url ? (
+          <Image
+            src={featuredImage.url}
+            alt={featuredImage.alt || post.title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover ken-burns"
+          />
+        ) : (
           <div
             className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, #131313 0%, transparent 60%)",
-            }}
+            style={{ background: "var(--color-bg-card)" }}
           />
-
-          {/* Title block positioned at bottom */}
-          <div className="absolute inset-0 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-12 md:pb-20">
-            <div className="max-w-4xl">
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                {primaryCategory &&
-                  typeof primaryCategory === "object" && (
-                    <span
-                      className="inline-block px-4 py-1"
-                      style={{
-                        backgroundColor: "#353535",
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: "0.7rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#d3c5ad",
-                      }}
-                    >
-                      {primaryCategory.name}
-                    </span>
-                  )}
-                {formattedDate && (
-                  <span
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: "0.7rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.2em",
-                      color: "#f2ca50",
-                    }}
-                  >
-                    {formattedDate}
-                  </span>
-                )}
-              </div>
-              <h1
-                className="font-bold leading-[1.05] mb-4 tracking-tighter"
+        )}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(15,13,11,0.5) 0%, rgba(15,13,11,0.1) 30%, rgba(15,13,11,0.96) 100%)",
+          }}
+        />
+        <div className="absolute" style={{ bottom: 80, left: 0, right: 0 }}>
+          <div className="container-jr">
+            <div className="kicker rise mb-6">
+              {primaryCategory?.name ?? "The Journal"}
+              {formattedDate ? ` · ${formattedDate}` : ""}
+            </div>
+            <h1
+              className="display rise-1 text-balance"
+              style={{
+                fontSize: "clamp(48px, 8vw, 124px)",
+                maxWidth: "16ch",
+                lineHeight: 0.95,
+              }}
+            >
+              {post.title}
+            </h1>
+            {post.excerpt && (
+              <p
+                className="rise-2 italic max-w-3xl text-pretty"
                 style={{
-                  fontFamily: '"Noto Serif", serif',
-                  fontSize: "clamp(2.5rem, 7vw, 6rem)",
-                  color: "#e5e2e1",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "clamp(18px, 1.6vw, 24px)",
+                  color: "var(--color-ink-dim)",
+                  marginTop: 24,
+                  lineHeight: 1.45,
                 }}
               >
-                {post.title}
-              </h1>
-              {post.excerpt && (
-                <p
-                  className="italic max-w-2xl"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "clamp(1.125rem, 1.5vw, 1.5rem)",
-                    color: "rgba(242,202,80,0.85)",
-                    lineHeight: "1.5",
-                  }}
-                >
-                  {post.excerpt}
-                </p>
-              )}
+                {post.excerpt}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Author byline */}
+      <section style={{ padding: "60px 0 0" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+            }}
+          >
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, #3a2f25, #6b5842)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--color-accent)",
+                fontSize: 18,
+              }}
+            >
+              BJ
+            </div>
+            <div>
+              <div style={{ fontFamily: "var(--font-serif)", fontSize: 16 }}>
+                By Brandon Johnson
+              </div>
+              <div className="meta" style={{ marginTop: 2 }}>
+                Editor {formattedDate ? `· ${formattedDate}` : ""}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Content + sidebar grid */}
-      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
-          {/* Narrative */}
-          <div className="lg:col-span-8">
-            <LexicalContent content={post.content} dropCap />
+      {/* Article body */}
+      <section style={{ padding: "40px 0 80px" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <LexicalContent content={post.content} dropCap />
+        </div>
+      </section>
 
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div
-                className="mt-16 pt-10"
-                style={{ borderTop: "1px solid rgba(77,70,53,0.3)" }}
-              >
-                <span
-                  className="block mb-5"
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.65rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.3em",
-                    color: "#99907c",
-                  }}
-                >
-                  Tags
-                </span>
-                <div className="flex flex-wrap gap-3">
+      {/* Gallery */}
+      {galleryImages.length > 0 && (
+        <section style={{ padding: "40px 0 80px" }}>
+          <div className="container-jr">
+            <PhotoGallery
+              images={galleryImages as { url: string; alt?: string; caption?: string }[]}
+              title="From the visit."
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Tags + back row */}
+      {tags.length > 0 && (
+        <section
+          style={{
+            padding: "60px 0",
+            borderTop: "1px solid var(--color-rule)",
+            borderBottom: "1px solid var(--color-rule)",
+          }}
+        >
+          <div className="container-jr" style={{ maxWidth: 1000 }}>
+            <div
+              className="between"
+              style={{ flexWrap: "wrap", gap: 24, alignItems: "center" }}
+            >
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+                <span className="meta">Tags</span>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {tags.map((tag) =>
                     typeof tag === "object" ? (
-                      <span
+                      <Link
                         key={tag.id}
-                        className="inline-block px-4 py-2"
+                        href={`/blog?tag=${tag.slug ?? tag.id}`}
+                        className="meta"
                         style={{
-                          backgroundColor: "#353535",
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.625rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.2em",
-                          color: "#d3c5ad",
+                          color: "var(--color-ink-dim)",
+                          border: "1px solid var(--color-rule-strong)",
+                          padding: "8px 14px",
+                          transition: "color 0.2s, border-color 0.2s",
                         }}
                       >
                         {tag.name}
-                      </span>
-                    ) : null
+                      </Link>
+                    ) : null,
                   )}
                 </div>
               </div>
-            )}
-
-            {/* Gallery */}
-            {galleryImages.length > 0 && (
-              <div className="mt-16">
-                <PhotoGallery
-                  images={
-                    galleryImages as {
-                      url: string;
-                      alt?: string;
-                      caption?: string;
-                    }[]
-                  }
-                  title="Photo Gallery"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar — "Concierge" */}
-          <aside className="lg:col-span-4">
-            <div className="sticky top-28 space-y-10">
-              <div
-                className="p-10"
-                style={{
-                  backgroundColor: "#20201f",
-                  boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
-                }}
-              >
-                <h3
-                  className="font-bold mb-8"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.5rem",
-                    color: "#e5e2e1",
-                  }}
-                >
-                  The Concierge
-                </h3>
-
-                <div className="space-y-6">
-                  {categories.length > 0 && (
-                    <div>
-                      <p
-                        className="mb-2"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.625rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.25em",
-                          color: "#99907c",
-                        }}
-                      >
-                        Collection
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {categories.map((c) =>
-                          typeof c === "object" ? (
-                            <Link
-                              key={c.id}
-                              href={`/blog?category=${c.slug}`}
-                              className="transition-colors hover:text-[#f2ca50]"
-                              style={{
-                                fontFamily: '"Noto Serif", serif',
-                                fontSize: "0.9rem",
-                                color: "#d3c5ad",
-                              }}
-                            >
-                              {c.name}
-                            </Link>
-                          ) : null
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {formattedDate && (
-                    <div>
-                      <p
-                        className="mb-2"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.625rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.25em",
-                          color: "#99907c",
-                        }}
-                      >
-                        Date of Visit
-                      </p>
-                      <p
-                        style={{
-                          fontFamily: '"Noto Serif", serif',
-                          fontSize: "0.9rem",
-                          color: "#d3c5ad",
-                        }}
-                      >
-                        {formattedDate}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center w-full mt-10 py-5 font-bold transition-transform duration-300 hover:-translate-y-1"
-                  style={{
-                    background:
-                      "linear-gradient(to right, #d4af37, #f2ca50)",
-                    color: "#3c2f00",
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.7rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.3em",
-                  }}
-                >
-                  Plan a Visit
-                </Link>
-              </div>
-
-              {/* Back link */}
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-3 transition-colors hover:text-[#f2ca50]"
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.25em",
-                  color: "#99907c",
-                }}
-              >
-                <span>&larr;</span>
-                Return to the Journal
+              <Link href="/blog" className="btn btn-ghost">
+                Back to The Journal <span className="arrow">→</span>
               </Link>
             </div>
-          </aside>
+          </div>
+        </section>
+      )}
+
+      {/* Signature */}
+      <section style={{ padding: "60px 0 100px" }}>
+        <div className="container-jr text-center" style={{ maxWidth: 760 }}>
+          <div className="meta mb-3">— End of dispatch —</div>
+          <div className="signature" style={{ fontSize: 40 }}>
+            Brandon J.
+          </div>
         </div>
       </section>
+
+      <NewsletterInline compact />
     </article>
   );
 }
