@@ -6,10 +6,61 @@ import { PhotoGallery } from "@/components/PhotoGallery";
 import { LexicalContent } from "@/components/LexicalContent";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Media, Post, Category, Tag } from "@/payload-types";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import { generateArticleMetadata, absoluteUrl } from "@/lib/metadata";
+import {
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+  combineSchemas,
+} from "@/lib/structured-data";
 
 export const dynamic = "force-dynamic";
+
+async function fetchPostBySlug(slug: string): Promise<Post | undefined> {
+  try {
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "posts",
+      where: { slug: { equals: slug } },
+      depth: 2,
+      limit: 1,
+    });
+    return docs[0] as Post | undefined;
+  } catch (error) {
+    console.error(`Failed to fetch blog post "${slug}":`, error);
+    return undefined;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await fetchPostBySlug(slug);
+  if (!post) {
+    return { title: "Not found", robots: { index: false, follow: false } };
+  }
+
+  const featuredImage = post.featuredImage as Media | undefined;
+  const tagNames = ((post.tags as Tag[]) ?? [])
+    .map((t) => (typeof t === "object" ? t.name : null))
+    .filter(Boolean) as string[];
+
+  return generateArticleMetadata({
+    title: post.title,
+    description: post.excerpt ?? post.title,
+    slug: post.slug ?? slug,
+    pathPrefix: "/blog",
+    ogImage: absoluteUrl(featuredImage?.url ?? undefined),
+    publishedTime: post.publishedDate ?? post.createdAt ?? undefined,
+    modifiedTime: post.updatedAt ?? undefined,
+    keywords: tagNames.length > 0 ? tagNames : undefined,
+  });
+}
 
 export default async function PostPage({
   params,
@@ -17,19 +68,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const payload = await getPayload({ config });
-  let post: Post | undefined;
-
-  try {
-    const { docs: posts } = await payload.find({
-      collection: "posts",
-      where: { slug: { equals: slug } },
-      depth: 2,
-    });
-    post = posts[0] as Post;
-  } catch (error) {
-    console.error(`Failed to fetch blog post "${slug}":`, error);
-  }
+  const post = await fetchPostBySlug(slug);
 
   if (!post) notFound();
 
@@ -37,6 +76,14 @@ export default async function PostPage({
   const categories = (post.categories as Category[]) ?? [];
   const tags = (post.tags as Tag[]) ?? [];
   const primaryCategory = categories[0];
+
+  const articleSchema = generateArticleSchema(post);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "The Journal", url: "/blog" },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ]);
+  const pageSchema = combineSchemas(articleSchema, breadcrumbSchema);
 
   const formattedDate = post.publishedDate
     ? new Date(post.publishedDate).toLocaleDateString("en-US", {
@@ -242,6 +289,13 @@ export default async function PostPage({
       </section>
 
       <NewsletterInline compact />
+
+      {pageSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+        />
+      )}
     </article>
   );
 }

@@ -28,15 +28,21 @@ based on the mandate and current state._
 
 ## Objective 3: SEO authority
 
-- **KR3.1** — Restaurant / TouristAttraction / LocalBusiness +
-  Review schema on 100% of published reviews. ⬜
-- **KR3.2** — Author bio block (E-E-A-T signal) shipped on all
-  posts. ⬜
+- **KR3.1** — Restaurant / LodgingBusiness / TouristAttraction /
+  LocalBusiness + Review schema on 100% of published reviews.
+  🟢 Infra shipped 2026-04-24 (`generateReviewSchema` +
+  `categoryToSchemaType` + wired into `/reviews/[slug]`). Counts
+  as done as soon as we have published reviews in the collection.
+- **KR3.2** — Author E-E-A-T signal — Person schema for Brandon in
+  global JSON-LD graph, Article + Review schemas author-ref to him.
+  ✅ Shipped 2026-04-24. Inline BJ byline on detail pages is already
+  there from PR #15.
 - **KR3.3** — Sitemap.xml + robots.txt verified clean and
-  submitted to GSC. ⬜
+  submitted to GSC. 🟡 `sitemap.ts` has a pre-existing TS narrowing
+  issue (surfaced by type-check tonight); fix next run, then submit.
 - **KR3.4** — At least 3 location hub pages live (Dana Point,
   Irvine, Las Vegas as starting set based on legacy review
-  density). ⬜
+  density). ⬜ Dana Point is next run's target.
 
 ## Objective 4: Establish the brand publicly
 

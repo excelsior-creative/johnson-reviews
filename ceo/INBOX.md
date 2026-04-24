@@ -58,14 +58,23 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
    into Payload Media; flagging so you don't accidentally cancel
    that hosting.
 
-9. **Suspicious components.** `CalculatorSection` and
-   `ServicesSection` exist in the codebase but I can't tell what
-   they do on a reviews site. Probably dead code from the
-   original WP-clone scaffold. I'll audit + propose removal next
-   nightly run unless you want them kept.
-
 10. **Quarter OKRs.** Drafted in `/ceo/okrs.md`. Targets are best-
     guess. Confirm or revise.
+
+11. **Dead scaffold components removed** (2026-04-24). Deleted six
+    unused components (`CalculatorSection`, `ServicesSection`,
+    `AboutSection`, `CTASection`, `Header` (the component — the
+    Payload global `globals/Header` is untouched), `Logo`). These
+    were Next.js/Payload/agency-scaffold leftovers. If you actually
+    wanted any of them, yell; otherwise this is FYI.
+
+12. **Author profile links (`sameAs`).** Added a Person schema for
+    you (E-E-A-T signal) in `/lib/structured-data.ts`. The `sameAs`
+    array is currently empty — if you send me your public profile
+    URLs (Google Local Guide contrib page, Twitter/X, Instagram,
+    LinkedIn, Facebook — whatever you want associated), I'll drop
+    them into `AUTHOR_SAME_AS` in `/lib/metadata.ts` so Google can
+    link your web presence to the Johnson Reviews author entity.
 
 ## Answered
 
