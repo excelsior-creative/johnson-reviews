@@ -1,193 +1,702 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", sans-serif;
-  --font-headline: "Noto Serif", serif;
-  --font-body: "Noto Serif", serif;
-  --font-label: "Inter", sans-serif;
+/* =====================================================================
+   Johnson & Co. — Dark Editorial Design System
+   ===================================================================== */
 
-  /* Legacy font aliases for gradual migration */
+@theme {
+  /* Type families */
+  --font-serif: "Playfair Display", "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  --font-script: "Caveat", "Homemade Apple", cursive;
+
+  /* Legacy aliases — keep until callers migrate */
+  --font-headline: "Playfair Display", serif;
+  --font-body: "Playfair Display", serif;
+  --font-label: "Inter", sans-serif;
   --font-oswald: "Inter", sans-serif;
   --font-jost: "Inter", sans-serif;
-  --font-unna: "Noto Serif", serif;
+  --font-unna: "Playfair Display", serif;
 
-  /* Dark luxury color system */
-  --color-background: #131313;
-  --color-on-surface: #e5e2e1;
-  --color-primary: #f2ca50;
-  --color-primary-container: #d4af37;
-  --color-on-primary: #3c2f00;
-  --color-surface-container: #20201f;
-  --color-surface-container-low: #1c1b1b;
-  --color-surface-container-high: #2a2a2a;
-  --color-surface-container-highest: #353535;
-  --color-outline: #99907c;
-  --color-outline-variant: #4d4635;
-  --color-secondary: #d3c5ad;
-  --color-secondary-fixed-dim: #d3c5ad;
+  /* ---- Editorial color system ---- */
+  --color-bg: #0f0d0b;
+  --color-bg-raised: #1a1613;
+  --color-bg-card: #221c17;
+  --color-bg-elev: #2a221b;
 
-  /* shadcn/Payload compatibility layer */
-  --color-foreground: #e5e2e1;
-  --color-card: #20201f;
-  --color-card-foreground: #e5e2e1;
-  --color-popover: #20201f;
-  --color-popover-foreground: #e5e2e1;
-  --color-muted: #2a2a2a;
-  --color-muted-foreground: #99907c;
-  --color-accent: #f2ca50;
-  --color-accent-foreground: #3c2f00;
-  --color-destructive: hsl(0 84% 60%);
-  --color-destructive-foreground: #e5e2e1;
-  --color-border: #4d4635;
-  --color-input: #4d4635;
-  --color-ring: #f2ca50;
+  --color-ink: #ece4d3;
+  --color-ink-dim: #a89d89;
+  --color-ink-mute: #6b6355;
 
-  /* Brand alias */
-  --color-brand: #f2ca50;
-  --color-brand-light: #f5d570;
-  --color-brand-dark: #d4af37;
-  --color-brand-foreground: #3c2f00;
+  --color-rule: #2e251d;
+  --color-rule-strong: #3d3125;
 
+  --color-accent: #c9a961;
+  --color-accent-warm: #d4b97a;
+  --color-accent-deep: #8c7340;
+  --color-danger: #a84630;
+
+  /* Tailwind/shadcn semantic tokens — point at editorial palette */
+  --color-background: #0f0d0b;
+  --color-foreground: #ece4d3;
+  --color-on-surface: #ece4d3;
+  --color-primary: #c9a961;
+  --color-primary-container: #d4b97a;
+  --color-on-primary: #0f0d0b;
+  --color-surface-container: #221c17;
+  --color-surface-container-low: #1a1613;
+  --color-surface-container-high: #2a221b;
+  --color-surface-container-highest: #3d3125;
+  --color-outline: #a89d89;
+  --color-outline-variant: #3d3125;
+  --color-secondary: #d4b97a;
+  --color-secondary-fixed-dim: #d4b97a;
+
+  --color-card: #221c17;
+  --color-card-foreground: #ece4d3;
+  --color-popover: #221c17;
+  --color-popover-foreground: #ece4d3;
+  --color-muted: #2a221b;
+  --color-muted-foreground: #a89d89;
+  --color-accent-foreground: #0f0d0b;
+  --color-destructive: #a84630;
+  --color-destructive-foreground: #ece4d3;
+  --color-border: #2e251d;
+  --color-input: #3d3125;
+  --color-ring: #c9a961;
+
+  --color-brand: #c9a961;
+  --color-brand-light: #d4b97a;
+  --color-brand-dark: #8c7340;
+  --color-brand-foreground: #0f0d0b;
+
+  /* Geometry */
   --radius-none: 0px;
-  --radius-lg: 0.25rem;
-  --radius-md: 0.25rem;
-  --radius-sm: 0.25rem;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+
+  /* Layout */
+  --max-w: 1440px;
+  --gutter: clamp(20px, 4vw, 64px);
 }
 
 @layer base {
   :root {
-    /* CSS variable shims for components that use hsl(var(--xxx)) */
-    --background: 0 0% 7.5%;
-    --foreground: 30 5% 89%;
-    --card: 0 0% 12.5%;
-    --card-foreground: 30 5% 89%;
-    --popover: 0 0% 12.5%;
-    --popover-foreground: 30 5% 89%;
-    --primary: 45 87% 63%;
-    --primary-foreground: 43 100% 12%;
-    --secondary: 0 0% 12.5%;
-    --secondary-foreground: 30 5% 89%;
-    --muted: 0 0% 16.5%;
-    --muted-foreground: 35 10% 56%;
-    --accent: 45 87% 63%;
-    --accent-foreground: 43 100% 12%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 37 17% 25%;
-    --input: 37 17% 25%;
-    --ring: 45 87% 63%;
+    /* HSL shims for legacy hsl(var(--xxx)) consumers */
+    --background: 30 18% 6%;
+    --foreground: 39 41% 87%;
+    --card: 28 20% 11%;
+    --card-foreground: 39 41% 87%;
+    --popover: 28 20% 11%;
+    --popover-foreground: 39 41% 87%;
+    --primary: 41 49% 58%;
+    --primary-foreground: 30 18% 6%;
+    --secondary: 28 20% 11%;
+    --secondary-foreground: 39 41% 87%;
+    --muted: 28 22% 14%;
+    --muted-foreground: 35 19% 60%;
+    --accent: 41 49% 58%;
+    --accent-foreground: 30 18% 6%;
+    --destructive: 11 56% 43%;
+    --destructive-foreground: 39 41% 87%;
+    --border: 30 24% 15%;
+    --input: 30 24% 15%;
+    --ring: 41 49% 58%;
     --radius: 0rem;
   }
 
-  body {
-    background-color: #131313;
-    color: #e5e2e1;
-    font-family: "Noto Serif", serif;
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  ::selection {
-    background: rgba(242, 202, 80, 0.3);
-  }
+  body { background-color: var(--color-bg); color: var(--color-ink); }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
 
-  * {
-    border-color: #4d4635;
-  }
+  ::selection { background: var(--color-accent); color: var(--color-bg); }
+
+  * { border-color: var(--color-rule); }
 }
 
+/* =====================================================================
+   Typography primitives
+   ===================================================================== */
+@layer components {
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+  }
+  .display-italic { font-style: italic; font-weight: 400; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-dim);
+    font-weight: 400;
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .prose {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+  .prose p + p { margin-top: 1.2em; text-indent: 1.5em; }
+  .prose p:first-child { text-indent: 0; }
+  .prose p.drop-cap::first-letter,
+  .prose .drop-cap::first-letter {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    float: left;
+    font-size: 5.2em;
+    line-height: 0.85;
+    padding: 0.08em 0.12em 0 0;
+    color: var(--color-accent);
+  }
+
+  /* Layout helpers */
+  .container-jr {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .stack-xs > * + * { margin-top: 4px; }
+  .stack-sm > * + * { margin-top: 8px; }
+  .stack-md > * + * { margin-top: 16px; }
+  .stack-lg > * + * { margin-top: 24px; }
+  .stack-xl > * + * { margin-top: 40px; }
+
+  .between { display: flex; justify-content: space-between; align-items: center; }
+  .rule-line { height: 1px; background: var(--color-rule); width: 100%; }
+
+  /* =====================================================================
+     Buttons
+     ===================================================================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-rule-strong);
+    color: var(--color-ink);
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+    will-change: color, border-color;
+  }
+  .btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .btn:focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border-color: var(--color-accent);
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-warm);
+    border-color: var(--color-accent-warm);
+    color: var(--color-bg);
+  }
+
+  .btn-ghost {
+    border-color: transparent;
+    padding: 14px 0;
+  }
+  .btn-ghost:hover { color: var(--color-accent); border-color: transparent; }
+
+  .arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    will-change: transform;
+  }
+  .btn:hover .arrow,
+  .group:hover .arrow,
+  a:hover > .arrow { transform: translateX(3px); }
+
+  /* =====================================================================
+     Score Disc
+     ===================================================================== */
+  .score-disc {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-family: var(--font-serif);
+    background: var(--color-bg);
+  }
+  .score-disc .score {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .score-disc .of {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: var(--color-ink-mute);
+    margin-top: 3px;
+    text-transform: uppercase;
+  }
+  .score-disc.sm { width: 56px; height: 56px; }
+  .score-disc.sm .score { font-size: 19px; }
+  .score-disc.sm .of { font-size: 7px; margin-top: 2px; }
+  .score-disc.lg { width: 128px; height: 128px; }
+  .score-disc.lg .score { font-size: 44px; }
+  .score-disc.lg .of { font-size: 10px; margin-top: 4px; }
+
+  /* =====================================================================
+     Tags / chips
+     ===================================================================== */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-dim);
+  }
+  .tag::before {
+    content: "";
+    width: 18px; height: 1px;
+    background: var(--color-accent);
+  }
+  .tag.no-rule::before { display: none; }
+
+  /* =====================================================================
+     Photo frame
+     ===================================================================== */
+  .photo {
+    background: var(--color-bg-card);
+    overflow: hidden;
+    position: relative;
+  }
+  .photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .photo.hover:hover img,
+  .photo-hover:hover img,
+  .group:hover .photo img,
+  .group:hover .photo-img { transform: scale(1.04); }
+
+  .caption {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .caption .num { color: var(--color-accent); }
+
+  /* =====================================================================
+     Issue bar (atop nav)
+     ===================================================================== */
+  .issue-bar {
+    display: block;
+    border-bottom: 1px solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+
+  /* =====================================================================
+     Nav (sticky, glass)
+     ===================================================================== */
+  .nav-jr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(15, 13, 11, 0.86);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink-dim);
+    transition: color 0.25s ease;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-link:hover { color: var(--color-ink); }
+  .nav-link.active { color: var(--color-ink); }
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    bottom: -6px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  .wordmark {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-align: center;
+  }
+  .wordmark .amp {
+    font-style: italic;
+    color: var(--color-accent);
+    font-weight: 400;
+  }
+  .wordmark-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--color-ink-mute);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  /* =====================================================================
+     Footer
+     ===================================================================== */
+  .footer-jr {
+    background: var(--color-bg-raised);
+    border-top: 1px solid var(--color-rule);
+    padding: 80px 0 40px;
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .footer-col a {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    color: var(--color-ink);
+    transition: color 0.25s ease;
+  }
+  .footer-col a:hover { color: var(--color-accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+    margin-top: 60px;
+    border-top: 1px solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  /* =====================================================================
+     Page header
+     ===================================================================== */
+  .page-header {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  /* =====================================================================
+     Review card
+     ===================================================================== */
+  .review-card {
+    cursor: pointer;
+    display: block;
+    color: inherit;
+  }
+  .review-card .photo {
+    aspect-ratio: 4 / 5;
+    margin-bottom: 20px;
+  }
+  .review-card .cat {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+  .review-card h3 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    transition: color 0.25s ease;
+  }
+  .review-card .location {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-mute);
+  }
+  .review-card .blurb {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-ink-dim);
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .review-card:hover h3 { color: var(--color-accent-warm); }
+
+  /* =====================================================================
+     Index row (used by archive / masthead)
+     ===================================================================== */
+  .index-row {
+    transition: padding 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
+    will-change: padding;
+  }
+  .index-row:hover { padding-inline: 16px; background: rgba(196, 169, 97, 0.04); }
+
+  /* =====================================================================
+     Signature
+     ===================================================================== */
+  .signature {
+    font-family: var(--font-script);
+    font-size: 32px;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  /* =====================================================================
+     Inputs
+     ===================================================================== */
+  .field-line {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-rule-strong);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-style: italic;
+    padding: 14px 4px;
+    width: 100%;
+    transition: border-color 0.25s ease;
+    outline: none;
+  }
+  .field-line:focus { border-color: var(--color-accent); }
+  .field-line::placeholder { color: var(--color-ink-mute); }
+}
+
+/* =====================================================================
+   Utility layer
+   ===================================================================== */
 @layer utilities {
-  /* Gilded gradient */
+  /* Headline gradient (used sparingly) */
   .gilded-gradient {
-    background: linear-gradient(135deg, #f2ca50 0%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--color-accent-warm) 0%, var(--color-accent-deep) 100%);
   }
 
-  /* Glass panel */
   .glass-panel {
-    background: rgba(53, 53, 53, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(34, 28, 23, 0.6);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
   }
 
-  /* Drop cap for review copy */
+  /* Drop cap utility (single-paragraph) */
   .drop-cap::first-letter {
     float: left;
-    font-size: 5rem;
-    line-height: 4rem;
-    padding-right: 0.75rem;
-    padding-top: 0.25rem;
-    font-family: "Noto Serif", serif;
-    font-weight: 700;
-    color: #d4af37;
+    font-size: 5.2em;
+    line-height: 0.85;
+    padding: 0.08em 0.18em 0 0;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: var(--color-accent);
   }
 
-  /* Grayscale → color hover (applied on parent group) */
+  /* Image hover treatments — kept for legacy callers but reduced motion friendly */
   .grayscale-hover {
-    filter: grayscale(100%);
-    transition: filter 0.7s ease, transform 0.7s ease;
+    filter: grayscale(50%);
+    transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: filter, transform;
   }
   .group:hover .grayscale-hover {
     filter: grayscale(0%);
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
-  /* Label typography */
   .label-caps {
-    font-family: "Inter", sans-serif;
+    font-family: var(--font-mono);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.4em;
   }
 
-  /* Font utilities */
-  .font-headline {
-    font-family: "Noto Serif", serif;
-  }
-  .font-label {
-    font-family: "Inter", sans-serif;
-  }
+  .font-headline { font-family: var(--font-serif); }
+  .font-label    { font-family: var(--font-mono); }
+  .font-oswald   { font-family: var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; }
+  .font-jost     { font-family: var(--font-sans); }
+  .font-dancing  { font-family: var(--font-script); font-style: italic; }
+  .font-unna     { font-family: var(--font-serif); }
 
-  /* Legacy font class aliases */
-  .font-oswald {
-    font-family: "Inter", sans-serif;
-  }
-  .font-jost {
-    font-family: "Inter", sans-serif;
-  }
-  .font-dancing {
-    font-family: "Noto Serif", serif;
-    font-style: italic;
-  }
-  .font-unna {
-    font-family: "Noto Serif", serif;
-  }
-
-  /* Background utilities */
   .bg-dot-pattern {
-    background-image: radial-gradient(circle, #4d4635 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image: radial-gradient(circle, var(--color-rule-strong) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
-  /* Gold divider line */
   .gold-divider {
     width: 50px;
-    height: 2px;
-    background: linear-gradient(90deg, #f2ca50 0%, #d4af37 100%);
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-deep) 100%);
   }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+/* =====================================================================
+   Animations — GPU-only (transform/opacity), eased on a single curve
+   for visual cohesion: `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out-expo)
+   ===================================================================== */
+@keyframes pageIn {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-::-webkit-scrollbar-track {
-  background: #131313;
+.page-body { animation: pageIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes editorial-rise {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
+.rise   { animation: editorial-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.rise-1 { animation: editorial-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both; }
+.rise-2 { animation: editorial-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both; }
+.rise-3 { animation: editorial-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both; }
+.rise-4 { animation: editorial-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.32s both; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in { animation: fade-in 0.5s ease both; }
+
+/* Slow, very subtle ken-burns on hero photos */
+@keyframes ken-burns {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.07); }
+}
+.ken-burns { animation: ken-burns 22s ease-out forwards; will-change: transform; }
+
+/* Subtle shimmer used on the gold dot indicator + score-disc focus */
+@keyframes accent-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 169, 97, 0); }
+  50%      { box-shadow: 0 0 0 6px rgba(196, 169, 97, 0.18); }
+}
+
+/* Focus rings — never fight the scroll, use outline + offset, no layout shift */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* =====================================================================
+   Reduced motion
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .photo img,
+  .group:hover .grayscale-hover,
+  .group:hover .photo img,
+  .ken-burns { transform: none !important; filter: none !important; }
+}
+
+/* =====================================================================
+   Custom scrollbar
+   ===================================================================== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb {
-  background: #4d4635;
-  border-radius: 0;
+  background: var(--color-rule-strong);
+  border: 2px solid var(--color-bg);
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #f2ca50;
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent-deep); }
+
+/* =====================================================================
+   Responsive
+   ===================================================================== */
+@media (max-width: 860px) {
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+  .nav-inner   { grid-template-columns: auto 1fr auto !important; }
+  .nav-left .nav-link,
+  .nav-right .nav-link:not(.search) { display: none; }
 }

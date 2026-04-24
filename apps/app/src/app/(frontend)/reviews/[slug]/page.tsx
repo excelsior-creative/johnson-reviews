@@ -4,38 +4,9 @@ import config from "@/payload.config";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill={i < rating ? "#f2ca50" : "none"}
-          stroke={i < rating ? "#f2ca50" : "#4d4635"}
-          strokeWidth="1.5"
-          className="w-4 h-4"
-        >
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-      <span
-        className="ml-3"
-        style={{
-          fontFamily: '"Inter", sans-serif',
-          fontSize: "0.7rem",
-          textTransform: "uppercase",
-          letterSpacing: "0.2em",
-          color: "#99907c",
-        }}
-      >
-        {rating} / 5
-      </span>
-    </div>
-  );
-}
+import { ScoreDisc } from "@/components/ScoreDisc";
+import { ReviewCard } from "@/components/ReviewCard";
+import { NewsletterInline } from "@/components/NewsletterInline";
 
 export async function generateStaticParams() {
   try {
@@ -51,6 +22,18 @@ export async function generateStaticParams() {
   }
 }
 
+type ReviewRecord = {
+  id: string;
+  slug: string;
+  businessName: string;
+  rating: number;
+  reviewText?: string;
+  reviewDate?: string;
+  address?: string;
+  category?: string;
+  photos?: { url: string }[];
+};
+
 export default async function ReviewPage({
   params,
 }: {
@@ -59,16 +42,8 @@ export default async function ReviewPage({
   const { slug } = await params;
   const payload = await getPayload({ config });
 
-  let review:
-    | {
-        businessName: string;
-        rating: number;
-        reviewText?: string;
-        reviewDate?: string;
-        address?: string;
-        photos?: { url: string }[];
-      }
-    | undefined;
+  let review: ReviewRecord | undefined;
+  let related: ReviewRecord[] = [];
 
   try {
     const { docs } = await payload.find({
@@ -76,363 +51,488 @@ export default async function ReviewPage({
       where: { slug: { equals: slug } },
       limit: 1,
     });
-    review = docs[0] as unknown as typeof review;
+    review = docs[0] as unknown as ReviewRecord;
   } catch (error) {
     console.error(`Failed to fetch review "${slug}":`, error);
   }
 
   if (!review) notFound();
 
-  const photos: string[] = (review.photos ?? [])
-    .map((p) => p.url)
-    .filter(Boolean);
+  try {
+    const { docs } = await payload.find({
+      collection: "reviews",
+      sort: "-rating",
+      limit: 4,
+      where: { slug: { not_equals: slug } },
+    });
+    related = docs as unknown as ReviewRecord[];
+  } catch {
+    // ignore
+  }
 
+  const photos = (review.photos ?? []).map((p) => p.url).filter(Boolean);
   const hero = photos[0];
+  const score = review.rating * 2;
+  const cityFromAddress = review.address?.split(",").slice(-2, -1)[0]?.trim();
+  const verdict =
+    score >= 9
+      ? "Essential. Worth the trip."
+      : score >= 8
+        ? "A confident recommendation."
+        : score >= 6
+          ? "Worth knowing about."
+          : "Mixed feelings, honestly told.";
+
+  const paragraphs = (review.reviewText ?? "")
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const lead = paragraphs[0];
+  const body = paragraphs.slice(1);
 
   return (
-    <article style={{ backgroundColor: "#131313" }}>
-      {/* Hero image */}
-      <section className="relative w-full pt-24 md:pt-28">
-        <div
-          className="relative w-full"
-          style={{ height: "clamp(55vh, 70vh, 720px)" }}
-        >
-          {hero ? (
-            <Image
-              src={hero}
-              alt={review.businessName}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover"
-              style={{ filter: "grayscale(15%) brightness(0.45)" }}
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: "#1c1b1b" }}
-            />
-          )}
+    <article className="page-body">
+      {/* Hero */}
+      <section
+        style={{
+          position: "relative",
+          height: "min(82vh, 880px)",
+          overflow: "hidden",
+        }}
+      >
+        {hero ? (
+          <Image
+            src={hero}
+            alt={review.businessName}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover ken-burns"
+          />
+        ) : (
           <div
             className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, #131313 0%, transparent 65%)",
-            }}
+            style={{ background: "var(--color-bg-card)" }}
           />
-
-          <div className="absolute inset-0 max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col justify-end pb-12 md:pb-20">
-            <div className="max-w-4xl">
-              <div className="flex flex-wrap items-center gap-4 mb-6">
-                <span
-                  className="inline-block px-4 py-1"
-                  style={{
-                    backgroundColor: "#353535",
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.7rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.2em",
-                    color: "#d3c5ad",
-                  }}
-                >
-                  Field Review
-                </span>
-                {review.reviewDate && (
-                  <span
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: "0.7rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.2em",
-                      color: "#f2ca50",
-                    }}
-                  >
-                    {review.reviewDate}
-                  </span>
-                )}
-              </div>
-              <h1
-                className="font-bold leading-[1.05] mb-4 tracking-tighter"
+        )}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(15,13,11,0.5) 0%, rgba(15,13,11,0.1) 30%, rgba(15,13,11,0.96) 100%)",
+          }}
+        />
+        <div
+          className="absolute"
+          style={{ bottom: 80, left: 0, right: 0 }}
+        >
+          <div className="container-jr">
+            <div className="kicker rise" style={{ marginBottom: 24 }}>
+              The {review.category ?? "Field"} Review
+              {review.reviewDate ? ` · ${review.reviewDate}` : ""}
+            </div>
+            <h1
+              className="display rise-1 text-balance"
+              style={{
+                fontSize: "clamp(48px, 8vw, 124px)",
+                maxWidth: "16ch",
+                lineHeight: 0.95,
+              }}
+            >
+              {review.businessName}
+            </h1>
+            {review.address && (
+              <div
+                className="rise-2 italic"
                 style={{
-                  fontFamily: '"Noto Serif", serif',
-                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
-                  color: "#e5e2e1",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: "clamp(18px, 1.6vw, 24px)",
+                  color: "var(--color-ink-dim)",
+                  marginTop: 24,
+                  maxWidth: 760,
+                  lineHeight: 1.4,
                 }}
               >
-                {review.businessName}
-              </h1>
-              {review.address && (
-                <p
-                  className="italic"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.125rem",
-                    color: "rgba(242,202,80,0.8)",
-                  }}
-                >
-                  {review.address}
-                </p>
-              )}
-            </div>
+                {review.address}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Body + sidebar */}
-      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
-          {/* Narrative */}
-          <div className="lg:col-span-8">
-            <div className="mb-10">
-              <StarRating rating={review.rating} />
-            </div>
-
-            {review.reviewText && (
-              <div className="space-y-6">
-                {review.reviewText
-                  .split(/\n\s*\n/)
-                  .filter(Boolean)
-                  .map((para, i) => (
-                    <p
-                      key={i}
-                      className={i === 0 ? "drop-cap" : ""}
-                      style={{
-                        fontFamily: '"Noto Serif", serif',
-                        fontSize: "1.125rem",
-                        lineHeight: "1.8",
-                        color: "#e5e2e1",
-                      }}
-                    >
-                      {para}
-                    </p>
-                  ))}
-              </div>
-            )}
-
-            {/* Verdict */}
-            <div
-              className="mt-16 p-10 md:p-16 space-y-10"
-              style={{ backgroundColor: "#1c1b1b" }}
-            >
-              <h2
-                className="font-bold tracking-tight"
+      {/* Meta bar */}
+      <section
+        style={{
+          borderBottom: "1px solid var(--color-rule)",
+          background: "var(--color-bg-raised)",
+        }}
+      >
+        <div className="container-jr">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto 1fr 1fr 1fr auto",
+              gap: 48,
+              alignItems: "center",
+              padding: "40px 0",
+            }}
+            className="meta-bar"
+          >
+            <ScoreDisc score={score} size="lg" />
+            <div>
+              <div className="meta">Location</div>
+              <div
                 style={{
-                  fontFamily: '"Noto Serif", serif',
-                  fontSize: "1.75rem",
-                  color: "#f2ca50",
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 22,
+                  marginTop: 8,
                 }}
               >
-                The Verdict
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8">
-                {(() => {
-                  const r = review!.rating;
-                  const base = r * 20;
-                  const rows = [
-                    { label: "Overall", value: base },
-                    { label: "Ambience", value: Math.max(60, base - 5) },
-                    {
-                      label: "Service",
-                      value: Math.min(100, base + 2),
-                    },
-                    {
-                      label: "Value",
-                      value: Math.max(60, base - 3),
-                    },
-                  ];
-                  return rows.map((row) => (
-                    <div key={row.label} className="space-y-3">
-                      <div
-                        className="flex justify-between"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.7rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.2em",
-                          color: "#d3c5ad",
-                        }}
-                      >
-                        <span>{row.label}</span>
-                        <span>{(row.value / 10).toFixed(1)}</span>
-                      </div>
-                      <div
-                        className="h-[2px] w-full"
-                        style={{ backgroundColor: "#4d4635" }}
-                      >
-                        <div
-                          className="h-full"
-                          style={{
-                            width: `${row.value}%`,
-                            background:
-                              "linear-gradient(90deg, #d4af37, #f2ca50)",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ));
-                })()}
+                {cityFromAddress ?? review.address ?? "—"}
               </div>
             </div>
-
-            {/* Photo gallery */}
-            {photos.length > 1 && (
-              <div className="mt-16">
-                <h2
-                  className="font-bold mb-10"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.75rem",
-                    color: "#e5e2e1",
-                  }}
-                >
-                  Photo Gallery
-                  <span
-                    className="ml-3"
-                    style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: "0.7rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.25em",
-                      color: "#99907c",
-                    }}
-                  >
-                    {photos.length} Photos
-                  </span>
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {photos.map((url, i) => (
-                    <div
-                      key={i}
-                      className="relative overflow-hidden group"
-                      style={{ paddingBottom: "75%", backgroundColor: "#1c1b1b" }}
-                    >
-                      <Image
-                        src={url}
-                        alt={`${review!.businessName} photo ${i + 1}`}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        quality={80}
-                        priority={i < 3}
-                        className="object-cover transition-all duration-700 [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-105"
-                      />
-                    </div>
-                  ))}
-                </div>
+            <div>
+              <div className="meta">Section</div>
+              <div
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 22,
+                  marginTop: 8,
+                }}
+              >
+                {review.category ?? "Field Review"}
               </div>
-            )}
+            </div>
+            <div>
+              <div className="meta">Visited</div>
+              <div
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 22,
+                  marginTop: 8,
+                }}
+              >
+                {review.reviewDate ?? "—"}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="meta">Verdict</div>
+              <div
+                className="italic"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 28,
+                  color: "var(--color-accent)",
+                  marginTop: 6,
+                }}
+              >
+                {score >= 8 ? "Yes." : score >= 6 ? "Probably." : "Maybe."}
+              </div>
+            </div>
+          </div>
+        </div>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `@media (max-width: 900px) {
+              .meta-bar {
+                grid-template-columns: auto 1fr !important;
+                gap: 24px !important;
+              }
+            }`,
+          }}
+        />
+      </section>
+
+      {/* Article body */}
+      <section style={{ padding: "100px 0 40px" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              marginBottom: 48,
+            }}
+          >
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, #3a2f25, #6b5842)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--color-accent)",
+                fontSize: 18,
+              }}
+            >
+              BJ
+            </div>
+            <div>
+              <div style={{ fontFamily: "var(--font-serif)", fontSize: 16 }}>
+                By Brandon Johnson
+              </div>
+              <div className="meta" style={{ marginTop: 2 }}>
+                Editor {review.reviewDate ? `· ${review.reviewDate}` : ""}
+              </div>
+            </div>
           </div>
 
-          {/* Concierge */}
-          <aside className="lg:col-span-4">
-            <div className="sticky top-28 space-y-10">
-              <div
-                className="p-10"
+          {lead && (
+            <div className="prose">
+              <p className="drop-cap">{lead}</p>
+              {body.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Pull quote */}
+      {body.length > 0 && (
+        <section style={{ padding: "40px 0 80px" }}>
+          <div className="container-jr" style={{ maxWidth: 1000 }}>
+            <div
+              className="text-center"
+              style={{
+                borderTop: "1px solid var(--color-rule-strong)",
+                borderBottom: "1px solid var(--color-rule-strong)",
+                padding: "60px 0",
+              }}
+            >
+              <div className="kicker mb-5">A Note</div>
+              <blockquote
+                className="display display-italic text-balance"
                 style={{
-                  backgroundColor: "#20201f",
-                  boxShadow: "0 48px 100px rgba(0,0,0,0.3)",
+                  fontSize: "clamp(28px, 3.6vw, 50px)",
+                  lineHeight: 1.22,
                 }}
               >
-                <h3
-                  className="font-bold mb-8"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    fontSize: "1.5rem",
-                    color: "#e5e2e1",
-                  }}
-                >
-                  The Concierge
+                &ldquo;{verdict}&rdquo;
+              </blockquote>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Gallery */}
+      {photos.length > 1 && (
+        <section style={{ padding: "40px 0 80px" }}>
+          <div className="container-jr">
+            <div
+              className="between"
+              style={{ marginBottom: 32, alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}
+            >
+              <div>
+                <div className="kicker mb-3">Photo Notes</div>
+                <h3 className="display" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
+                  From the visit.
                 </h3>
+              </div>
+              <div className="meta">
+                Photographed by Brandon Johnson · {photos.length} photos
+              </div>
+            </div>
 
-                <div className="space-y-6">
-                  {review.address && (
-                    <div>
-                      <p
-                        className="mb-2"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.625rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.25em",
-                          color: "#99907c",
-                        }}
-                      >
-                        Address
-                      </p>
-                      <p
-                        style={{
-                          fontFamily: '"Noto Serif", serif',
-                          fontSize: "0.9rem",
-                          color: "#d3c5ad",
-                          lineHeight: "1.5",
-                        }}
-                      >
-                        {review.address}
-                      </p>
-                    </div>
-                  )}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+                gridAutoRows: 180,
+                gap: 16,
+              }}
+              className="gallery-grid"
+            >
+              {photos.slice(0, 6).map((src, i) => {
+                const layouts = [
+                  { gridColumn: "span 4", gridRow: "span 2" },
+                  { gridColumn: "span 2", gridRow: "span 1" },
+                  { gridColumn: "span 2", gridRow: "span 1" },
+                  { gridColumn: "span 2", gridRow: "span 2" },
+                  { gridColumn: "span 2", gridRow: "span 2" },
+                  { gridColumn: "span 2", gridRow: "span 2" },
+                ];
+                return (
+                  <div key={src} className="photo group" style={layouts[i]}>
+                    <Image
+                      src={src}
+                      alt={`${review!.businessName} photo ${i + 1}`}
+                      fill
+                      sizes="(max-width: 900px) 100vw, 50vw"
+                      quality={80}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div
+              className="caption"
+              style={{ marginTop: 20, justifyContent: "space-between" }}
+            >
+              <span>
+                <span className="num">N° {String(photos.length).padStart(2, "0")}</span>{" "}
+                Plates, rooms, and moments from the visit
+              </span>
+            </div>
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `@media (max-width: 900px) {
+                  .gallery-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                    grid-auto-rows: 200px !important;
+                  }
+                  .gallery-grid > div { grid-column: span 1 !important; grid-row: span 1 !important; }
+                }`,
+              }}
+            />
+          </div>
+        </section>
+      )}
 
-                  {review.reviewDate && (
-                    <div>
-                      <p
-                        className="mb-2"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.625rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.25em",
-                          color: "#99907c",
-                        }}
-                      >
-                        Date of Visit
-                      </p>
-                      <p
-                        style={{
-                          fontFamily: '"Noto Serif", serif',
-                          fontSize: "0.9rem",
-                          color: "#d3c5ad",
-                        }}
-                      >
-                        {review.reviewDate}
-                      </p>
-                    </div>
-                  )}
-
-                  <div>
-                    <p
-                      className="mb-2"
-                      style={{
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: "0.625rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.25em",
-                        color: "#99907c",
-                      }}
-                    >
-                      Rating
-                    </p>
-                    <StarRating rating={review.rating} />
+      {/* Particulars */}
+      <section style={{ padding: "40px 0 80px" }}>
+        <div className="container-jr" style={{ maxWidth: 1000 }}>
+          <div
+            style={{
+              background: "var(--color-bg-raised)",
+              border: "1px solid var(--color-rule)",
+              padding: "60px",
+            }}
+            className="particulars"
+          >
+            <div className="kicker mb-8">The Particulars</div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: 40,
+              }}
+              className="particulars-grid"
+            >
+              {[
+                ["Address", review.address ?? "—"],
+                ["Section", review.category ?? "Field Review"],
+                ["Visited", review.reviewDate ?? "—"],
+                ["Score", `${score.toFixed(1)} / 10`],
+                ["Visits", "Multiple"],
+                ["Notable", "Family-friendly notes available on request"],
+              ].map(([label, val]) => (
+                <div key={label}>
+                  <div className="meta">{label}</div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-serif)",
+                      fontSize: 19,
+                      marginTop: 8,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    {val}
                   </div>
                 </div>
+              ))}
+            </div>
+            <div
+              style={{
+                marginTop: 48,
+                paddingTop: 32,
+                borderTop: "1px solid var(--color-rule)",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 20,
+              }}
+            >
+              <div>
+                <div className="meta">Our Verdict</div>
+                <div
+                  className="display display-italic"
+                  style={{
+                    fontSize: 28,
+                    marginTop: 8,
+                    color: "var(--color-accent)",
+                  }}
+                >
+                  {verdict}
+                </div>
               </div>
-
-              <Link
-                href="/reviews"
-                className="inline-flex items-center gap-3 transition-colors hover:text-[#f2ca50]"
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.25em",
-                  color: "#99907c",
-                }}
-              >
-                <span>&larr;</span>
-                Back to all reviews
+              <Link href="/reviews" className="btn">
+                More Reviews <span className="arrow">→</span>
               </Link>
             </div>
-          </aside>
+          </div>
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+                @media (max-width: 768px) {
+                  .particulars { padding: 32px !important; }
+                  .particulars-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+                }
+              `,
+            }}
+          />
         </div>
       </section>
+
+      {/* Signature */}
+      <section style={{ padding: "40px 0 100px" }}>
+        <div
+          className="container-jr text-center"
+          style={{ maxWidth: 760 }}
+        >
+          <div className="meta mb-3">— End of review —</div>
+          <div className="signature" style={{ fontSize: 40 }}>
+            Brandon J.
+          </div>
+        </div>
+      </section>
+
+      {/* Related */}
+      {related.length > 0 && (
+        <section
+          style={{
+            padding: "60px 0 100px",
+            borderTop: "1px solid var(--color-rule)",
+          }}
+        >
+          <div className="container-jr">
+            <div className="kicker mb-6">More From The Field</div>
+            <h3
+              className="display mb-12"
+              style={{ fontSize: "clamp(32px, 4vw, 48px)" }}
+            >
+              Related{" "}
+              <span
+                className="display-italic"
+                style={{ color: "var(--color-ink-dim)" }}
+              >
+                reviews.
+              </span>
+            </h3>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                columnGap: 48,
+                rowGap: 80,
+              }}
+              className="post-grid"
+            >
+              {related.slice(0, 3).map((r) => (
+                <ReviewCard key={r.id} review={r as unknown as Record<string, unknown>} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <NewsletterInline compact />
     </article>
   );
 }

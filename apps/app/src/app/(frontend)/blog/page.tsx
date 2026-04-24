@@ -2,7 +2,8 @@ import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
 import { PostCard } from "@/components/PostCard";
-import Header from "@/components/Header";
+import { PageHeader } from "@/components/PageHeader";
+import { NewsletterInline } from "@/components/NewsletterInline";
 import Link from "next/link";
 import { Post, Category } from "@/payload-types";
 
@@ -16,7 +17,6 @@ export default async function BlogPage({
   const { category: categoryParam } = await searchParams;
   const payload = await getPayload({ config });
 
-  // Load categories for the sidebar filter
   let categories: Category[] = [];
   try {
     const res = await payload.find({
@@ -29,12 +29,10 @@ export default async function BlogPage({
     console.error("Failed to fetch categories:", error);
   }
 
-  // Find selected category object (if any) by slug
   const selectedCategory = categoryParam
     ? categories.find((c) => c.slug === categoryParam)
     : null;
 
-  // Fetch posts
   let posts: Post[] = [];
   try {
     const baseWhere = { _status: { equals: "published" } } as const;
@@ -52,141 +50,140 @@ export default async function BlogPage({
     console.error("Failed to fetch blog posts:", error);
   }
 
-  return (
-    <div className="pt-28 md:pt-40 pb-24 md:pb-32">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        <Header
-          badge="The Discovery"
-          title={
-            selectedCategory ? selectedCategory.name : "The Search For Perfection."
-          }
-          subtitle={
-            selectedCategory
-              ? `Reviews in the ${selectedCategory.name} collection, each a dispatch from the field.`
-              : "Reviews, dispatches, and editorials from the road — insights on restaurants, hotels, and stages we've judged worthy of note."
-          }
-        />
+  const featured = posts[0];
+  const rest = posts.slice(1);
 
-        <div className="grid grid-cols-12 gap-12 md:gap-16">
-          {/* Sidebar */}
-          <aside className="col-span-12 lg:col-span-3 space-y-12">
-            <div>
-              <h3
-                className="mb-6"
+  return (
+    <div className="page-body">
+      <PageHeader
+        eyebrow="The Journal"
+        title={selectedCategory ? selectedCategory.name : "Long-form"}
+        italicPart={selectedCategory ? "" : "field reports."}
+        subtitle={
+          selectedCategory
+            ? `Reviews in the ${selectedCategory.name} collection — written down so other families can decide what's worth the drive.`
+            : "Reviews, dispatches, and editorials from the road. The long-form versions of what's on Google Maps — written when a place earned more than a paragraph."
+        }
+      />
+
+      {/* Sticky filter bar */}
+      <section
+        style={{
+          position: "sticky",
+          top: 64,
+          zIndex: 20,
+          background: "rgba(15,13,11,0.92)",
+          backdropFilter: "blur(14px) saturate(120%)",
+          WebkitBackdropFilter: "blur(14px) saturate(120%)",
+          borderBottom: "1px solid var(--color-rule)",
+        }}
+      >
+        <div className="container-jr">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "20px 0",
+              gap: 24,
+              flexWrap: "wrap",
+            }}
+          >
+            <span className="meta">Section</span>
+            <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+              <Link
+                href="/blog"
+                className="nav-link"
                 style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.3em",
-                  color: "#99907c",
+                  color: !selectedCategory
+                    ? "var(--color-accent)"
+                    : "var(--color-ink-dim)",
+                  borderBottom: !selectedCategory
+                    ? "1px solid var(--color-accent)"
+                    : "1px solid transparent",
+                  paddingBottom: 4,
                 }}
               >
-                Collections
-              </h3>
-              <ul className="space-y-4">
-                <li>
+                All
+              </Link>
+              {categories.map((cat) => {
+                const isActive = selectedCategory?.slug === cat.slug;
+                return (
                   <Link
-                    href="/blog"
-                    className="flex justify-between items-center transition-colors"
+                    key={cat.id}
+                    href={`/blog?category=${cat.slug}`}
+                    className="nav-link"
                     style={{
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: "0.875rem",
-                      color: !selectedCategory ? "#f2ca50" : "rgba(229,226,225,0.7)",
+                      color: isActive
+                        ? "var(--color-accent)"
+                        : "var(--color-ink-dim)",
+                      borderBottom: isActive
+                        ? "1px solid var(--color-accent)"
+                        : "1px solid transparent",
+                      paddingBottom: 4,
                     }}
                   >
-                    <span>All Reviews</span>
-                    {!selectedCategory && (
-                      <span style={{ color: "#f2ca50" }}>•</span>
-                    )}
+                    {cat.name}
                   </Link>
-                </li>
-                {categories.map((cat) => {
-                  const isActive = selectedCategory?.slug === cat.slug;
-                  return (
-                    <li key={cat.id}>
-                      <Link
-                        href={`/blog?category=${cat.slug}`}
-                        className="flex justify-between items-center transition-colors hover:text-[#f2ca50]"
-                        style={{
-                          fontFamily: '"Inter", sans-serif',
-                          fontSize: "0.875rem",
-                          color: isActive
-                            ? "#f2ca50"
-                            : "rgba(229,226,225,0.7)",
-                        }}
-                      >
-                        <span>{cat.name}</span>
-                        {isActive && (
-                          <span style={{ color: "#f2ca50" }}>•</span>
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                );
+              })}
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div>
-              <h3
-                className="mb-6"
+      {/* Featured */}
+      {featured && (
+        <section style={{ padding: "80px 0 40px" }}>
+          <div className="container-jr">
+            <div className="kicker mb-8">Editor&rsquo;s Pick</div>
+            <PostCard post={featured} variant="horizontal" priority />
+          </div>
+        </section>
+      )}
+
+      {/* Grid */}
+      <section style={{ padding: "40px 0 120px" }}>
+        <div className="container-jr">
+          {rest.length > 0 ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                columnGap: 48,
+                rowGap: 80,
+              }}
+              className="post-grid"
+            >
+              {rest.map((post, i) => (
+                <PostCard key={post.id} post={post} priority={i < 2} />
+              ))}
+            </div>
+          ) : (
+            <div
+              className="text-center italic"
+              style={{
+                padding: "80px 0",
+                fontFamily: "var(--font-serif)",
+                color: "var(--color-ink-dim)",
+                fontSize: 22,
+              }}
+            >
+              No reviews match this section.{" "}
+              <Link
+                href="/blog"
                 style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.7rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.3em",
-                  color: "#99907c",
+                  color: "var(--color-accent)",
+                  textDecoration: "underline",
                 }}
               >
-                Experience Tiers
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {["Editorial Pick", "Hidden Gem", "Michelin Starred"].map(
-                  (tier) => (
-                    <span
-                      key={tier}
-                      className="inline-block px-4 py-2 transition-colors"
-                      style={{
-                        border: "1px solid rgba(77,70,53,0.6)",
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: "0.625rem",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.2em",
-                        color: "#e5e2e1",
-                      }}
-                    >
-                      {tier}
-                    </span>
-                  )
-                )}
-              </div>
+                Clear filter
+              </Link>
             </div>
-          </aside>
-
-          {/* Main grid */}
-          <section className="col-span-12 lg:col-span-9">
-            {posts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {posts.map((post, i) => (
-                  <PostCard key={post.id} post={post} priority={i < 2} />
-                ))}
-              </div>
-            ) : (
-              <div className="py-20">
-                <p
-                  className="italic"
-                  style={{
-                    fontFamily: '"Noto Serif", serif',
-                    color: "#99907c",
-                    fontSize: "1.125rem",
-                  }}
-                >
-                  No reviews match this selection.
-                </p>
-              </div>
-            )}
-          </section>
+          )}
         </div>
-      </div>
+      </section>
+
+      <NewsletterInline compact />
     </div>
   );
 }

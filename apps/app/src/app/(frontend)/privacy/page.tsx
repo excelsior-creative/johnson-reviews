@@ -1,7 +1,7 @@
 import React from "react";
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import Header from "@/components/Header";
+import { PageHeader } from "@/components/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -10,40 +10,26 @@ export default async function PrivacyPage() {
   const siteSettings = await payload.findGlobal({ slug: "site-settings" });
 
   return (
-    <div
-      className="pt-28 md:pt-40 pb-24 md:pb-32"
-      style={{ backgroundColor: "#131313" }}
-    >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        <Header badge="Fine Print" title="Privacy Policy" />
-
-        <div className="max-w-3xl">
-          {!siteSettings.privacyPolicy ? (
-            <p
-              className="italic"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                color: "#99907c",
-                fontSize: "1.125rem",
-                lineHeight: "1.7",
-              }}
-            >
-              Privacy policy content has not been populated in the CMS yet.
-            </p>
-          ) : (
-            <p
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                color: "#e5e2e1",
-                fontSize: "1.125rem",
-                lineHeight: "1.8",
-              }}
-            >
-              Content is driven by the Site Settings global in the backend.
-            </p>
-          )}
+    <div className="page-body">
+      <PageHeader
+        eyebrow="Fine Print"
+        title="Privacy"
+        italicPart="policy."
+        subtitle="What we collect, what we don't, and what happens to it. Full text managed in the CMS."
+      />
+      <section style={{ padding: "60px 0 120px" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <div className="prose">
+            {!siteSettings.privacyPolicy ? (
+              <p className="italic" style={{ color: "var(--color-ink-dim)" }}>
+                Privacy policy content has not been populated in the CMS yet.
+              </p>
+            ) : (
+              <p>Content is driven by the Site Settings global in the backend.</p>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

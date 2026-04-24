@@ -6,11 +6,16 @@ import { Post, Media, Category } from "@/payload-types";
 interface PostCardProps {
   post: Post;
   priority?: boolean;
+  variant?: "default" | "horizontal";
 }
 
-export const PostCard = ({ post, priority = false }: PostCardProps) => {
-  const featuredImage = post.featuredImage as Media;
-  const categories = post.categories as Category[];
+export const PostCard = ({
+  post,
+  priority = false,
+  variant = "default",
+}: PostCardProps) => {
+  const featuredImage = post.featuredImage as Media | undefined;
+  const categories = post.categories as Category[] | undefined;
   const primaryCategory = categories?.[0] as Category | undefined;
 
   const formattedDate = post.publishedDate
@@ -21,104 +26,91 @@ export const PostCard = ({ post, priority = false }: PostCardProps) => {
       })
     : null;
 
-  return (
-    <article
-      className="group cursor-pointer h-full flex flex-col"
-      style={{ backgroundColor: "#1c1b1b" }}
-    >
-      <Link href={`/blog/${post.slug}`} className="h-full flex flex-col">
-        {/* Thumbnail — grayscale to full color on hover */}
-        <div className="relative overflow-hidden h-[280px] md:h-[320px]">
+  const cityHint = primaryCategory?.name ?? "Field Review";
+
+  if (variant === "horizontal") {
+    return (
+      <Link
+        href={`/blog/${post.slug}`}
+        className="review-card group"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.3fr",
+          gap: 32,
+          alignItems: "center",
+        }}
+      >
+        <div className="photo" style={{ aspectRatio: "4 / 3" }}>
           {featuredImage?.url ? (
             <Image
               src={featuredImage.url}
               alt={featuredImage.alt || post.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes="(max-width: 1024px) 50vw, 40vw"
               quality={80}
               priority={priority}
-              className="object-cover transition-all duration-700 [filter:grayscale(100%)] group-hover:[filter:grayscale(0%)] group-hover:scale-105"
+              className="object-cover"
             />
           ) : (
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: "#20201f" }}
-            />
+            <div className="absolute inset-0" style={{ background: "var(--color-bg-card)" }} />
           )}
-          {/* Subtle scrim */}
-          <div
-            className="absolute inset-0 transition-colors"
-            style={{ background: "rgba(0,0,0,0.2)" }}
-          />
         </div>
-
-        {/* Content */}
-        <div className="p-8 flex flex-col flex-1">
-          <div className="flex justify-between items-start mb-4 gap-4">
-            <div>
-              {primaryCategory && typeof primaryCategory === "object" && (
-                <span
-                  style={{
-                    fontFamily: '"Inter", sans-serif',
-                    fontSize: "0.625rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.2em",
-                    color: "#99907c",
-                  }}
-                >
-                  {primaryCategory.name}
-                </span>
-              )}
-              <h3
-                className="font-bold leading-snug mt-2 group-hover:text-[#f2ca50] transition-colors"
-                style={{
-                  fontFamily: '"Noto Serif", serif',
-                  fontSize: "1.25rem",
-                  lineHeight: "1.3",
-                  color: "#e5e2e1",
-                }}
-              >
-                {post.title}
-              </h3>
-            </div>
-          </div>
-
+        <div>
+          <div className="cat">{cityHint}</div>
+          <h3 style={{ fontSize: 32 }}>{post.title}</h3>
           {post.excerpt && (
-            <p
-              className="italic line-clamp-3 mb-6"
-              style={{
-                fontFamily: '"Noto Serif", serif',
-                fontSize: "0.875rem",
-                color: "#d3c5ad",
-                lineHeight: "1.7",
-              }}
-            >
+            <div className="blurb" style={{ fontSize: 18 }}>
               {post.excerpt}
-            </p>
+            </div>
           )}
-
-          {/* Bottom meta */}
           {formattedDate && (
-            <div className="mt-auto pt-4 flex items-center gap-3">
-              <div
-                className="h-[1px] w-8"
-                style={{ backgroundColor: "#4d4635" }}
-              />
-              <span
-                style={{
-                  fontFamily: '"Inter", sans-serif',
-                  fontSize: "0.625rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.2em",
-                  color: "rgba(229,226,225,0.4)",
-                }}
-              >
-                {formattedDate}
-              </span>
+            <div className="meta" style={{ marginTop: 20 }}>
+              {formattedDate} · By Brandon Johnson
             </div>
           )}
         </div>
       </Link>
-    </article>
+    );
+  }
+
+  return (
+    <Link href={`/blog/${post.slug}`} className="review-card group">
+      <div className="photo">
+        {featuredImage?.url ? (
+          <Image
+            src={featuredImage.url}
+            alt={featuredImage.alt || post.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            quality={80}
+            priority={priority}
+            className="object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0" style={{ background: "var(--color-bg-card)" }} />
+        )}
+      </div>
+      <div className="cat">{cityHint}</div>
+      <h3>{post.title}</h3>
+      {post.excerpt && (
+        <p className="blurb" style={{ display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          &ldquo;{post.excerpt}&rdquo;
+        </p>
+      )}
+      {formattedDate && (
+        <div
+          className="meta"
+          style={{
+            marginTop: 14,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+          }}
+        >
+          <span>{formattedDate}</span>
+          <span style={{ color: "var(--color-accent)" }}>Read review →</span>
+        </div>
+      )}
+    </Link>
   );
 };

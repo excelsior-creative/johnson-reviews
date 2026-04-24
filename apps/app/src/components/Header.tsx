@@ -1,62 +1,77 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
+interface HeaderProps {
+  className?: string;
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+  italicPart?: string;
+}
+
+/**
+ * Page-level section header used on inner routes (about, blog, contact, etc.).
+ * Renders in the editorial typography system: kicker eyebrow, large serif
+ * title with optional italic accent line, and subtitle.
+ */
 const Header = ({
   className,
   title,
   subtitle,
   badge,
-}: {
-  className?: string;
-  title?: string;
-  subtitle?: string;
-  badge?: string;
-}) => {
+  italicPart,
+}: HeaderProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-start space-y-6 mb-16 md:mb-20 tracking-tight",
-        className
+        "flex flex-col items-start space-y-7 mb-16 md:mb-20",
+        className,
       )}
     >
       {badge && (
-        <div className="inline-flex items-center gap-4">
+        <div className="kicker rise inline-flex items-center gap-3">
           <span
-            className="block h-[1px] w-12"
-            style={{ backgroundColor: "#f2ca50" }}
-          />
-          <span
+            aria-hidden
             style={{
-              fontFamily: '"Inter", sans-serif',
-              fontSize: "0.7rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.4em",
-              color: "#f2ca50",
+              display: "inline-block",
+              width: 24,
+              height: 1,
+              background: "var(--color-accent)",
             }}
-          >
-            {badge}
-          </span>
+          />
+          {badge}
         </div>
       )}
       {title && (
         <h1
-          className="font-bold leading-[1.05]"
+          className="display rise-1 text-balance"
           style={{
-            fontFamily: '"Noto Serif", serif',
-            fontSize: "clamp(2.25rem, 6vw, 4.5rem)",
-            color: "#e5e2e1",
+            fontSize: "clamp(40px, 6vw, 80px)",
+            maxWidth: "18ch",
           }}
         >
           {title}
+          {italicPart && (
+            <>
+              {" "}
+              <span
+                className="display-italic"
+                style={{ color: "var(--color-accent)" }}
+              >
+                {italicPart}
+              </span>
+            </>
+          )}
         </h1>
       )}
       {subtitle && (
         <p
-          className="max-w-3xl italic leading-relaxed"
+          className="rise-2 italic max-w-3xl text-pretty"
           style={{
-            fontFamily: '"Noto Serif", serif',
-            fontSize: "clamp(1rem, 1.25vw, 1.25rem)",
-            color: "#d3c5ad",
+            fontFamily: "var(--font-serif)",
+            fontSize: "clamp(17px, 1.4vw, 22px)",
+            color: "var(--color-ink-dim)",
+            lineHeight: 1.55,
           }}
         >
           {subtitle}
