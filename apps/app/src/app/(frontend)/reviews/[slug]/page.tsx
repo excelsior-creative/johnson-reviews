@@ -4,9 +4,16 @@ import config from "@/payload.config";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ScoreDisc } from "@/components/ScoreDisc";
 import { ReviewCard } from "@/components/ReviewCard";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import { generateArticleMetadata, absoluteUrl } from "@/lib/metadata";
+import {
+  generateReviewSchema,
+  generateBreadcrumbSchema,
+  combineSchemas,
+} from "@/lib/structured-data";
 
 export async function generateStaticParams() {
   try {
@@ -34,6 +41,60 @@ type ReviewRecord = {
   photos?: { url: string }[];
 };
 
+async function fetchReviewBySlug(slug: string): Promise<ReviewRecord | undefined> {
+  try {
+    const payload = await getPayload({ config });
+    const { docs } = await payload.find({
+      collection: "reviews",
+      where: { slug: { equals: slug } },
+      limit: 1,
+    });
+    return docs[0] as unknown as ReviewRecord | undefined;
+  } catch (error) {
+    console.error(`Failed to fetch review "${slug}":`, error);
+    return undefined;
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const review = await fetchReviewBySlug(slug);
+  if (!review) {
+    return { title: "Not found", robots: { index: false, follow: false } };
+  }
+
+  const score = (review.rating ?? 0) * 2;
+  const locationBits = review.address?.split(",").slice(-3, -1).map((s) => s.trim()).filter(Boolean) ?? [];
+  const city = locationBits[0];
+  const titleCore = city
+    ? `${review.businessName} — ${city}`
+    : review.businessName;
+  const description =
+    review.reviewText?.slice(0, 180).trim() ??
+    `${review.businessName}${review.address ? ` · ${review.address}` : ""} — a Johnson Reviews field review (${score.toFixed(1)}/10).`;
+  const hero = review.photos?.[0]?.url;
+
+  return generateArticleMetadata({
+    title: titleCore,
+    description,
+    slug: review.slug,
+    pathPrefix: "/reviews",
+    ogImage: absoluteUrl(hero ?? undefined),
+    publishedTime: review.reviewDate ?? undefined,
+    keywords: [
+      review.businessName,
+      review.category ?? "",
+      city ?? "",
+      "family-friendly",
+      "restaurant review",
+    ].filter(Boolean),
+  });
+}
+
 export default async function ReviewPage({
   params,
 }: {
@@ -42,22 +103,10 @@ export default async function ReviewPage({
   const { slug } = await params;
   const payload = await getPayload({ config });
 
-  let review: ReviewRecord | undefined;
-  let related: ReviewRecord[] = [];
-
-  try {
-    const { docs } = await payload.find({
-      collection: "reviews",
-      where: { slug: { equals: slug } },
-      limit: 1,
-    });
-    review = docs[0] as unknown as ReviewRecord;
-  } catch (error) {
-    console.error(`Failed to fetch review "${slug}":`, error);
-  }
-
+  const review = await fetchReviewBySlug(slug);
   if (!review) notFound();
 
+  let related: ReviewRecord[] = [];
   try {
     const { docs } = await payload.find({
       collection: "reviews",
@@ -89,6 +138,24 @@ export default async function ReviewPage({
     .filter(Boolean);
   const lead = paragraphs[0];
   const body = paragraphs.slice(1);
+
+  const reviewSchema = generateReviewSchema({
+    businessName: review.businessName,
+    slug: review.slug,
+    pathPrefix: "/reviews",
+    category: review.category,
+    address: review.address,
+    ratingValue: Number(score.toFixed(1)),
+    reviewBody: review.reviewText,
+    reviewDate: review.reviewDate,
+    imageUrl: hero,
+  });
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Reviews", url: "/reviews" },
+    { name: review.businessName, url: `/reviews/${review.slug}` },
+  ]);
+  const pageSchema = combineSchemas(reviewSchema, breadcrumbSchema);
 
   return (
     <article className="page-body">
@@ -533,6 +600,13 @@ export default async function ReviewPage({
       )}
 
       <NewsletterInline compact />
+
+      {pageSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+        />
+      )}
     </article>
   );
 }

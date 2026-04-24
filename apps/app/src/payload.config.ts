@@ -114,8 +114,8 @@ export default buildConfig({
       uploadsCollection: "media",
       generateTitle: ({ doc }: any) =>
         doc?.title
-          ? `${doc.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || "Your Site"}`
-          : process.env.NEXT_PUBLIC_SITE_NAME || "Your Site",
+          ? `${doc.title} | ${process.env.NEXT_PUBLIC_SITE_NAME || "Johnson Reviews"}`
+          : process.env.NEXT_PUBLIC_SITE_NAME || "Johnson Reviews",
       generateDescription: ({ doc }: any) => doc?.excerpt || "",
     }),
     redirectsPlugin({

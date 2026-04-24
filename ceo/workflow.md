@@ -10,11 +10,17 @@ is its operating manual.
 Target: < 48 hours for a single restaurant or single attraction.
 Stretch: < 12 hours when Brandon has fresh photos + memory.
 
-## Current state (2026-04-20)
+## Current state (2026-04-24)
 
-**Status: not yet built.** Pipeline is conceptual. Brandon hasn't yet
-initiated a review through the workflow, and the agent hasn't yet
-done a draft cycle with him. First night.
+**Status: documented end-to-end; not yet exercised with Brandon.**
+The intake prompt (`/ceo/prompts/intake.md`) now covers the full
+cycle: interview → draft → photo proposal → redline → publish →
+schema → internal links → cycle-time log. Publish-side infrastructure
+(schema + metadata + canonical URLs) shipped 2026-04-24.
+
+Next step is the first real cycle: Brandon mentions a place, the
+agent runs the intake script, produces a draft, and we time the
+north-star metric.
 
 The infrastructure that exists:
 - Payload CMS Posts collection with `_status: draft|published`,
@@ -82,12 +88,20 @@ The infrastructure that does NOT exist:
   friction starting point: Brandon went to all those places, the
   factual basis already exists, the migration "interview" is
   Brandon confirming or correcting the existing review.
+  **Done 2026-04-20** — queue is populated.
 - Build a Brandon-facing intake prompt template (in
   `/ceo/prompts/intake.md`) that the agent can use whenever Brandon
-  initiates a new review. **Pending — not started this run.**
+  initiates a new review. **Done 2026-04-24** — two-pass conversational
+  interview + drafting rules + photo proposal rules + publish steps +
+  legacy-migration variant + hard "never do" list.
+- Wire per-page structured data (Schema.org `Review` for the Reviews
+  collection, `BlogPosting` for Posts, with Brandon as `Person` author)
+  into the slug pages. **Done 2026-04-24** — schema + `generateMetadata`
+  now shipping on `/blog/[slug]` and `/reviews/[slug]`.
 - Build a publish-readiness checklist (schema, alt text, internal
   links, geotag stripping, related-reviews block, category page
-  refresh). **Pending — not started this run.**
+  refresh). See `/ceo/prompts/intake.md` §"Publish steps" —
+  checklist lives there. **Done 2026-04-24.**
 
 ## Open questions for Brandon
 

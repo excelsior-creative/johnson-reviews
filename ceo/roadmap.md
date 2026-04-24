@@ -2,17 +2,25 @@
 
 ## Now (this week)
 
-- 🟡 **Replace luxury-critic placeholder copy** site-wide. Started
-  2026-04-20. First pass tonight: Hero, FeaturedReviews, CategoryGrid,
-  QuickStats. Voice.md is the rubric.
+- ✅ **Replace luxury-critic placeholder copy** site-wide (PR #12,
+  2026-04-20). Voice re-audit of Timmy's PR #15 rebuild is the
+  next sub-task.
+- ✅ **Author bio signal on Posts + Reviews** — Person schema for
+  Brandon added to the global JSON-LD graph, Article and Review
+  schemas both author-ref to him (2026-04-24). The inline
+  BJ-avatar byline is already present on detail pages from PR #15.
+- ✅ **Core SEO foundation** — metadata.ts rewritten with real
+  brand values, structured-data.ts expanded with Person/Restaurant/
+  LodgingBusiness/TouristAttraction/Review/Breadcrumb schemas,
+  `generateMetadata` exports wired to slug pages (2026-04-24).
 - ⬜ **Verify the live deploy.** WebFetch from agent returned 403/
   ECONNREFUSED. Could be Vercel firewall, CF, or a real outage.
   Brandon: confirm site is up and what URL is canonical
-  (`johnsonreviews.com` vs `www.johnsonreviews.com`).
-- ⬜ **Author bio block on Posts.** E-E-A-T signal. Show "Reviewed by
-  Brandon Johnson, Google Local Guide Level 10 · 500+ reviews · OC."
-  Plus a small portrait + link to Google Local Guide profile.
-- ⬜ **About page** rewritten on-voice.
+  (`johnsonreviews.com` vs `www.johnsonreviews.com`). (INBOX #1)
+- ⬜ **Voice re-audit of PR #15 rebuild.** Home/about/contact/privacy/
+  terms were rebuilt on new components; re-check for any
+  luxury-critic regressions.
+- ⬜ **About page** — spot-check voice after PR #15 rebuild.
 
 ## Next (this month)
 
@@ -48,8 +56,21 @@ See `/ceo/backlog.md`.
 
 ## Done
 
+- ✅ CEO run 2026-04-24 — killed "Template Site" brand bug in
+  `metadata.ts` + `structured-data.ts`, added Person (Brandon) /
+  Review / Restaurant / LodgingBusiness / TouristAttraction /
+  Breadcrumb schemas, wired `generateMetadata` + JSON-LD onto
+  `/blog/[slug]` and `/reviews/[slug]`, deleted 6 dead scaffold
+  components, rewrote `design-system.md` for the new Johnson & Co.
+  reference, authored `/ceo/prompts/intake.md` (full review intake
+  script).
+- ✅ PR #15 — Migrate to new dark editorial design system (Johnson
+  & Co.) from `reference/design2/`. Timmy, 2026-04-23. Supersedes
+  Gilded Legacy.
+- ✅ PR #12 — Rewrite off-brand placeholder copy to Brandon's voice
+  + bootstrap `/ceo` (first CEO run, 2026-04-20).
 - ✅ PR #10 — Apply Gilded Legacy design system across the site
-  (visual layer; copy still off-brand, addressed in current cycle).
+  (superseded by PR #15).
 - ✅ PR #7 — Remove payload-types from tracking.
 - ✅ PR #6 — Dark luxury editorial aesthetic overhaul (preceded
   the current Gilded Legacy pass).
