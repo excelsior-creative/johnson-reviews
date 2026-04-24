@@ -133,9 +133,9 @@ export default async function ReviewsPage({
               alignItems: "center",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
               <span className="meta">Rating</span>
-              <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {RATING_OPTIONS.map((opt) => {
                   const isActive = opt.value === ratingFilter;
                   const href = opt.value
@@ -145,16 +145,7 @@ export default async function ReviewsPage({
                     <Link
                       key={opt.label}
                       href={href}
-                      className="nav-link"
-                      style={{
-                        color: isActive
-                          ? "var(--color-accent)"
-                          : "var(--color-ink-dim)",
-                        borderBottom: isActive
-                          ? "1px solid var(--color-accent)"
-                          : "1px solid transparent",
-                        paddingBottom: 4,
-                      }}
+                      className={`pill ${isActive ? "active" : ""}`}
                     >
                       {opt.label}
                     </Link>

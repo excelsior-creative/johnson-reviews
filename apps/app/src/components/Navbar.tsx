@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Menu, X, Search } from "lucide-react";
 import { useSearch } from "./SearchProvider";
@@ -22,21 +22,40 @@ const rightLinks = [
 
 const allLinks = [...leftLinks, ...rightLinks];
 
-function isActive(pathname: string, search: string, path: string) {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+function isActive(pathname: string, currentCategory: string | null, path: string) {
   const [base, query] = path.split("?");
   if (query) {
     const expected = new URLSearchParams(query).get("category");
-    const current = new URLSearchParams(search).get("category");
-    return pathname.startsWith(base) && expected === current;
+    return pathname.startsWith(base) && expected === currentCategory;
   }
-  return pathname === base || (base !== "/" && pathname.startsWith(base + "/"));
+  // Exact match or nested route under this section.
+  // Don't mark "/blog" active while a category is selected (category links own that).
+  if (base === "/blog") {
+    return pathname === base && !currentCategory;
+  }
+  return pathname === base || pathname.startsWith(base + "/");
 }
 
 export const Navbar = () => {
   const pathname = usePathname() ?? "/";
-  const [search] = useState("");
+  const [currentCategory, setCurrentCategory] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const { openSearch } = useSearch();
+
+  // Read ?category=... client-side so category nav links can highlight
+  // without forcing the layout into a Suspense boundary.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const update = () => {
+      const params = new URLSearchParams(window.location.search);
+      setCurrentCategory(params.get("category"));
+    };
+    update();
+    window.addEventListener("popstate", update);
+    return () => window.removeEventListener("popstate", update);
+  }, [pathname]);
 
   return (
     <header className="relative z-50">
@@ -68,7 +87,7 @@ export const Navbar = () => {
                 <Link
                   key={l.name}
                   href={l.path}
-                  className={`nav-link ${isActive(pathname, search, l.path) ? "active" : ""}`}
+                  className={`nav-link ${isActive(pathname, currentCategory, l.path) ? "active" : ""}`}
                 >
                   {l.name}
                 </Link>
@@ -86,12 +105,13 @@ export const Navbar = () => {
                 <Link
                   key={l.name}
                   href={l.path}
-                  className={`nav-link ${isActive(pathname, search, l.path) ? "active" : ""}`}
+                  className={`nav-link ${isActive(pathname, currentCategory, l.path) ? "active" : ""}`}
                 >
                   {l.name}
                 </Link>
               ))}
               <button
+                type="button"
                 onClick={openSearch}
                 className="nav-link search inline-flex items-center"
                 aria-label="Search"
@@ -101,9 +121,11 @@ export const Navbar = () => {
 
               {/* Mobile toggle */}
               <button
+                type="button"
                 onClick={() => setIsOpen((v) => !v)}
-                className="lg:hidden nav-link"
+                className="lg:hidden nav-link inline-flex items-center"
                 aria-label="Toggle menu"
+                aria-expanded={isOpen}
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -118,7 +140,7 @@ export const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.3, ease: EASE }}
               className="lg:hidden overflow-hidden"
               style={{
                 background: "var(--color-bg-raised)",
@@ -131,7 +153,7 @@ export const Navbar = () => {
                     key={l.name}
                     href={l.path}
                     onClick={() => setIsOpen(false)}
-                    className={`nav-link ${isActive(pathname, search, l.path) ? "active" : ""}`}
+                    className={`nav-link ${isActive(pathname, currentCategory, l.path) ? "active" : ""}`}
                     style={{ fontSize: 12 }}
                   >
                     {l.name}

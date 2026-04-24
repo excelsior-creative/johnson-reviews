@@ -120,15 +120,26 @@ export const Hero = () => {
           </div>
 
           {/* Image column */}
-          <div className="rise-2 photo" style={{ aspectRatio: "4 / 5" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={heroSrc}
-              alt="Brandon Johnson on the road"
-              className="ken-burns"
-              loading="eager"
-              decoding="async"
-            />
+          <div className="rise-2" style={{ position: "relative" }}>
+            <div className="photo" style={{ aspectRatio: "4 / 5" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroSrc}
+                alt="Brandon Johnson on the road"
+                className="ken-burns"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <div
+              className="caption"
+              style={{ marginTop: 14, justifyContent: "space-between" }}
+            >
+              <span>
+                <span className="num">N° XLVII</span> On assignment · Orange County
+              </span>
+              <span className="hidden md:inline">Photographed for Issue № 47</span>
+            </div>
           </div>
         </div>
       </div>
@@ -137,8 +148,9 @@ export const Hero = () => {
         dangerouslySetInnerHTML={{
           __html: `
             @media (max-width: 860px) {
-              .hero-grid { grid-template-columns: minmax(0, 1fr) !important; }
-              .hero-grid > .photo { aspect-ratio: 4 / 3 !important; order: -1; }
+              .hero-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 40px !important; }
+              .hero-grid > div:last-child .photo { aspect-ratio: 4 / 3 !important; }
+              .hero-grid > div:last-child { order: -1; }
             }
           `,
         }}

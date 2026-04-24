@@ -203,19 +203,13 @@ export default async function PostPage({
             >
               <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
                 <span className="meta">Tags</span>
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                   {tags.map((tag) =>
                     typeof tag === "object" ? (
                       <Link
                         key={tag.id}
                         href={`/blog?tag=${tag.slug ?? tag.id}`}
-                        className="meta"
-                        style={{
-                          color: "var(--color-ink-dim)",
-                          border: "1px solid var(--color-rule-strong)",
-                          padding: "8px 14px",
-                          transition: "color 0.2s, border-color 0.2s",
-                        }}
+                        className="pill"
                       >
                         {tag.name}
                       </Link>

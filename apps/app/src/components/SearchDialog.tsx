@@ -1,80 +1,77 @@
-'use client'
+"use client";
 
-import { AnimatePresence, m } from 'framer-motion'
-import { Search, X, Loader2, ArrowRight } from 'lucide-react'
-import React, { useEffect, useState, useRef } from 'react'
-import { Input } from './ui/input'
-import Link from 'next/link'
+import { AnimatePresence, m } from "framer-motion";
+import { Search, X, Loader2, ArrowRight } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 
 type SearchResult = {
-  id: string
-  title: string
-  slug: string
-  excerpt?: string
-  status: string
-}
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  status: string;
+};
 
 type SearchDialogProps = {
-  isOpen: boolean
-  onClose: () => void
-}
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const SearchDialog: React.FC<SearchDialogProps> = ({ isOpen, onClose }) => {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<SearchResult[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose()
+      if (e.key === "Escape" && isOpen) {
+        onClose();
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-      setTimeout(() => inputRef.current?.focus(), 100)
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+      setTimeout(() => inputRef.current?.focus(), 120);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen, onClose])
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose]);
 
   useEffect(() => {
     if (!query) {
-      setResults([])
-      return
+      setResults([]);
+      return;
     }
 
     const timer = setTimeout(async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        // Query the search collection. The search plugin provides a /api/search endpoint.
         const response = await fetch(
           `/api/search?where[status][equals]=published&where[title][contains]=${encodeURIComponent(query)}&limit=5`,
-        )
-        const data = (await response.json()) as { docs: SearchResult[] }
-        setResults(data.docs || [])
+        );
+        const data = (await response.json()) as { docs: SearchResult[] };
+        setResults(data.docs || []);
       } catch (err) {
-        console.error('Search failed:', err)
+        console.error("Search failed:", err);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }, 300)
+    }, 220);
 
-    return () => clearTimeout(timer)
-  }, [query])
+    return () => clearTimeout(timer);
+  }, [query]);
 
-  // Reset query when closed
   useEffect(() => {
-    if (!isOpen) {
-      setQuery('')
-    }
-  }, [isOpen])
+    if (!isOpen) setQuery("");
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -83,89 +80,199 @@ const SearchDialog: React.FC<SearchDialogProps> = ({ isOpen, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-[10vh]"
+          transition={{ duration: 0.22, ease: EASE }}
+          className="fixed inset-0 z-[100] flex items-start justify-center"
+          style={{
+            padding: "10vh 16px 16px",
+            background: "rgba(15, 13, 11, 0.85)",
+            backdropFilter: "blur(14px) saturate(120%)",
+          }}
           onClick={onClose}
         >
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
-
           <m.div
-            initial={{ opacity: 0, scale: 0.95, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.28, ease: EASE }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-2xl bg-card border border-border shadow-2xl overflow-hidden rounded-2xl flex flex-col"
+            className="relative w-full"
+            style={{
+              maxWidth: 640,
+              background: "var(--color-bg-raised)",
+              border: "1px solid var(--color-rule-strong)",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
+            }}
           >
-            <div className="flex items-center p-4 border-b">
-              <Search className="w-5 h-5 text-muted-foreground mr-3" />
-              <Input
+            {/* Header */}
+            <div
+              className="flex items-center"
+              style={{
+                padding: "20px 24px",
+                borderBottom: "1px solid var(--color-rule)",
+                gap: 14,
+              }}
+            >
+              <Search
+                size={18}
+                style={{ color: "var(--color-ink-mute)", flexShrink: 0 }}
+              />
+              <input
                 ref={inputRef}
-                placeholder="Search blog posts..."
+                type="text"
+                placeholder="Search reviews, restaurants, cities..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 border-none shadow-none focus-visible:ring-0 text-lg h-auto p-0 bg-transparent"
+                className="flex-1 bg-transparent outline-none italic"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 22,
+                  color: "var(--color-ink)",
+                }}
               />
               <button
+                type="button"
                 onClick={onClose}
-                className="p-1 hover:bg-muted rounded-md transition-colors cursor-pointer"
+                aria-label="Close search"
+                className="transition-colors"
+                style={{ color: "var(--color-ink-mute)" }}
               >
-                <X className="w-5 h-5 text-muted-foreground" />
+                <X size={18} />
               </button>
             </div>
 
-            <div className="max-h-[60vh] overflow-y-auto p-2">
+            {/* Body */}
+            <div
+              className="overflow-y-auto"
+              style={{ maxHeight: "60vh", padding: 8 }}
+            >
               {isLoading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="w-6 h-6 animate-spin text-brand" />
+                <div className="flex items-center justify-center" style={{ padding: "48px 0" }}>
+                  <Loader2
+                    size={20}
+                    className="animate-spin"
+                    style={{ color: "var(--color-accent)" }}
+                  />
                 </div>
               ) : query && results.length === 0 ? (
-                <div className="py-12 text-center text-muted-foreground">
-                  No results found for &quot;{query}&quot;
+                <div
+                  className="italic text-center"
+                  style={{
+                    padding: "48px 24px",
+                    fontFamily: "var(--font-serif)",
+                    color: "var(--color-ink-dim)",
+                    fontSize: 18,
+                  }}
+                >
+                  Nothing matches &ldquo;{query}&rdquo;. Try another spelling?
                 </div>
               ) : results.length > 0 ? (
-                <div className="space-y-1">
-                  {results.map((result) => (
+                <div>
+                  {results.map((result, i) => (
                     <Link
                       key={result.id}
                       href={`/blog/${result.slug}`}
                       onClick={onClose}
-                      className="flex flex-col p-4 rounded-xl hover:bg-muted transition-colors group"
+                      className="group flex items-center justify-between"
+                      style={{
+                        padding: "18px 16px",
+                        borderBottom:
+                          i < results.length - 1
+                            ? "1px solid var(--color-rule)"
+                            : "none",
+                        transition: "background-color 0.2s, padding 0.25s",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "rgba(196, 169, 97, 0.06)";
+                        e.currentTarget.style.paddingLeft = "24px";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.paddingLeft = "16px";
+                      }}
                     >
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-semibold text-foreground group-hover:text-brand transition-colors">
+                      <div style={{ minWidth: 0 }}>
+                        <div
+                          className="group-hover:text-[color:var(--color-accent)] transition-colors"
+                          style={{
+                            fontFamily: "var(--font-serif)",
+                            fontSize: 20,
+                            fontWeight: 500,
+                            letterSpacing: "-0.01em",
+                          }}
+                        >
                           {result.title}
-                        </h3>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0" />
+                        </div>
+                        {result.excerpt && (
+                          <div
+                            className="italic"
+                            style={{
+                              marginTop: 4,
+                              fontFamily: "var(--font-serif)",
+                              fontSize: 14,
+                              color: "var(--color-ink-dim)",
+                              display: "-webkit-box",
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {result.excerpt}
+                          </div>
+                        )}
                       </div>
-                      {result.excerpt && (
-                        <p className="text-sm text-muted-foreground line-clamp-1 mt-1">
-                          {result.excerpt}
-                        </p>
-                      )}
+                      <ArrowRight
+                        size={16}
+                        className="arrow"
+                        style={{ color: "var(--color-ink-mute)", flexShrink: 0 }}
+                      />
                     </Link>
                   ))}
                 </div>
               ) : (
-                <div className="py-12 text-center text-muted-foreground text-sm">
-                  {query ? 'Keep typing to search...' : 'Try searching for topics like "Payload" or "Next.js"'}
+                <div
+                  className="italic text-center"
+                  style={{
+                    padding: "48px 24px",
+                    fontFamily: "var(--font-serif)",
+                    color: "var(--color-ink-mute)",
+                    fontSize: 16,
+                  }}
+                >
+                  Try a restaurant name, a city, or a cuisine.
                 </div>
               )}
             </div>
-            
-            <div className="p-3 bg-muted/30 border-t flex justify-between items-center text-[10px] text-muted-foreground uppercase tracking-widest font-bold">
-              <span>Search Powered by Payload</span>
-              <div className="flex gap-2">
-                <kbd className="px-1.5 py-0.5 rounded border bg-background">ESC</kbd>
-                <span>to close</span>
-              </div>
+
+            {/* Footer */}
+            <div
+              className="flex items-center justify-between meta"
+              style={{
+                padding: "14px 24px",
+                borderTop: "1px solid var(--color-rule)",
+                background: "var(--color-bg-card)",
+              }}
+            >
+              <span>Search · Johnson & Co.</span>
+              <span>
+                <kbd
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    padding: "2px 6px",
+                    border: "1px solid var(--color-rule-strong)",
+                    marginRight: 6,
+                  }}
+                >
+                  ESC
+                </kbd>
+                to close
+              </span>
             </div>
           </m.div>
         </m.div>
       )}
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default SearchDialog
-
+export default SearchDialog;

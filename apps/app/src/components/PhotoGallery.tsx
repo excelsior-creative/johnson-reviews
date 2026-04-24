@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 
 interface GalleryImage {
@@ -18,7 +18,9 @@ interface PhotoGalleryProps {
   title?: string;
 }
 
-export function PhotoGallery({ images, title }: PhotoGalleryProps) {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+export function PhotoGallery({ images, title = "From the visit." }: PhotoGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
@@ -26,17 +28,16 @@ export function PhotoGallery({ images, title }: PhotoGalleryProps) {
 
   const goPrev = useCallback(() => {
     setLightboxIndex((prev) =>
-      prev === null ? null : (prev - 1 + images.length) % images.length
+      prev === null ? null : (prev - 1 + images.length) % images.length,
     );
   }, [images.length]);
 
   const goNext = useCallback(() => {
     setLightboxIndex((prev) =>
-      prev === null ? null : (prev + 1) % images.length
+      prev === null ? null : (prev + 1) % images.length,
     );
   }, [images.length]);
 
-  // Keyboard navigation
   useEffect(() => {
     if (lightboxIndex === null) return;
 
@@ -47,7 +48,6 @@ export function PhotoGallery({ images, title }: PhotoGalleryProps) {
     };
 
     document.addEventListener("keydown", handleKey);
-    // Prevent body scroll
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -60,151 +60,223 @@ export function PhotoGallery({ images, title }: PhotoGalleryProps) {
 
   const currentImage = lightboxIndex !== null ? images[lightboxIndex] : null;
 
-  // Determine grid layout based on count
-  const gridClass =
-    images.length === 1
-      ? "grid-cols-1"
-      : images.length === 2
-      ? "grid-cols-2"
-      : images.length === 3
-      ? "grid-cols-3"
-      : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4";
-
   return (
-    <section className="mt-12 mb-8">
-      {title && (
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <span className="w-8 h-0.5 bg-primary inline-block" />
-          {title}
-        </h2>
-      )}
-
-      {/* Gallery Grid */}
-      <div className={`grid ${gridClass} gap-2`}>
-        {images.map((img, i) => (
-          <motion.button
-            key={i}
-            className="group relative aspect-square overflow-hidden rounded-lg bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => openLightbox(i)}
-            aria-label={`View photo ${i + 1}${img.caption ? `: ${img.caption}` : ""}`}
-          >
-            <Image
-              src={img.url}
-              alt={img.alt || img.caption || `Gallery photo ${i + 1}`}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-            />
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-              <ZoomIn
-                className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
-                size={28}
-              />
-            </div>
-          </motion.button>
-        ))}
+    <section>
+      <div
+        className="between"
+        style={{ marginBottom: 32, alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}
+      >
+        <div>
+          <div className="kicker mb-3">Photo Notes</div>
+          <h3 className="display" style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}>
+            {title}
+          </h3>
+        </div>
+        <div className="meta">
+          {images.length} photo{images.length !== 1 ? "s" : ""} · Click to enlarge
+        </div>
       </div>
 
-      <p className="text-xs text-muted-foreground mt-2 text-right">
-        {images.length} photo{images.length !== 1 ? "s" : ""} — click to enlarge
-      </p>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+          gridAutoRows: 180,
+          gap: 16,
+        }}
+        className="gallery-grid"
+      >
+        {images.map((img, i) => {
+          const layouts = [
+            { gridColumn: "span 4", gridRow: "span 2" },
+            { gridColumn: "span 2", gridRow: "span 1" },
+            { gridColumn: "span 2", gridRow: "span 1" },
+            { gridColumn: "span 2", gridRow: "span 2" },
+            { gridColumn: "span 2", gridRow: "span 2" },
+            { gridColumn: "span 2", gridRow: "span 2" },
+          ];
+          const layout = layouts[i] ?? { gridColumn: "span 2", gridRow: "span 1" };
+          return (
+            <button
+              key={i}
+              type="button"
+              className="photo group"
+              style={{ ...layout, cursor: "zoom-in" }}
+              onClick={() => openLightbox(i)}
+              aria-label={`View photo ${i + 1}${img.caption ? `: ${img.caption}` : ""}`}
+            >
+              <Image
+                src={img.url}
+                alt={img.alt || img.caption || `Gallery photo ${i + 1}`}
+                fill
+                sizes="(max-width: 900px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <div
+                className="gallery-scrim"
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(180deg, rgba(15,13,11,0) 60%, rgba(15,13,11,0.55) 100%)",
+                  opacity: 0,
+                  transition: "opacity 0.35s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ZoomIn
+                  size={28}
+                  style={{
+                    color: "var(--color-accent)",
+                    opacity: 0.9,
+                  }}
+                />
+              </div>
+            </button>
+          );
+        })}
+      </div>
 
-      {/* Lightbox */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .gallery-grid button:hover .gallery-scrim { opacity: 1; }
+            @media (max-width: 900px) {
+              .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; grid-auto-rows: 200px !important; }
+              .gallery-grid > button { grid-column: span 1 !important; grid-row: span 1 !important; }
+            }
+          `,
+        }}
+      />
+
       <AnimatePresence>
         {lightboxIndex !== null && currentImage && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.25, ease: EASE }}
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            style={{ background: "rgba(15, 13, 11, 0.95)", backdropFilter: "blur(8px)" }}
             onClick={closeLightbox}
           >
-            {/* Close button */}
+            {/* Counter */}
+            <div
+              className="absolute top-6 left-1/2 -translate-x-1/2 meta"
+              style={{ color: "var(--color-ink-dim)" }}
+            >
+              {String(lightboxIndex + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
+            </div>
+
+            {/* Close */}
             <button
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              type="button"
               onClick={closeLightbox}
               aria-label="Close gallery"
+              className="absolute top-5 right-5 p-2 transition-colors"
+              style={{ color: "var(--color-ink-dim)" }}
             >
               <X size={24} />
             </button>
 
-            {/* Counter */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/70 text-sm tabular-nums">
-              {lightboxIndex + 1} / {images.length}
-            </div>
-
-            {/* Prev button */}
+            {/* Prev */}
             {images.length > 1 && (
               <button
-                className="absolute left-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   goPrev();
                 }}
                 aria-label="Previous photo"
+                className="absolute left-6 p-3 transition-colors"
+                style={{ color: "var(--color-ink-dim)" }}
               >
                 <ChevronLeft size={28} />
               </button>
             )}
 
-            {/* Next button */}
+            {/* Next */}
             {images.length > 1 && (
               <button
-                className="absolute right-4 z-10 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                type="button"
                 onClick={(e) => {
                   e.stopPropagation();
                   goNext();
                 }}
                 aria-label="Next photo"
+                className="absolute right-6 p-3 transition-colors"
+                style={{ color: "var(--color-ink-dim)" }}
               >
                 <ChevronRight size={28} />
               </button>
             )}
 
-            {/* Image */}
-            <motion.div
+            <m.div
               key={lightboxIndex}
-              className="relative max-w-[90vw] max-h-[85vh] flex flex-col items-center"
-              initial={{ scale: 0.92, opacity: 0 }}
+              initial={{ scale: 0.96, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="relative flex flex-col items-center"
+              style={{ maxWidth: "90vw", maxHeight: "85vh" }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentImage.url}
                 alt={currentImage.alt || currentImage.caption || "Gallery photo"}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
-                style={{ maxWidth: "90vw" }}
+                className="max-w-full"
+                style={{
+                  maxHeight: "78vh",
+                  objectFit: "contain",
+                }}
               />
               {currentImage.caption && (
-                <p className="mt-3 text-white/80 text-sm text-center max-w-lg px-4">
+                <p
+                  className="italic text-pretty"
+                  style={{
+                    marginTop: 14,
+                    fontFamily: "var(--font-serif)",
+                    fontSize: 15,
+                    color: "var(--color-ink-dim)",
+                    textAlign: "center",
+                    maxWidth: 640,
+                    padding: "0 16px",
+                  }}
+                >
                   {currentImage.caption}
                 </p>
               )}
-            </motion.div>
+            </m.div>
 
             {/* Thumbnail strip */}
             {images.length > 1 && (
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 max-w-[90vw] overflow-x-auto px-4 pb-1">
+              <div
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 overflow-x-auto"
+                style={{ maxWidth: "90vw", padding: "4px 16px" }}
+                onClick={(e) => e.stopPropagation()}
+              >
                 {images.map((img, i) => (
                   <button
                     key={i}
+                    type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLightboxIndex(i);
                     }}
-                    className={`flex-shrink-0 w-12 h-12 rounded overflow-hidden border-2 transition-all ${
-                      i === lightboxIndex
-                        ? "border-white scale-110"
-                        : "border-white/30 hover:border-white/60 opacity-60 hover:opacity-100"
-                    }`}
                     aria-label={`Go to photo ${i + 1}`}
+                    style={{
+                      flexShrink: 0,
+                      width: 48,
+                      height: 48,
+                      overflow: "hidden",
+                      border: `1px solid ${i === lightboxIndex ? "var(--color-accent)" : "var(--color-rule-strong)"}`,
+                      opacity: i === lightboxIndex ? 1 : 0.6,
+                      transition: "opacity 0.2s, border-color 0.2s",
+                    }}
                   >
                     <Image
                       src={img.url}
@@ -217,7 +289,7 @@ export function PhotoGallery({ images, title }: PhotoGalleryProps) {
                 ))}
               </div>
             )}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </section>

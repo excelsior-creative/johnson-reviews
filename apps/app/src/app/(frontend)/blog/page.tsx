@@ -89,19 +89,10 @@ export default async function BlogPage({
             }}
           >
             <span className="meta">Section</span>
-            <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <Link
                 href="/blog"
-                className="nav-link"
-                style={{
-                  color: !selectedCategory
-                    ? "var(--color-accent)"
-                    : "var(--color-ink-dim)",
-                  borderBottom: !selectedCategory
-                    ? "1px solid var(--color-accent)"
-                    : "1px solid transparent",
-                  paddingBottom: 4,
-                }}
+                className={`pill ${!selectedCategory ? "active" : ""}`}
               >
                 All
               </Link>
@@ -111,16 +102,7 @@ export default async function BlogPage({
                   <Link
                     key={cat.id}
                     href={`/blog?category=${cat.slug}`}
-                    className="nav-link"
-                    style={{
-                      color: isActive
-                        ? "var(--color-accent)"
-                        : "var(--color-ink-dim)",
-                      borderBottom: isActive
-                        ? "1px solid var(--color-accent)"
-                        : "1px solid transparent",
-                      paddingBottom: 4,
-                    }}
+                    className={`pill ${isActive ? "active" : ""}`}
                   >
                     {cat.name}
                   </Link>
