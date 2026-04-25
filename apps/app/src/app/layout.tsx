@@ -7,11 +7,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   ...defaultMetadata,
   title: {
-    default: "Johnson Reviews - Every Day a New Destination",
+    default: "Johnson Reviews — Real visits. Honest reviews.",
     template: "%s | Johnson Reviews",
   },
   description:
-    "Embark on a culinary journey with Johnson Reviews, your premier guide to discovering hidden gems and top-notch dining and experiences across various destinations.",
+    "Long-form restaurant, hotel, and family-travel reviews from Brandon Johnson — a Google Local Guide Level 10 based in Orange County, California.",
 };
 
 export default function RootLayout({

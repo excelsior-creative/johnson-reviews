@@ -7,8 +7,7 @@ import Link from "next/link";
  * column. Photo lives in the second column at 4:5.
  */
 export const Hero = () => {
-  const heroSrc =
-    "https://brandonj117.sg-host.com/wp-content/uploads/2021/04/johnson-reviews2.jpg";
+  const heroSrc = "/hero/brandon-on-the-road.jpg";
 
   return (
     <section className="relative overflow-hidden" style={{ padding: "60px 0 100px" }}>
