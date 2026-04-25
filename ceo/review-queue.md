@@ -19,7 +19,7 @@ to build a Location hub off of), then Irvine, then Las Vegas, then
 the rest.
 
 ### Dana Point, CA cluster — `legacy`
-- [ ] **Apizza Doho** — `apizza-doho-where-culinary-excellence-meets-cozy-ambiance-in-dana-point-ca`
+- [~] **Apizza Doho** — `apizza-doho-where-culinary-excellence-meets-cozy-ambiance-in-dana-point-ca` — `drafting → blocked on Brandon`. Draft at `/ceo/drafts/apizza-doho-dana-point.md`. Six specific questions queued in INBOX #14.
 - [ ] **Chart House** — `dana-point-ca-chart-house-oceanfront-elegance-prime-rib-bliss`
 - [ ] **Maison Cafe & Market** — `maison-cafe-market-dana-point-breakfast-bliss`
 - [ ] **Ramos House Cafe** — `a-culinary-sojourn-at-ramos-house-cafe-where-every-bite-is-art` (technically SJC, adjacent)
@@ -107,7 +107,12 @@ the rest.
 
 ## In progress (drafting)
 
-_(empty — first night)_
+- **Apizza Doho** (Dana Point, CA) — draft at
+  `/ceo/drafts/apizza-doho-dana-point.md`. Built from the legacy WP
+  text (which was AI-marketing voice — stripped). Verified facts kept;
+  unverifiable claims explicitly flagged. Blocked on Brandon for: visit
+  context (kids-along vs adults-only), rating, full order, any
+  disappointments, logistics. See INBOX #14.
 
 ## In review (Brandon redlining)
 

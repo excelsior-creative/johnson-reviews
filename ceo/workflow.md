@@ -73,21 +73,45 @@ The infrastructure that does NOT exist:
 
 ## Friction points (to track as we run)
 
-- _(empty — first night, nothing to log yet)_
+- **Legacy text is poisoned.** The legacy WordPress posts in
+  `reference/` are AI-marketing rewrites (not Brandon's original
+  Google reviews). Every voice.md §4 cliché — "nestled in," "hidden
+  gem," "must-visit," "harmonious medley," "culinary masterpiece" —
+  appears in the source. Migration cannot be a copy-edit; it has to be
+  a fact-extraction-then-rewrite, which means every legacy migration
+  blocks on Brandon for the verdict + at least one specific moment.
+  **Mitigation:** drafts now flag every unverifiable claim explicitly
+  rather than guessing. Apizza Doho draft is the proof.
+- **Schema needs ratings to add value.** `generateReviewSchema` won't
+  emit `reviewRating` without a real number, but ratings drive most of
+  the search-result lift from Review schema. Brandon's redline pass
+  must include a rating on every legacy migration or we lose the
+  star-snippet upside. Add rating prompt to the intake template
+  (already there as Q5).
+
+## Improvements shipped tonight (2026-04-25)
+
+- **`/ceo/prompts/intake.md` — v1.** Five-question core, optional
+  add-ons, photo handoff, agent-do/don't list. Standard front door.
+- **`/ceo/templates/review-template.md` — v1.** Frontmatter (with
+  schema-mapping fields), six-section body, photo plan, internal-link
+  + publish checklists. Plugs directly into the JSON-LD generators in
+  `apps/app/src/lib/structured-data.ts`.
+- **JSON-LD pipeline live on `/blog/[slug]`.** Article + Review +
+  Breadcrumb schema render server-side per post; Author Person schema
+  shipped in the global graph and `@id`-referenced from each Review.
+- **First migration draft.** Apizza Doho saved to `/ceo/drafts/`,
+  blocked on Brandon's redline. Did not auto-publish — waiting on
+  INBOX #7 (approve-by-silence vs. explicit approve).
 
 ## Improvements in progress
 
-- Build the legacy-WP migration backlog into `/ceo/review-queue.md`
-  from the 60+ slugs already in `reference/`. This is the lowest-
-  friction starting point: Brandon went to all those places, the
-  factual basis already exists, the migration "interview" is
-  Brandon confirming or correcting the existing review.
-- Build a Brandon-facing intake prompt template (in
-  `/ceo/prompts/intake.md`) that the agent can use whenever Brandon
-  initiates a new review. **Pending — not started this run.**
-- Build a publish-readiness checklist (schema, alt text, internal
-  links, geotag stripping, related-reviews block, category page
-  refresh). **Pending — not started this run.**
+- Photo proposal automation from a Google Photos album — pending
+  INBOX #6 (Google Photos access posture).
+- EXIF-stripper script for Payload Media uploads tagged
+  `containsKids: true` — backlog, target next nightly.
+- Location hub route (`/location/[slug]`) — depends on first review
+  publishing into Payload, target next nightly.
 
 ## Open questions for Brandon
 

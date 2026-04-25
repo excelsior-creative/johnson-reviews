@@ -1,5 +1,19 @@
 # design-system.md — Gilded Legacy (captured from `/reference/`)
 
+> ⚠️ **2026-04-25 status:** PR #15 merged on 2026-04-23 ("feat: migrate
+> to dark editorial design system from reference/design2"). There are
+> now **three** design folders in `reference/`:
+> `stitch_johnson_reviews_discovery/` (the original Gilded Legacy that
+> this doc captures), `design/`, and `design2/`. The live components
+> currently reflect the design2 merge. **Open question:** is design2
+> the new canonical target? If yes, this doc needs a full rewrite to
+> reflect design2's tokens, type scale, and components. INBOX #11.
+> Until Brandon confirms, the contents below describe Gilded Legacy
+> as the captured reference, not necessarily the live state.
+
+---
+
+
 Source of truth: `reference/stitch_johnson_reviews_discovery/gilded_legacy/DESIGN.md`
 plus three page-template HTML files (home, discovery, review_detail).
 
