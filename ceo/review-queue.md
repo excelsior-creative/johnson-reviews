@@ -4,11 +4,19 @@ Sources of items: (1) the 60+ legacy WordPress review slugs in
 `reference/`, which are old reviews that need migration / refresh
 into Posts; (2) places Brandon mentions going forward.
 
+⚠️ **IMPORTANT — Legacy Review Policy (2026-04-26):**
+The old WP reviews were written by a hired ghostwriter, not Brandon.
+Do NOT migrate any legacy review without Brandon confirming the
+basic facts of the visit. See `decisions/0001-legacy-review-migration-policy.md`.
+All legacy items below are `legacy/blocked` until Brandon verifies.
+Status will update to `legacy/confirmed` once he confirms, then
+to `drafting` once the agent starts rewriting.
+
 Statuses: `legacy` (in old WP, not yet in Payload) → `needs-info`
 (blocked on Brandon for facts) → `drafting` (agent is writing) →
 `review` (Brandon redlining) → `published` (live).
 
-Updated 2026-04-20.
+Updated 2026-04-26.
 
 ---
 
