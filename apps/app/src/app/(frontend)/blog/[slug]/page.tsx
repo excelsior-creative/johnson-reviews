@@ -8,6 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Media, Post, Category, Tag } from "@/payload-types";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import {
+  combineSchemas,
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+  generateReviewSchema,
+} from "@/lib/structured-data";
 
 export const dynamic = "force-dynamic";
 
@@ -62,8 +68,20 @@ export default async function PostPage({
       })
       .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
+  const postSchema = combineSchemas(
+    generateArticleSchema(post),
+    generateReviewSchema(post),
+    generateBreadcrumbSchema(post),
+  );
+
   return (
     <article className="page-body">
+      {postSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(postSchema) }}
+        />
+      )}
       {/* Hero */}
       <section
         style={{
@@ -231,8 +249,88 @@ export default async function PostPage({
         </section>
       )}
 
+      {/* Author bio — E-E-A-T signal */}
+      <section style={{ padding: "80px 0 60px" }}>
+        <div className="container-jr" style={{ maxWidth: 760 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "120px 1fr",
+              gap: 32,
+              alignItems: "start",
+              padding: "40px 0",
+              borderTop: "1px solid var(--color-rule)",
+              borderBottom: "1px solid var(--color-rule)",
+            }}
+            className="author-bio-grid"
+          >
+            <div
+              style={{
+                width: 120,
+                height: 120,
+                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, #3a2f25, #6b5842)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--color-accent)",
+                fontSize: 44,
+              }}
+            >
+              BJ
+            </div>
+            <div>
+              <div className="kicker mb-3">About the reviewer</div>
+              <div
+                className="display"
+                style={{ fontSize: 28, lineHeight: 1.2 }}
+              >
+                Brandon Johnson
+              </div>
+              <p
+                className="text-pretty"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 17,
+                  color: "var(--color-ink-dim)",
+                  lineHeight: 1.6,
+                  marginTop: 14,
+                }}
+              >
+                Family travel + restaurant reviewer based in Orange County,
+                California. Google Local Guide Level 10 with 500+ reviews,
+                27,000+ original photos, and 132M+ photo views. Every
+                place on this site is somewhere we&rsquo;ve actually been —
+                usually with the kids.
+              </p>
+              <div style={{ marginTop: 18 }}>
+                <Link href="/about" className="btn btn-ghost">
+                  More about Brandon <span className="arrow">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @media (max-width: 640px) {
+                .author-bio-grid {
+                  grid-template-columns: 1fr !important;
+                  gap: 24px !important;
+                  text-align: left;
+                }
+              }
+            `,
+          }}
+        />
+      </section>
+
       {/* Signature */}
-      <section style={{ padding: "60px 0 100px" }}>
+      <section style={{ padding: "20px 0 100px" }}>
         <div className="container-jr text-center" style={{ maxWidth: 760 }}>
           <div className="meta mb-3">— End of dispatch —</div>
           <div className="signature" style={{ fontSize: 40 }}>

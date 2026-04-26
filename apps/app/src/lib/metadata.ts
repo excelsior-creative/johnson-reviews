@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
-export const SITE_NAME = "Template Site";
-export const SITE_TAGLINE = "Built with Next.js & Payload CMS";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://johnsonreviews.com";
+export const SITE_NAME = "Johnson Reviews";
+export const SITE_TAGLINE = "Real visits. Honest reviews.";
 export const DEFAULT_DESCRIPTION =
-  "A high-performance project template with integrated SEO and AI features.";
+  "Long-form restaurant, hotel, and family-travel reviews from Brandon Johnson — a Google Local Guide Level 10 based in Orange County, California. Every place is somewhere we've actually been.";
 
 export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 
@@ -19,11 +22,12 @@ export const defaultMetadata: Metadata = {
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
-    "Next.js",
-    "Payload CMS",
-    "React",
-    "Tailwind CSS",
-    "SEO optimized",
+    "family travel blog",
+    "restaurant reviews",
+    "Orange County restaurants",
+    "Google Local Guide",
+    "Brandon Johnson",
+    "Johnson Reviews",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -45,7 +49,7 @@ export const defaultMetadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Project Template`,
+        alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
       },
     ],
   },

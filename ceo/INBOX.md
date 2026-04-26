@@ -9,11 +9,56 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 1. **Live site reachability.** WebFetch from the agent returned 403
    then ECONNREFUSED at both `johnsonreviews.com` and
-   `www.johnsonreviews.com` during this run (2026-04-20). Could be a
-   Vercel firewall, Cloudflare WAF, or actual outage. **Question:**
+   `www.johnsonreviews.com` during the 2026-04-20 run. Re-checked
+   2026-04-25 — same result. Two consecutive nights now. **Question:**
    is the site up for you in a browser right now? If yes, what's
    the canonical URL (apex vs www) and is there a WAF rule we
    should whitelist agent traffic against?
+
+11. 🔴 **Which design system is current?** Between the 2026-04-20
+    nightly run and 2026-04-25, PR #15 merged
+    "feat: migrate to dark editorial design system from
+    reference/design2." There are now three reference design folders
+    (`stitch_johnson_reviews_discovery/`, `design/`, `design2/`) and
+    `/ceo/design-system.md` references the original Gilded Legacy
+    direction. **Question:** is `reference/design2/` the current
+    target, and should I update `/ceo/design-system.md` to reflect it
+    + audit live components against it next nightly run?
+
+12. 🔴 **Brand commitment to no affiliates / no sponsors.** The
+    homepage on-method blockquote and the `/about` "Three Principles"
+    block publicly commit Johnson Reviews to "no press trips, no
+    comped meals, no affiliate links, no booking links, no referral
+    commissions, no Amazon tags." That's a strong public stake. The
+    CEO mandate (priority 5) lists ads + affiliate relationships as
+    eventual monetization. **Question:** confirm we want to keep this
+    public commitment as-is, or do you want me to soften the language
+    now (before the page accumulates more inbound trust on it) so
+    affiliate relationships don't feel like a betrayal later?
+
+13. 🟡 **OpenTable + Yelp on AsSeenIn.** I cut both from the press
+    strip tonight because I couldn't confirm Brandon writes on
+    either. Only Google Local Guides remained (which is the
+    confirmed Level 10 platform). **Question:** if you do have
+    OpenTable / Yelp profiles you'd like back on the home page, send
+    URLs and I'll re-add. Otherwise we leave the strip as the
+    single Google logo + the credentials line.
+
+14. 🟡 **Apizza Doho draft for redline.** First legacy migration
+    draft is at `/ceo/drafts/apizza-doho-dana-point.md`. The legacy
+    WP post was AI-marketing voice (every clichГ© voice.md §4 calls
+    out is in there), so I stripped to the verifiable core and
+    flagged every unverifiable claim explicitly. **Specific
+    questions in the draft:** (a) was this kids-along or
+    adults-only? (b) when did we last go? (c) what's the rating?
+    (d) anything we ordered besides the pizza + the sausage-meatball
+    sub? (e) anything that disappointed? (f) parking + reservations?
+
+15. 🟡 **Brandon portrait for /about.** I removed the Unsplash stock
+    photo posing as your portrait (a stranger's face). Replaced
+    with a typographic "BJ" placeholder in the gold accent. **Send a
+    real photo when you have one** — square or 4:5, good light, no
+    kids in frame is fine. I'll process and ship.
 
 ### 🟡 Needs decision
 

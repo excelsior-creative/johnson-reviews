@@ -123,7 +123,18 @@ _(Brandon: when you correct a draft or a published post, log the
 correction here as a one-liner so the voice doc evolves. The agent
 will read this every night.)_
 
-- _(empty — first night)_
+- **2026-04-25 (agent self-note, not yet Brandon-verified).** The
+  legacy WordPress reviews in `reference/` are AI-marketing voice,
+  not Brandon's voice. Every §4 avoid-list phrase appears in the
+  Apizza Doho source — "nestled in," "hidden gem," "must-visit,"
+  "harmonious medley," "culinary masterpiece," "symphony of savory
+  flavors." Treat the legacy text as a **factual mining ground**, not
+  a voice reference. The voice rebuild has to happen at draft time,
+  not by editing the legacy text.
+- **2026-04-25.** Adding the §4 avoid-list: "elevating our visit,"
+  "destination for [X] delight," "every bite was a journey,"
+  "promises to leave you craving" — all from the same legacy text.
+  These all set off the AI-tells alarm bells in voice.md §4.
 
 ---
 

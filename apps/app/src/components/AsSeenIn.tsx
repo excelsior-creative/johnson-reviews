@@ -1,21 +1,14 @@
 import React from "react";
 
-const pressLogos = [
+// Honest framing: the only platform we can confirm Brandon writes on is
+// Google Local Guides (Level 10, 500+ reviews). OpenTable + Yelp presence
+// is unverified — queued as an INBOX question for Brandon. Until then
+// we don't claim "As Seen In" on outlets we haven't been seen in.
+const platforms = [
   {
     name: "Google Local Guides",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2021/03/220-2209071_a-special-offer-from-google-local-guides-google.png",
-  },
-  {
-    name: "OpenTable",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2021/03/OTLogo_fullhor_r1a-01-2.png",
-  },
-  {
-    name: "Yelp",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2023/08/yelp.png",
-  },
-  {
-    name: "Google Local Guides",
-    src: "https://brandonj117.sg-host.com/wp-content/uploads/2023/08/220-2209071_a-special-offer-from-google-local-guides-google-1.png",
+    src: "/press/google-local-guides.png",
+    href: "https://maps.google.com/contrib",
   },
 ];
 
@@ -30,19 +23,32 @@ export const AsSeenIn = () => {
       }}
     >
       <div className="container-jr">
-        <div className="kicker text-center mb-8">As Seen In</div>
+        <div className="kicker text-center mb-8">Where Brandon writes</div>
         <div className="flex flex-wrap items-center justify-center gap-12 md:gap-16">
-          {pressLogos.map((logo, i) => (
+          {platforms.map((logo) => (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              key={i}
+              key={logo.name}
               src={logo.src}
-              alt={logo.name}
+              alt={`${logo.name} — Brandon Johnson, Level 10`}
               className="press-logo"
               loading="lazy"
               decoding="async"
             />
           ))}
+          <div
+            className="meta italic"
+            style={{
+              fontFamily: "var(--font-serif)",
+              color: "var(--color-ink-dim)",
+              fontSize: 16,
+              maxWidth: 380,
+              textAlign: "left",
+            }}
+          >
+            Level 10 · 500+ reviews · 27,000+ photos · 132M+ photo views.
+            The site is the long-form version.
+          </div>
         </div>
         <style
           dangerouslySetInnerHTML={{
@@ -51,7 +57,7 @@ export const AsSeenIn = () => {
                 height: 28px;
                 width: auto;
                 object-fit: contain;
-                opacity: 0.5;
+                opacity: 0.55;
                 filter: grayscale(100%);
                 transition: opacity 0.4s ease, filter 0.4s ease;
               }

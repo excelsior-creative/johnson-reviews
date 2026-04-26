@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { NewsletterInline } from "@/components/NewsletterInline";
 
@@ -44,21 +43,58 @@ export default function AboutPage() {
                   lineHeight: 1.55,
                 }}
               >
-                Johnson &amp; Co. is the review project of Brandon Johnson — a
+                Johnson Reviews is the writing project of Brandon Johnson — a
                 Google Maps Level 10 Local Guide with 500+ reviews, 27,000+
-                original photos, and 132 million photo views. Started in 2019 as
-                a personal notebook, it&rsquo;s now a working publication.
+                original photos, and 132 million photo views. It started as a
+                personal notebook of places we&rsquo;d been; it&rsquo;s now the
+                long-form record of what was worth saying.
               </p>
             </div>
-            <div className="rise-2 photo" style={{ aspectRatio: "4 / 5" }}>
-              <Image
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80"
-                alt="Brandon Johnson"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
-                priority
-              />
+            {/*
+              Portrait slot — kept as a typographic placeholder until Brandon
+              supplies a real photo. Stock photography of a stranger is worse
+              than honest negative space, especially on the page that's
+              supposed to introduce the actual person behind the reviews.
+            */}
+            <div
+              className="rise-2 photo"
+              style={{
+                aspectRatio: "4 / 5",
+                background:
+                  "linear-gradient(160deg, #1f1a14 0%, #2a2018 60%, #3a2f25 100%)",
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 16,
+                  padding: 24,
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  className="signature"
+                  style={{
+                    fontSize: 96,
+                    color: "var(--color-accent)",
+                    lineHeight: 1,
+                  }}
+                >
+                  BJ
+                </div>
+                <div
+                  className="meta"
+                  style={{ color: "var(--color-ink-dim)" }}
+                >
+                  Portrait coming
+                </div>
+              </div>
             </div>
           </div>
         </div>
