@@ -5,25 +5,21 @@ const categories = [
   {
     region: "Sit-down dinners, brunch, taquerías",
     name: "Restaurants",
-    count: "180+",
     href: "/blog?category=restaurants",
   },
   {
     region: "Where the Johnsons actually slept",
     name: "Hotels & Resorts",
-    count: "60+",
     href: "/blog?category=hotels-resorts",
   },
   {
     region: "Theme parks, golf, concerts",
     name: "Entertainment",
-    count: "120+",
     href: "/blog?category=entertainment",
   },
   {
     region: "Big-box and boutique stops",
     name: "Shopping",
-    count: "40+",
     href: "/blog?category=shopping",
   },
 ];
@@ -91,23 +87,11 @@ export const CategoryGrid = () => {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
                   marginTop: 24,
                 }}
               >
-                <div
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: 28,
-                    color: "var(--color-accent)",
-                  }}
-                >
-                  {cat.count}
-                </div>
                 <div className="meta inline-flex items-center gap-2">
-                  Reviews <span className="arrow">→</span>
+                  Browse <span className="arrow">→</span>
                 </div>
               </div>
             </Link>
