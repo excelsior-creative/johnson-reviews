@@ -4,8 +4,9 @@ This is the most important doc in `/ceo`. It's sacred. Update it whenever
 Brandon redlines a draft, when a published post feels off, or when you
 learn something new about how he thinks.
 
-_Last updated: 2026-04-20 (v0 — derived from inferred priors and the
-CEO mandate. Brandon: please redline this freely, especially Section 3.)_
+_Last updated: 2026-04-26 (v0.1 — added Section 3.1 with canonical
+on-brand examples observed in PR #15 home page copy. Brandon still
+needs to redline the rest, especially Section 5: the family.)_
 
 ---
 
@@ -66,6 +67,53 @@ priors, not from observed Brandon writing. Today is day 1.)_
 - Geographic anchor: name the city/area in the first paragraph
   where applicable.
 
+## 3.1 Canonical on-brand examples (currently shipping)
+
+These are real copy strings on the live site that the agent considers
+canonical "this is the voice." Use them as reference when drafting.
+If Brandon redlines any of them, log it in §8 and flag the fix.
+
+**Hero (home):**
+
+> "Real visits. _Honest reviews._"
+> Orange County, California · Est. 2019
+> Restaurants, hotels, and family travel — written up after we've
+> actually been there, with the kids, and brought back something
+> worth saying.
+> _The Verdict — Five hundred places. Worth your evening._
+
+**On Method (home, full-bleed quote band):**
+
+> "We visit every place _at our own expense_, often more than once.
+> No press trips, no comped meals, no affiliate links. Just a long
+> record of what we actually thought."
+> — Brandon Johnson, Editor
+
+> ⚠️ **Future-Brandon note:** the "no affiliate links" clause hard-
+> commits the brand to no affiliate revenue. If Brandon ever wants
+> affiliates (booking, gear, delivery), this string needs to soften
+> first. Logged in INBOX.
+
+**Archive CTA (home bottom):**
+
+> Est. 2019
+> "Seven years. Five hundred _reviews._"
+> Every restaurant, hotel, and place we've written about since the
+> beginning. Filterable, searchable, sortable.
+> _Enter the Archive →_
+
+**Common patterns observed:**
+- Two-line display headlines with an italic accent word in the
+  second clause (Real visits. _Honest reviews._ / Five hundred
+  _reviews._ / Worth your _evening._)
+- Mono kicker in caps + dot-separator + place + Est. year above
+  most major sections
+- Italic deck (champagne/dim ink color) for secondary copy under
+  display headlines
+- "We" as the default narrator voice
+- Specific numbers when honest (Five hundred reviews, Seven years)
+- No exclamation marks anywhere
+
 ## 4. Phrasing patterns to avoid
 
 - ❌ "MUST-VISIT" / "MUST-TRY" / "BEST EVER"
@@ -123,7 +171,7 @@ _(Brandon: when you correct a draft or a published post, log the
 correction here as a one-liner so the voice doc evolves. The agent
 will read this every night.)_
 
-- _(empty — first night)_
+- _(empty — Brandon hasn't redlined any drafts yet through 2026-04-26.)_
 
 ---
 

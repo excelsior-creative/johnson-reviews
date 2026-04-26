@@ -2,17 +2,20 @@
 
 ## Now (this week)
 
-- 🟡 **Replace luxury-critic placeholder copy** site-wide. Started
-  2026-04-20. First pass tonight: Hero, FeaturedReviews, CategoryGrid,
-  QuickStats. Voice.md is the rubric.
+- 🔴 **Land one of the seven open draft PRs** (recommendation: PR #17 — see
+  `/ceo/pr-triage.md`). Until something merges, the nightly routine cannot
+  advance the brand-critical SEO/copy fixes; new runs just add to the pile.
+- 🟢 **Replace luxury-critic placeholder copy** — substantially shipped
+  by PR #15 (2026-04-23). New home page reads on-brand
+  ("Real visits. Honest reviews.", the On-Method quote, Archive CTA).
+  Remaining off-brand strings (mostly /about page) are addressed in
+  open draft PRs.
 - ⬜ **Verify the live deploy.** WebFetch from agent returned 403/
-  ECONNREFUSED. Could be Vercel firewall, CF, or a real outage.
-  Brandon: confirm site is up and what URL is canonical
-  (`johnsonreviews.com` vs `www.johnsonreviews.com`).
-- ⬜ **Author bio block on Posts.** E-E-A-T signal. Show "Reviewed by
-  Brandon Johnson, Google Local Guide Level 10 · 500+ reviews · OC."
-  Plus a small portrait + link to Google Local Guide profile.
-- ⬜ **About page** rewritten on-voice.
+  ECONNREFUSED on 2026-04-20. Brandon: confirm site is up and what URL
+  is canonical (`johnsonreviews.com` vs `www.johnsonreviews.com`).
+- 🟡 **Author bio block on Posts.** E-E-A-T signal. Pending in open
+  PRs (#14, #17). Will land when one of those merges.
+- 🟡 **About page** rewritten on-voice. Pending in open PRs.
 
 ## Next (this month)
 
@@ -48,8 +51,16 @@ See `/ceo/backlog.md`.
 
 ## Done
 
+- ✅ EXIF GPS stripper utility (`apps/app/scripts/strip-exif-gps.ts`,
+  `pnpm strip:exif`) shipped 2026-04-26 — supports the kid-photo
+  privacy default per the CEO mandate.
+- ✅ PR #15 — Migrate to Johnson & Co. dark editorial design system
+  from `reference/design2/` (2026-04-23). Supersedes Gilded Legacy.
+  See ADR 0002. `design-system.md` rewritten to match.
+- ✅ PR #12 — `/ceo` brain bootstrap + first round of off-brand copy
+  surgery (2026-04-20).
 - ✅ PR #10 — Apply Gilded Legacy design system across the site
-  (visual layer; copy still off-brand, addressed in current cycle).
+  (visual layer; superseded by PR #15).
 - ✅ PR #7 — Remove payload-types from tracking.
 - ✅ PR #6 — Dark luxury editorial aesthetic overhaul (preceded
   the current Gilded Legacy pass).

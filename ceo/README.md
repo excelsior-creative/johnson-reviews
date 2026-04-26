@@ -29,30 +29,35 @@ https://johnsonreviews.com.
   past review slug. Useful for the migration backlog (`/ceo/review-queue.md`).
 - `ceo/` — this folder.
 
-## Current site state (as of 2026-04-20, first nightly run)
+## Current site state (as of 2026-04-26)
 
-- **Visual system: applied.** Dark luxury palette (#131313 base, #f2ca50 +
-  #d4af37 gold), Noto Serif headlines, Inter labels, 0px corner radius.
-  Shipped in PR #10 ("Gilded Legacy design system").
-- **Copy: WILDLY off-brand.** The reference design's *placeholder* copy was
-  copied verbatim into the live components. Examples:
-  - Hero: "Established 1984", "Elevating the Standard of Taste through
-    rigorous analysis and an uncompromising palate."
-  - QuickStats: "The Sommelier's Ledger", "A Quiet Tally of Crossings."
-  - FeaturedReviews: "We do not merely eat; we witness the convergence of
-    technique, tradition, and audacity."
-  - CategoryGrid: "Trending Destinations", "Where fire meets craftsmanship
-    at the table."
-  This reads like a Michelin critic site, not a family travel + restaurant
-  blog. Tonight's CEO patch starts replacing this with honest placeholder
-  copy in Brandon's voice. **See `voice.md`.**
+- **Visual system: dark editorial Johnson & Co.** Warm bourbon-ink
+  base (`#0f0d0b`) + warm gold accent (`#c9a961`), Playfair Display
+  headlines, Inter sans, JetBrains Mono meta, Caveat signature. 0px
+  corners. Shipped in PR #15 (2026-04-23) — supersedes Gilded
+  Legacy. **Source of truth:** `reference/design2/Johnson Reviews/`
+  + `/ceo/design-system.md` (rewritten 2026-04-26). See ADR 0002.
+- **Copy: mostly on-brand on home/index pages.** PR #15 shipped
+  good editorial copy on the home page (Hero "Real visits. Honest
+  reviews.", On-Method quote, Archive CTA). Some pages
+  still need polish — particularly /about (open draft PRs propose
+  fixes).
 - **Content backend works.** Payload CMS Posts collection, Reviews
-  collection (Google Reviews import schema), Categories, Tags, Pages,
-  Media. Published posts render at `/blog/[slug]` and reviews at
-  `/reviews/[slug]`.
-- **No live deploy verified this run.** WebFetch to johnsonreviews.com
-  returned 403/ECONNREFUSED — could be Vercel firewall, CF, or a real
-  outage. Flagged as a question for Brandon. Did not block this run.
+  collection, Categories, Tags, Pages, Media. Renders at
+  `/blog/[slug]` and `/reviews/[slug]`.
+- **Brand metadata leak still live.** `apps/app/src/lib/metadata.ts`
+  still ships `SITE_NAME = "Template Site"` and "Built with Next.js
+  & Payload CMS" tagline → leaks to OG cards, JSON-LD Organization,
+  Twitter cards, RSS feed channel, contact email footer. Fixed in
+  multiple open draft PRs (#13, #14, #16, #17). Not yet merged.
+- **JSON-LD schema graph still incomplete.** Same story — proposed
+  in open PRs.
+- **PR backlog — 7 open drafts, none merged.** Documented in
+  `/ceo/pr-triage.md`. Recommendation: merge PR #17, close the rest.
+- **EXIF GPS stripper utility shipped 2026-04-26**
+  (`pnpm strip:exif <path>`). New tooling, no other PR has it.
+- **Live site reachability still unverified.** Last attempted
+  2026-04-20 — returned 403/ECONNREFUSED. Open ask for Brandon.
 
 ## Operating rhythm
 
@@ -92,6 +97,7 @@ every nightly summary and every ask. Severity tags: 🔴 urgent /
 - `competitive.md` — who we benchmark against
 - `photos.md` — Google Photos ingestion + privacy rules
 - `INBOX.md` — running queue of asks for Brandon (Slack-mirrored)
+- `pr-triage.md` — current open-PR audit; refresh each night
 - `journal/YYYY-MM-DD.md` — one per night
 - `decisions/NNNN-short-slug.md` — numbered ADRs, supersede rather than edit
 - `experiments.md` — hypotheses + results
