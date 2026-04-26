@@ -51,6 +51,15 @@ _(empty — nothing ingested yet by the agent)_
 ## Tooling status
 
 - Payload Media collection exists and works for upload.
-- No automated EXIF stripper yet. Backlog: `scripts/strip-exif.ts`.
+- ✅ **EXIF GPS stripper shipped 2026-04-26** —
+  `apps/app/scripts/strip-exif-gps.ts`. Run with `pnpm strip:exif
+  <path-or-dir>`. Walks directories recursively, strips GPS metadata
+  in place, preserves other EXIF (camera, lens, date) for E-E-A-T.
+  Use on every kid-containing photo before upload. Note the privacy-
+  conservative behavior: when a GPS marker is detected, sharp's
+  re-encode drops *all* EXIF (current sharp version doesn't expose
+  per-tag exemption). For photos where preserving full EXIF matters
+  (food / scenery / travel hero shots without kids), don't run this
+  script — they're cleared for direct upload.
 - No automated photo proposal from a Google Photos album yet.
   Backlog.

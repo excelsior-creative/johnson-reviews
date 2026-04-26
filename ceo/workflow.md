@@ -73,7 +73,27 @@ The infrastructure that does NOT exist:
 
 ## Friction points (to track as we run)
 
-- _(empty — first night, nothing to log yet)_
+- 🔴 **Nightly PRs not landing.** As of 2026-04-26, six prior nightly
+  runs have stacked seven open draft PRs against `main`. Each new
+  run reads `/ceo`, sees the same outstanding bugs (most painfully
+  `SITE_NAME = "Template Site"` leaking everywhere), and opens
+  another fix PR — because the previous fix is sitting unmerged. This
+  is the dominant friction in the system right now: until Brandon
+  merges or closes PRs, the nightly routine cannot meaningfully
+  advance the brand-critical SEO and copy fixes. Recorded in
+  `/ceo/pr-triage.md` with a recommended merge order. Tonight's run
+  consciously did NOT add another duplicate-fix PR.
+- 🟡 **Brandon hasn't engaged across 6 nightly runs.** No INBOX asks
+  answered, no PRs reviewed, no Slack replies recorded. The intake
+  workflow's #1 unblocker is Brandon's input on a single review —
+  any review — to start the redline-cycle. Reviews stuck in
+  `needs-info` indefinitely.
+- 🟡 **Conversational intake never tested end-to-end.** The whole
+  pipeline (initiate → interview → draft → photos → redline →
+  publish) has zero real cycles. The `apizza-doho-dana-point.md`
+  draft sitting in PR #14 / #17 is the closest we have to a real
+  artifact, but it's blocked on Brandon's `[?? Brandon — ...]`
+  answers.
 
 ## Improvements in progress
 

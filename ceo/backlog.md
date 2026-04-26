@@ -29,9 +29,13 @@ promote into roadmap when ready.
   skeleton for every review draft.
 - [ ] Publish-readiness checklist (schema, alt text, internal links,
   geotag stripping).
-- [ ] Photo metadata stripper script: `apps/app/scripts/strip-exif.ts`
-  that runs on uploads to Payload Media for any photo flagged
-  "contains-kids."
+- [x] ✅ Photo metadata stripper CLI:
+  `apps/app/scripts/strip-exif-gps.ts` shipped 2026-04-26
+  (`pnpm strip:exif <path>`). Strips GPS tags from JPEG/PNG/WebP/AVIF.
+  Pre-upload tool, not a Payload hook yet — that's a follow-up.
+- [ ] Wrap the stripper in a Payload `beforeChange` hook on the Media
+  collection so photos flagged `contains-kids: true` are auto-stripped
+  on upload.
 
 ## content
 
