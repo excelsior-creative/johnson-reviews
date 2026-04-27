@@ -19,6 +19,8 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🟡 Needs decision
 
+16. **Ready-spec queue is empty after BOS bootstrap** (added 2026-04-27). `ceo/next.md` now explicitly says no ready specs are queued and agents must stop when fewer than two ready items exist. I did not implement roadmap/backlog work tonight. **Decision needed:** approve converting these existing backlog/roadmap items into specs and adding the first two to `ceo/next.md`: (A) Author bio block on Posts for E-E-A-T, (B) Review intake template pack (`ceo/prompts/intake.md`, `ceo/templates/review-template.md`, publish-readiness checklist), (C) Sitemap + schema coverage audit.
+
 2. **Off-brand placeholder copy.** The current site copied the
    reference-design's *placeholder* luxury-critic copy verbatim
    ("Established 1984," "Sommelier's Ledger," "uncompromising
