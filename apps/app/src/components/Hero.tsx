@@ -76,46 +76,16 @@ export const Hero = () => {
               style={{
                 marginTop: 40,
                 display: "flex",
-                alignItems: "center",
-                gap: 28,
+                gap: 14,
                 flexWrap: "wrap",
               }}
             >
-              <div
-                className="score-disc lg"
-                aria-label="Editor's verdict score"
-              >
-                <div className="score">9.4</div>
-                <div className="of">Out of 10</div>
-              </div>
-
-              <div
-                style={{
-                  borderLeft: "1px solid var(--color-rule-strong)",
-                  paddingLeft: 24,
-                }}
-              >
-                <div className="meta">The Verdict</div>
-                <div
-                  className="italic"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: 20,
-                    marginTop: 8,
-                    color: "var(--color-accent)",
-                  }}
-                >
-                  Five hundred places. Worth your evening.
-                </div>
-                <div style={{ marginTop: 18, display: "flex", gap: 14, flexWrap: "wrap" }}>
-                  <Link href="/blog" className="btn">
-                    Browse the Reviews <span className="arrow">→</span>
-                  </Link>
-                  <Link href="/about" className="btn btn-ghost">
-                    About the Johnsons <span className="arrow">→</span>
-                  </Link>
-                </div>
-              </div>
+              <Link href="/blog" className="btn">
+                Browse the Reviews <span className="arrow">→</span>
+              </Link>
+              <Link href="/about" className="btn btn-ghost">
+                About the Johnsons <span className="arrow">→</span>
+              </Link>
             </div>
           </div>
 

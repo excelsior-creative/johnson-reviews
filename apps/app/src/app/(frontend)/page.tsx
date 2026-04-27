@@ -113,12 +113,12 @@ export default function Home() {
               margin: "0 auto",
             }}
           >
-            Seven years. Five hundred{" "}
+            The full{" "}
             <span
               className="display-italic"
               style={{ color: "var(--color-accent)" }}
             >
-              reviews.
+              archive.
             </span>
           </h2>
           <p
@@ -132,8 +132,8 @@ export default function Home() {
               lineHeight: 1.5,
             }}
           >
-            Every restaurant, hotel, and place we&rsquo;ve written about since
-            the beginning. Filterable, searchable, sortable.
+            Every restaurant, hotel, and place we&rsquo;ve written about.
+            Filterable, searchable, sortable.
           </p>
             <div style={{ marginTop: 40 }}>
               <Link href="/reviews" className="btn">

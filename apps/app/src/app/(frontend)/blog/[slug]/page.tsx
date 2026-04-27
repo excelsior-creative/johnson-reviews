@@ -8,6 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Media, Post, Category, Tag } from "@/payload-types";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import {
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+  combineSchemas,
+} from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -62,8 +68,25 @@ export default async function PostPage({
       })
       .filter((x): x is NonNullable<typeof x> => x !== null) ?? [];
 
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Journal", url: "/blog" },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ];
+
+  const jsonLd = combineSchemas(
+    generateArticleSchema(post),
+    generateBreadcrumbSchema(breadcrumbs),
+  );
+
   return (
     <article className="page-body">
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       {/* Hero */}
       <section
         style={{
