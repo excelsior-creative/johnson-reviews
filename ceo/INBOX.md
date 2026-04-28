@@ -7,7 +7,7 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🔴 Urgent
 
-17. **Vercel/builds are failing because generated Payload types are missing** (added 2026-04-28). PR #22 is docs/planning-only and mergeable, but its Vercel check fails during `next build` with `Cannot find module '@/payload-types'` from `apps/app/src/app/(frontend)/blog/[slug]/page.tsx`. Repo facts: `apps/app/src/payload.config.ts` writes `apps/app/src/payload-types.ts`, PR #7 removed payload types from tracking, no `payload-types.ts` exists in the checkout, and app files still import `@/payload-types`. **Decision/action needed:** approve a ready spec to add a reliable Payload type-generation/build strategy, or confirm Vercel should bypass builds for docs-only PRs until this is fixed.
+17. **Vercel/builds are failing because generated Payload types are missing** (added 2026-04-28). PR #22 is docs/planning-only and mergeable once conflicts are resolved, but its Vercel check fails during `next build` with `Cannot find module '@/payload-types'` from `apps/app/src/app/(frontend)/blog/[slug]/page.tsx`. Repo facts: `apps/app/src/payload.config.ts` writes `apps/app/src/payload-types.ts`, PR #7 removed payload types from tracking, no `payload-types.ts` exists in the checkout, and app files still import `@/payload-types`. **Decision/action needed:** approve a ready spec to add a reliable Payload type-generation/build strategy, or confirm Vercel should bypass builds for docs-only PRs until this is fixed.
 
 11. **Vercel is not deploying from main** (added 2026-04-26). The live site at johnsonreviews.com is running an old build — the copy rewrites from PR #12 (merged ~2026-04-20) are still not live on production. The site is showing "EACH DAY AS A NEW DESTINATION" and luxury-critic copy we replaced weeks ago. **Please check your Vercel dashboard:** is auto-deploy from `main` enabled? Is production pointed at the right branch? The fix is probably one button in Vercel — but it has to be you who does it.
 
@@ -20,8 +20,6 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
    should whitelist agent traffic against?
 
 ### 🟡 Needs decision
-
-16. **Ready-spec queue is empty after BOS bootstrap** (added 2026-04-27). `ceo/next.md` now explicitly says no ready specs are queued and agents must stop when fewer than two ready items exist. I did not implement roadmap/backlog work tonight. **Decision needed:** approve converting these existing backlog/roadmap items into specs and adding the first two to `ceo/next.md`: (A) Author bio block on Posts for E-E-A-T, (B) Review intake template pack (`ceo/prompts/intake.md`, `ceo/templates/review-template.md`, publish-readiness checklist), (C) Sitemap + schema coverage audit.
 
 2. **Off-brand placeholder copy.** The current site copied the
    reference-design's *placeholder* luxury-critic copy verbatim
@@ -83,4 +81,4 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ## Answered
 
-_(empty)_
+16. **[ANSWERED 2026-04-27] Ready-spec queue is empty after BOS bootstrap.** Brandon asked Peter to move the project forward in Slack thread C0AHR2NJ361 / 1777339258.868489. Peter converted the first two backlog/roadmap items into ready specs and added them to `ceo/next.md`: (A) Review intake template pack and (B) Author bio block on Posts. Sitemap + schema coverage audit remains a future candidate.
