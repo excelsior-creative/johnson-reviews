@@ -7,6 +7,8 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🔴 Urgent
 
+17. **Preview build fails: missing generated Payload types** (added 2026-04-27). PR #22's Vercel preview failed during TypeScript with `Cannot find module '@/payload-types'` from `apps/app/src/app/(frontend)/blog/[slug]/page.tsx`. This appears unrelated to PR #22's docs-only changes and likely stems from `payload-types.ts` being generated but not present during Vercel builds. **Decision/action needed:** create a separate build-fix spec to ensure Payload types are generated before `next build` or provide a safe checked-in/generated-types policy.
+
 11. **Vercel is not deploying from main** (added 2026-04-26). The live site at johnsonreviews.com is running an old build — the copy rewrites from PR #12 (merged ~2026-04-20) are still not live on production. The site is showing "EACH DAY AS A NEW DESTINATION" and luxury-critic copy we replaced weeks ago. **Please check your Vercel dashboard:** is auto-deploy from `main` enabled? Is production pointed at the right branch? The fix is probably one button in Vercel — but it has to be you who does it.
 
 1. **Live site reachability.** WebFetch from the agent returned 403
