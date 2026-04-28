@@ -7,6 +7,8 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🔴 Urgent
 
+17. **Vercel/builds are failing because generated Payload types are missing** (added 2026-04-28). PR #22 is docs/planning-only and mergeable, but its Vercel check fails during `next build` with `Cannot find module '@/payload-types'` from `apps/app/src/app/(frontend)/blog/[slug]/page.tsx`. Repo facts: `apps/app/src/payload.config.ts` writes `apps/app/src/payload-types.ts`, PR #7 removed payload types from tracking, no `payload-types.ts` exists in the checkout, and app files still import `@/payload-types`. **Decision/action needed:** approve a ready spec to add a reliable Payload type-generation/build strategy, or confirm Vercel should bypass builds for docs-only PRs until this is fixed.
+
 11. **Vercel is not deploying from main** (added 2026-04-26). The live site at johnsonreviews.com is running an old build — the copy rewrites from PR #12 (merged ~2026-04-20) are still not live on production. The site is showing "EACH DAY AS A NEW DESTINATION" and luxury-critic copy we replaced weeks ago. **Please check your Vercel dashboard:** is auto-deploy from `main` enabled? Is production pointed at the right branch? The fix is probably one button in Vercel — but it has to be you who does it.
 
 1. **Live site reachability.** WebFetch from the agent returned 403
