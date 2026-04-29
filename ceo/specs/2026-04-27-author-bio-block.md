@@ -1,9 +1,10 @@
 ---
 title: Author bio block on Posts
-status: ready
+status: completed
 risk_tier: R2
 owner: Devon
 reviewer: Quinn
+completed: 2026-04-29
 approval_evidence: "Brandon asked Peter in Slack thread C0AHR2NJ361 / 1777339258.868489 on 2026-04-27 to move the project forward; production deploy still requires deploy-gate verification because the site is public."
 ---
 

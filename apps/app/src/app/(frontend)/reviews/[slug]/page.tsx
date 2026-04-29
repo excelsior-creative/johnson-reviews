@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ScoreDisc } from "@/components/ScoreDisc";
 import { ReviewCard } from "@/components/ReviewCard";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import { AuthorBioBlock } from "@/components/AuthorBioBlock";
 
 export async function generateStaticParams() {
   try {
@@ -122,10 +123,7 @@ export default async function ReviewPage({
               "linear-gradient(180deg, rgba(15,13,11,0.5) 0%, rgba(15,13,11,0.1) 30%, rgba(15,13,11,0.96) 100%)",
           }}
         />
-        <div
-          className="absolute"
-          style={{ bottom: 80, left: 0, right: 0 }}
-        >
+        <div className="absolute" style={{ bottom: 80, left: 0, right: 0 }}>
           <div className="container-jr">
             <div className="kicker rise" style={{ marginBottom: 24 }}>
               The {review.category ?? "Field"} Review
@@ -246,41 +244,7 @@ export default async function ReviewPage({
       {/* Article body */}
       <section style={{ padding: "100px 0 40px" }}>
         <div className="container-jr" style={{ maxWidth: 760 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              marginBottom: 48,
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: "50%",
-                background:
-                  "linear-gradient(135deg, #3a2f25, #6b5842)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                color: "var(--color-accent)",
-                fontSize: 18,
-              }}
-            >
-              BJ
-            </div>
-            <div>
-              <div style={{ fontFamily: "var(--font-serif)", fontSize: 16 }}>
-                By Brandon Johnson
-              </div>
-              <div className="meta" style={{ marginTop: 2 }}>
-                Editor {review.reviewDate ? `· ${review.reviewDate}` : ""}
-              </div>
-            </div>
-          </div>
+          <AuthorBioBlock date={review.reviewDate} />
 
           {lead && (
             <div className="prose">
@@ -326,11 +290,19 @@ export default async function ReviewPage({
           <div className="container-jr">
             <div
               className="between"
-              style={{ marginBottom: 32, alignItems: "flex-end", flexWrap: "wrap", gap: 16 }}
+              style={{
+                marginBottom: 32,
+                alignItems: "flex-end",
+                flexWrap: "wrap",
+                gap: 16,
+              }}
             >
               <div>
                 <div className="kicker mb-3">Photo Notes</div>
-                <h3 className="display" style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}>
+                <h3
+                  className="display"
+                  style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
+                >
                   From the visit.
                 </h3>
               </div>
@@ -375,7 +347,9 @@ export default async function ReviewPage({
               style={{ marginTop: 20, justifyContent: "space-between" }}
             >
               <span>
-                <span className="num">N° {String(photos.length).padStart(2, "0")}</span>{" "}
+                <span className="num">
+                  N° {String(photos.length).padStart(2, "0")}
+                </span>{" "}
                 Plates, rooms, and moments from the visit
               </span>
             </div>
@@ -482,10 +456,7 @@ export default async function ReviewPage({
 
       {/* Signature */}
       <section style={{ padding: "40px 0 100px" }}>
-        <div
-          className="container-jr text-center"
-          style={{ maxWidth: 760 }}
-        >
+        <div className="container-jr text-center" style={{ maxWidth: 760 }}>
           <div className="meta mb-3">— End of review —</div>
           <div className="signature" style={{ fontSize: 40 }}>
             Brandon J.
@@ -525,7 +496,10 @@ export default async function ReviewPage({
               className="post-grid"
             >
               {related.slice(0, 3).map((r) => (
-                <ReviewCard key={r.id} review={r as unknown as Record<string, unknown>} />
+                <ReviewCard
+                  key={r.id}
+                  review={r as unknown as Record<string, unknown>}
+                />
               ))}
             </div>
           </div>

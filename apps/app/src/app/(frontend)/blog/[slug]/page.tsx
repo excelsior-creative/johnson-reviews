@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Media, Post, Category, Tag } from "@/payload-types";
 import { NewsletterInline } from "@/components/NewsletterInline";
+import { AuthorBioBlock } from "@/components/AuthorBioBlock";
 import {
   generateArticleSchema,
   generateBreadcrumbSchema,
@@ -154,40 +155,7 @@ export default async function PostPage({
       {/* Author byline */}
       <section style={{ padding: "60px 0 0" }}>
         <div className="container-jr" style={{ maxWidth: 760 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: "50%",
-                background:
-                  "linear-gradient(135deg, #3a2f25, #6b5842)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                color: "var(--color-accent)",
-                fontSize: 18,
-              }}
-            >
-              BJ
-            </div>
-            <div>
-              <div style={{ fontFamily: "var(--font-serif)", fontSize: 16 }}>
-                By Brandon Johnson
-              </div>
-              <div className="meta" style={{ marginTop: 2 }}>
-                Editor {formattedDate ? `· ${formattedDate}` : ""}
-              </div>
-            </div>
-          </div>
+          <AuthorBioBlock date={formattedDate} context="post" />
         </div>
       </section>
 
@@ -203,7 +171,13 @@ export default async function PostPage({
         <section style={{ padding: "40px 0 80px" }}>
           <div className="container-jr">
             <PhotoGallery
-              images={galleryImages as { url: string; alt?: string; caption?: string }[]}
+              images={
+                galleryImages as {
+                  url: string;
+                  alt?: string;
+                  caption?: string;
+                }[]
+              }
               title="From the visit."
             />
           </div>
@@ -224,7 +198,14 @@ export default async function PostPage({
               className="between"
               style={{ flexWrap: "wrap", gap: 24, alignItems: "center" }}
             >
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 16,
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
                 <span className="meta">Tags</span>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {tags.map((tag) =>
