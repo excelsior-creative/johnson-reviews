@@ -31,7 +31,7 @@ based on the mandate and current state._
 - **KR3.1** — Restaurant / TouristAttraction / LocalBusiness +
   Review schema on 100% of published reviews. ⬜
 - **KR3.2** — Author bio block (E-E-A-T signal) shipped on all
-  posts. ⬜
+  posts. ✅ Implemented in 2026-04-29 nightly branch; production deploy still gated.
 - **KR3.3** — Sitemap.xml + robots.txt verified clean and
   submitted to GSC. ⬜
 - **KR3.4** — At least 3 location hub pages live (Dana Point,

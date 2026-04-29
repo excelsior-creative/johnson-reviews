@@ -21,6 +21,8 @@ Mirrored to Slack C0AHR2NJ361. When Brandon answers, mark
 
 ### 🟡 Needs decision
 
+18. **Ready-spec queue is below BOS minimum after author bio implementation** (added 2026-04-29). After completing the Author Bio Block spec, `ceo/next.md` has one remaining ready item: Sitemap + Schema Coverage Audit. BOS guardrails ask for at least two ready items before continued execution. **Recommended conversions:** (A) urgent Payload type-generation/build strategy from item #17, (B) legacy SG-Host image dependency migration from item #8/backlog, or (C) About page on-voice rewrite from roadmap/brand backlog.
+
 2. **Off-brand placeholder copy.** The current site copied the
    reference-design's *placeholder* luxury-critic copy verbatim
    ("Established 1984," "Sommelier's Ledger," "uncompromising

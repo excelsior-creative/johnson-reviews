@@ -9,9 +9,7 @@
   ECONNREFUSED. Could be Vercel firewall, CF, or a real outage.
   Brandon: confirm site is up and what URL is canonical
   (`johnsonreviews.com` vs `www.johnsonreviews.com`).
-- ⬜ **Author bio block on Posts.** E-E-A-T signal. Show "Reviewed by
-  Brandon Johnson, Google Local Guide Level 10 · 500+ reviews · OC."
-  Plus a small portrait + link to Google Local Guide profile.
+- ✅ **Author bio block on Posts.** Completed in the 2026-04-29 nightly branch: reusable `AuthorBioBlock` now renders on blog post and review detail pages with honest Local Guide/family-traveler positioning and no unverified numeric stats.
 - ⬜ **About page** rewritten on-voice.
 
 ## Next (this month)
