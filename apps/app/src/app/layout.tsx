@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "Embark on a culinary journey with Johnson Reviews, your premier guide to discovering hidden gems and top-notch dining and experiences across various destinations.",
 };
 
+// root
 export default function RootLayout({
   children,
 }: {
@@ -26,7 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         {children}
